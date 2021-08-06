@@ -1,0 +1,16 @@
+.advertising-list {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: black;
+}
+
+.advertising-list__item {
+  width: calc(100% / 3);
+  height: 200px;
+  background-color: blue;
+}
+
+.advertising-list__item:first-child {
+  width: calc(100% / 3 * 2);
+  height: 400px;
+}
