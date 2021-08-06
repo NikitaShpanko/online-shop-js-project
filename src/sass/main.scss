@@ -5,14 +5,21 @@
 
 // Стили для файла с примером HTML-фрагмента
 // @import './example';
+// UTILS
+@import './utils/variables';
+@import './utils/visually-hidden';
 
 // BASE
-@import './utils/variables';
-
 @import './base/common';
 @import './base/container';
 @import './base/buttons';
 
+// COMPONENTS
+@import './components/modal-close-button';
+@import './components/authorization-form';
+
+// LAYOUT
+@import './layout/hero';
 @import './layout/footer';
 
 @import './categories/categories';
