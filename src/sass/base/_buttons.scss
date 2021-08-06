@@ -1,0 +1,13 @@
+.primary-button {
+  &:hover {
+    color: var(--color-main-text);
+    background-color: var(--color-main-background);
+  }
+  color: var(--color-main-background);
+  background-color: var(--color-highlight);
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
