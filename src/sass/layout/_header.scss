@@ -1,5 +1,9 @@
 .header {
   background-color: #122438;
+  color: #5E6671;
+  font-size: 12px;
+  line-height: 1.25;
+
   &__mobile {
     position: relative;
     display: flex;
@@ -9,23 +13,17 @@
     padding-bottom: 15px;
   }
 
-  &__burger-icon {
-    width: 20px;
-    height: 20px;
-    fill: rgba(68, 83, 97, 1);
-  }
-
-  &__icon {
-    width: 24px;
-    height: 24px;
-  }
-
   &__icon-logo {
     width: 64px;
     height: 40px;
   }
 
+  &__icon {
+    fill: #5E6671;
+  }
+
   &__mobile-btn {
+    color: #5E6671;
     background-color: transparent;
     border: none;
   }
@@ -34,33 +32,198 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 95vw;
     height: 100vh;
     background-color: #122438;
+    padding-top: 73px;
+    padding-left: 14px;
 
-    transform: translateY(-100%);
+    transform: translateX(-100%);
     transition: transform 500ms linear;
 
-    &__container {
-      position: relative;
-      padding-top: 48px;
-      padding-bottom: 48px;
-      padding-left: 24px;
-    }
-
-    &__close-btn {
+    .close-btn {
       position: absolute;
-      top: 48px;
-      right: 15px;
-      width: 40px;
-      height: 40px;
+      top: 29px;
+      right: 25px;
       background-color: transparent;
-      border: none;
       padding: 0;
     }
   }
+  &__account {
+    margin-left: 70px;
+    margin-bottom: 40px;
+  }
+  &__account-link:not(:first-child) {
+    padding-left: 12px;
+  }
+  &__account-link:not(:last-child) {
+    border-right: 2px solid #5E6671;
+    padding-right: 12px;
+  }
+  
+  &__controls {
+    margin-bottom: 30px;
+    display: flex;
+  }
+
+  .controls-btn {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    span {
+      margin-left: 13px;
+    }
+  }
+  .controls-btn:not(:last-child) {
+    margin-right: 55px;
+  }
+
+  &__filter {
+    display: flex;
+    flex-wrap: wrap;
+    letter-spacing: 0.03em;
+  }
+
+  &__filter-item {
+    border: 1px solid #5E6671;
+    border-radius: 20px;
+    padding: 8px 21px;
+    margin-right: 8px;
+    margin-bottom: 20px;
+  }
+  &__desk {
+    display: none;
+  }
 
   .is-open {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
+
+  @media screen and (min-width: 768px) {
+    &__mobile {
+      display: none;
+    }
+
+    &__desk {
+      position: relative;
+      display: block;
+      padding: 35px 40px 31px 38px;
+
+    }
+
+    &__desk-main {
+      
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    &__logo {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+   
+
+    &__input-search {
+      width: 410px;
+      height: 44px;
+    }
+
+    &__left-container {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      right: 38px;
+      top: 35px;
+    }
+    &__right-container {
+      display: flex;
+      flex-direction: column;
+
+    }
+
+    &__account {
+      margin-right: 24px;
+      margin-bottom: 0;
+      margin-left: 0;
+    }
+
+    &__create-btn {
+      padding: 13px 37px;
+    }
+    &__desk-filter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__filter {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 144px;
+      background-color: #122438;
+      padding-top: 30px;
+      padding-left: 40px;
+      padding-bottom: 32px;
+  
+      transform: translateY(-100%);
+      transition: transform 500ms linear;
+
+    }
+
+    &__filter-buttons {
+      display: flex;
+      position: absolute;
+      right: 38px;
+      top: 108px;
+
+    }
+
+    &__filter-item {
+      margin-bottom:20px;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    &__desk {
+      padding: 35px;
+    }
+
+    &__right-container {
+      flex-direction: row;
+    }
+
+    &__icon-logo {
+      width: 71px;
+      height: 44px;
+    }
+
+    &__logo {
+      margin-right: 31px;
+      margin-bottom: 0;
+    }
+
+    &__input-search {
+      margin-right: 282px;
+    }
+
+    &__filter-buttons {
+      position: relative;
+    }
+
+    .filter-btn {
+      display: none;
+    }
+
+  
+  }
+
+
+
 }
