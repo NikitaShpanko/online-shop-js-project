@@ -1,20 +1,16 @@
 import config from '../config.json';
 
-/** Converts endpoint string and data object to a
- * complete URL, ready to be passed to our API.
+/** Запрашивает данные у нашего API.
  *
- * `link` must start with a slash `/`.
+ * @param {string} link должен начинаться со слэша `/`.
+ * @param {string} method по умолчанию GET.
+ * @param {object} body игнорируется методами GET и HEAD.
  */
-function apiLink(link = '/', data = {}) {
-  const url = new URL(link, config.apiURL);
-  Object.entries(data).forEach(([key, value]) => url.searchParams.append(key, value));
-  return url.toString();
-}
-
-/** Request data from our dear API.
- *
- * `link` must start with a slash `/`.
- */
-export function request(link = '/', data = {}) {
-  return fetch(apiLink(link, data)).then(data => data.json());
+export function request(link = '/', method = 'GET', body = {}) {
+  method = method.toUpperCase();
+  const param = { method };
+  if (method !== 'GET' && method !== 'HEAD') {
+    param.body = body;
+  }
+  return fetch(config.apiURL + link, param).then(data => data.json());
 }

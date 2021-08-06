@@ -1,7 +1,7 @@
 {{#each items}}
 <article>
     <div class="card">
-        <img class="card__img" src="{{imageUrls[0]}}" alt="{{description}}">
+        <img class="card__img" src="{{imageUrls.[0]}}" alt="{{description}}">
         <h3 class="card__title">{{title}}</h3>
         {{#if (isOnSale)}}<span class="card__Old-price">{{price}}</span>{{/if}}
         <span class="card__New-price">{{price}}</span>
