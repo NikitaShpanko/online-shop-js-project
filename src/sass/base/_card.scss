@@ -1,0 +1,32 @@
+.card {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 290px;
+
+  height: 100%;
+  max-height: 300px;
+
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+
+  @media screen and (min-width: 768px) {
+    width: 334px;
+    height: 306px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 286px;
+    height: 306px;
+  }
+}
+
+.card__title {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  span {
+    letter-spacing: 0.04em;
+    color: #ff6b09;
+  }
+}
