@@ -12,5 +12,7 @@ export function request(link = '/', method = 'GET', body = {}) {
   if (method !== 'GET' && method !== 'HEAD') {
     param.body = body;
   }
-  return fetch(config.apiURL + link, param).then(data => data.json());
+  return fetch(config.apiURL + link, param).then(data =>
+    data.ok ? data.json() : { error: data.status, errorText: data.statusText },
+  );
 }

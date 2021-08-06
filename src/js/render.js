@@ -1,5 +1,5 @@
-// import cardTpl from '../templates/card.hbs';
-// import categoriesTpl from '../templates/categories.hbs';
+import cardTpl from '../templates/card.hbs';
+import categoriesTpl from '../templates/categories.hbs';
 
 import * as API from './api.js';
 import config from '../config.json';
@@ -63,7 +63,8 @@ export default class Render {
     }
     try {
       const data = await API.request(link);
-      this.#parent.innerText = JSON.stringify(data);
+      this.#parent.innerHTML = cardTpl(Object.values(data)[0]);
+      //this.#parent.innerText = JSON.stringify(Object.values(data)[0]);
       if (changeHistory) this.#changeHistory(link);
     } catch (err) {
       this.#parent.innerText = err;
