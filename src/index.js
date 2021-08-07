@@ -14,7 +14,7 @@ mainRender.dataTransform = data => Object.values(data)[0];
 mainRender.template = cardTpl;
 mainRender.changeLink = true;
 mainRender.changeLinkOnRoot = true;
-mainRender.render();
+mainRender.render().then(console.log(mainRender.parent));
 
 // (async () => {
 //   await mainRender.render();
