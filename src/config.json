@@ -1,0 +1,5 @@
+{
+  "apiURL": "https://callboard-backend.goit.global",
+  "projectName": "online-shop-js-project",
+  "defaultServerLink": "/call?page=1"
+}

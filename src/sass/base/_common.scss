@@ -1,6 +1,12 @@
 body {
   margin: 0;
   padding: 0;
+  @include light-theme;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 h1,

@@ -1,0 +1,31 @@
+.modal-close-button {
+  position: absolute;
+  top: 20px;
+  right: 19px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+
+  border: none;
+  border-radius: 50%;
+  color: var(--color-main-text);
+  background-color: var(--color-main-background);
+
+  transition-property: color, background-color, box-shadow;
+  transition-timing-function: linear;
+  transition-duration: 250ms;
+
+  &:hover {
+    color: var(--color-main-background);
+    background-color: var(--color-footer-text);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.modal-close-button__icon {
+  fill: currentColor;
+}
