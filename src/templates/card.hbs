@@ -2,6 +2,21 @@
 <div class="card__all--content">
   <article class='card__article'>
     <div class='card'>
+        <button class="icon-heart-wihte" type="button">
+          <svg class="icon" width="16" height="16">
+            <use href="./images/sprite.svg#icon-heart-wihte"></use>
+          </svg>
+        </button>
+        <button class="icon-heart isHiben" type="button">
+          <svg class="icon" width="16" height="16">
+            <use href="./images/sprite.svg#icon-heart"></use>
+          </svg>
+        </button>
+        <button class="icon-fullscreen" type="button">
+          <svg class="icon" width="20" height="20">
+            <use href="./images/sprite.svg#icon-fullscreen"></use>
+          </svg>
+        </button>
       <div class='card__conteiner'>
         <img class='card__img' src='{{imageUrls.[0]}}' alt='{{title}}' />
       </div>
@@ -21,5 +36,4 @@
     <li class="card__poiter"></li>
   </ul>
 </div>
-
 {{/each}}
