@@ -60,7 +60,27 @@
   text-transform: uppercase;
 }
 
-.card__New-price {
+.card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__old-price {
+  display: block;
+
+  text-decoration: line-through;
+  margin-right: 25px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: #bbbbbb;
+}
+
+.card__new-price {
   display: block;
   font-weight: bold;
   font-size: 12px;
