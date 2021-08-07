@@ -10,11 +10,11 @@ Render.errorTemplate = errorTpl;
 
 // Это просто тест:
 const mainRender = new Render(document.querySelector('main'));
-mainRender.dataTransform = data => Object.values(data)[0];
-mainRender.template = cardTpl;
-mainRender.changeLink = true;
-mainRender.changeLinkOnRoot = true;
-mainRender.render().then(console.log(mainRender.parent));
+mainRender.dataTransform = data => Object.values(data);
+mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
+// mainRender.changeLink = true;
+// mainRender.changeLinkOnRoot = true;
+mainRender.render('/call/specific/electronics').then(console.log(mainRender.parent));
 
 // (async () => {
 //   await mainRender.render();
