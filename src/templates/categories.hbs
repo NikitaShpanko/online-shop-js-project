@@ -1,16 +1,15 @@
-<div class="categories">
-    <h2 class="categories__titel">{{titel}}</h2> 
-    <span><a class="categories__all--card" href="{{ALL_card}}">Смотреть все</a></span>
-    <p>Товары домашнего обихода, видео, аудио, наушники, камеры,
-    аксессуары и многое другое.</p>
+<div class='categories'>
+  <h2 class='categories__title'>{{title}}</h2>
+  <span><a class='categories__all--card' href='{{ALL_card}}'>Смотреть все</a></span>
+  <p>Товары домашнего обихода, видео, аудио, наушники, камеры, аксессуары и многое другое.</p>
 
-    <ul>
-        {{#each items}}
-        <li>
-            <div>
-                {{card}}
-            </div>
-        </li>
-        {{/each}}
-    </ul>
+  <ul>
+    {{#each items}}
+      <li>
+        <div>
+          {{{card}}}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
 </div>
