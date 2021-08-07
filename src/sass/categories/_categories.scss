@@ -1,54 +1,42 @@
 .categories {
   margin: 0 auto;
-  padding: 20px 0px;
+
+  @media screen and (min-width: 768px) {
+    padding: 20px 0px;
+  }
 }
 
 .categories__container {
-  height: 354px;
+  height: 376px;
   margin: 0 auto;
 
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.02em;
+  &:not(:last-child) {
+    margin-right: 22px;
+  }
+
+  overflow: hidden;
 
   @media screen and (min-width: 768px) {
     height: 354px;
   }
 }
-
 .container__card--list {
   position: relative;
-  @media screen and (min-width: 768px) {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  overflow: hidden;
 }
 
 .categories__card--list {
   display: block;
-  width: 290px;
+
   @media screen and (min-width: 768px) {
+    height: 306px;
     display: flex;
     flex-wrap: nowrap;
-    height: 306px;
-  }
-}
-
-.categories__card {
-  display: block;
-  margin: 0 auto;
-  &:not(:last-child) {
-    margin-bottom: 40px;
-  }
-
-  @media screen and (min-width: 768px) {
-    margin-left: 0px;
-    height: 306px;
-    &:not(:last-child) {
-      margin-right: 20px;
-      margin-bottom: 0px;
-    }
+    padding: 0 16px;
   }
 }
 
@@ -90,9 +78,7 @@
 .button__arow--left,
 .button__arow-right {
   display: none;
-
   cursor: pointer;
-
   &.icon {
     fill: black;
   }
@@ -130,4 +116,7 @@
 
 .button__arow-right {
   right: 0px;
+}
+.icon {
+  z-index: 3;
 }
