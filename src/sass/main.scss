@@ -12,11 +12,11 @@
 // BASE
 @import './base/common';
 @import './base/container';
-@import './base/buttons';
 
 // COMPONENTS
 @import './components/modal-close-button';
 @import './components/authorization-form';
+@import './components/buttons';
 
 // LAYOUT
 @import './layout/header';
