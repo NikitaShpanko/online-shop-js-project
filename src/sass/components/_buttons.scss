@@ -1,0 +1,32 @@
+%button {
+  font-weight: 700;
+  border-left: 1px;
+  border-style: solid;
+  transition-property: color, background-color; //, box-shadow;
+  transition-timing-function: $trans-func;
+  transition-duration: $trans-dur;
+  cursor: pointer;
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+  &:hover {
+    color: var(--color-highlight);
+    background-color: var(--color-main-background);
+    box-shadow: $shadow-default;
+  }
+}
+
+.primary-button {
+  @extend %button;
+  color: var(--color-main-background);
+  background-color: var(--color-highlight);
+  border-color: var(--color-highlight);
+}
+
+.secondary-button {
+  @extend %button;
+  color: var(--color-main-text);
+  background-color: var(--color-main-background);
+  border-color: var(--color-ghost);
+}
