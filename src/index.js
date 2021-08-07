@@ -12,9 +12,9 @@ Render.errorTemplate = errorTpl;
 const mainRender = new Render(document.querySelector('main'));
 mainRender.dataTransform = data => Object.values(data);
 mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
-// mainRender.changeLink = true;
-// mainRender.changeLinkOnRoot = true;
-mainRender.render('/call/specific/electronics').then(console.log(mainRender.parent));
+mainRender.changeLink = true;
+mainRender.changeLinkOnRoot = true;
+mainRender.render().then(console.log(mainRender.parent));
 
 // (async () => {
 //   await mainRender.render();
