@@ -2,22 +2,21 @@
   display: block;
   margin: 0 auto;
 
-  &:not(:last-child) {
-    margin-bottom: 40px;
-  }
-
   @media screen and (min-width: 768px) {
     margin-left: 0px;
     height: 306px;
     &:not(:last-child) {
-      margin-right: 20px;
-      margin-bottom: 0px;
+      margin-right: 22px;
     }
   }
 }
 
 .card__article {
   margin-bottom: 22px;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0px;
+  }
 }
 
 .card {
