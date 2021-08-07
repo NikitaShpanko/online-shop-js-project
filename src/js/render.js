@@ -9,6 +9,70 @@ import config from '../config.json';
  */
 export default class Render {
   /**
+   * Метод, которым класс перезаписывает содержимое
+   * DOM-элемента.
+   *
+   * Это статическое свойство для всех экземпляров класса,
+   * у которых оно явно не переназначено.
+   * @param {Element} element DOM-элемент.
+   * @param {string} tplOutput данные, которые вернёт
+   * функция `template` или `errorTemplate`. По умолчанию
+   * и при работе с Handlebars-шаблонами это строка.
+   *
+   * Но если Вы переопределяете и `template`/`errorTemplate`,
+   * и функции с суффиксом -`DOM`, то вольны использовать любой
+   * другой тип данных.
+   * @returns
+   */
+  static replaceDOM = (element, tplOutput) => {
+    element.innerHTML = tplOutput;
+  };
+
+  /**
+   * Аналог метода `replaceDOM` для вывода ошибок.
+   *
+   * Это статическое свойство для всех экземпляров класса,
+   * у которых оно явно не переназначено.
+   * @param {Element} element
+   * @param {string} tplOutput
+   */
+  static errorReplaceDOM = (element, tplOutput) => {
+    element.innerHTML = tplOutput;
+  };
+
+  /**
+   * Метод, которым класс дополняет снизу содержимое
+   * DOM-элемента.
+   *
+   * Это статическое свойство для всех экземпляров класса,
+   * у которых оно явно не переназначено.
+   * @param {Element} element DOM-элемент.
+   * @param {string} tplOutput данные, которые вернёт
+   * функция `template` или `errorTemplate`. По умолчанию
+   * и при работе с Handlebars-шаблонами это строка.
+   *
+   * Но если Вы переопределяете и `template`/`errorTemplate`,
+   * и функции с суффиксом -`DOM`, то вольны использовать любой
+   * другой тип данных.
+   * @returns
+   */
+  static appendDOM = (element, tplOutput) => {
+    element.insertAdjacentHTML('beforeend', tplOutput);
+  };
+
+  /**
+   * Аналог метода `appendDOM` для вывода ошибок.
+   *
+   * Это статическое свойство для всех экземпляров класса,
+   * у которых оно явно не переназначено.
+   * @param {Element} element
+   * @param {string} tplOutput
+   */
+  static errorAppendDOM = (element, tplOutput) => {
+    element.insertAdjacentHTML('beforeend', tplOutput);
+  };
+
+  /**
    * Шаблон ошибки, по умолчанию выдаёт JSON.
    *
    * Это статическое свойство для всех экземпляров класса,
@@ -74,6 +138,50 @@ export default class Render {
    * @returns {string}
    */
   errorTemplate = Render.errorTemplate;
+
+  /**
+   * Метод, которым класс перезаписывает содержимое
+   * DOM-элемента.
+   *
+   * По умолчанию равен функции, заданной в статическом
+   * свойстве `Render.replaceDOM`.
+   * @param {Element} element
+   * @param {string} tplOutput
+   * @returns
+   */
+  replaceDOM = Render.replaceDOM;
+
+  /**
+   * Аналог метода `replaceDOM` для вывода ошибок.
+   *
+   * По умолчанию равен функции, заданной в статическом
+   * свойстве `Render.errorReplaceDOM`.
+   * @param {Element} element
+   * @param {string} tplOutput
+   */
+  errorReplaceDOM = Render.errorReplaceDOM;
+
+  /**
+   * Метод, которым класс дополняет снизу содержимое
+   * DOM-элемента.
+   *
+   * По умолчанию равен функции, заданной в статическом
+   * свойстве `Render.appendDOM`.
+   * @param {Element} element
+   * @param {string} tplOutput
+   * @returns
+   */
+  appendDOM = Render.appendDOM;
+
+  /**
+   * Аналог метода `appendDOM` для вывода ошибок.
+   *
+   * По умолчанию равен функции, заданной в статическом
+   * свойстве `Render.errorAppendDOM`.
+   * @param {Element} element
+   * @param {string} tplOutput
+   */
+  errorAppendDOM = Render.errorAppendDOM;
 
   /**
    * Позволено ли этому экземпляру класса изменять адрес страницы,
@@ -145,9 +253,9 @@ export default class Render {
     try {
       const data = await API.request(link);
       if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      this.#parent.innerHTML = this.template(this.dataTransform(data));
+      this.replaceDOM(this.#parent, this.template(this.dataTransform(data)));
     } catch (err) {
-      this.#parent.innerHTML = this.errorTemplate(err);
+      this.errorReplaceDOM(this.#parent, this.errorTemplate(err));
     }
   }
 
@@ -163,9 +271,9 @@ export default class Render {
     try {
       const data = await API.request(link);
       if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      this.#parent.insertAdjacentHTML('beforeend', this.template(this.dataTransform(data)));
+      this.appendDOM(this.#parent, this.template(this.dataTransform(data)));
     } catch (err) {
-      this.#parent.insertAdjacentHTML('beforeend', this.errorTemplate(err));
+      this.errorAppendDOM(this.#parent, this.errorTemplate(err));
     }
   }
 
