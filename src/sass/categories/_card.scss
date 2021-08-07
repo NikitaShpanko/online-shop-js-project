@@ -1,12 +1,9 @@
-.card {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 290px;
-
-  height: 100%;
-  max-height: 300px;
-
+.card__article {
+  width: 290px;
+  height: 300px;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+
+  margin-bottom: 22px;
 
   @media screen and (min-width: 768px) {
     width: 334px;
@@ -19,14 +16,85 @@
   }
 }
 
+.card {
+  position: relative;
+  width: inherit;
+  height: inherit;
+}
+
+.card__img {
+  margin: 0 auto;
+
+  width: 288px;
+  height: 300px;
+
+  @media screen and (min-width: 768px) {
+    width: 334px;
+    height: 304px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 286px;
+    height: 304px;
+  }
+}
+
+.card__name--price {
+  position: absolute;
+  width: inherit;
+  left: auto;
+  right: auto;
+
+  text-align: center;
+  bottom: 30px;
+}
+
 .card__title {
+  margin-bottom: 3px;
+  font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 15px;
   text-align: center;
   letter-spacing: 0.02em;
-  span {
-    letter-spacing: 0.04em;
-    color: #ff6b09;
+  text-transform: uppercase;
+}
+
+.card__New-price {
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: 0.04em;
+
+  color: #ff6b09;
+}
+
+.card__poiter--list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 56px;
+  margin: 0 auto;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+
+.card__poiter {
+  display: block;
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  list-style: none;
+  background: #cdcdcd;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  &.active__color {
+    background: #ff6b09;
   }
 }

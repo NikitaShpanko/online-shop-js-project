@@ -1,13 +1,133 @@
 .categories {
   margin: 0 auto;
-  width: 100%;
-  max-width: 290px;
+  margin-bottom: 40px;
+}
 
-  height: 100%;
-  max-height: 374px;
+.categories__container {
+  height: 354px;
+  margin: 0 auto;
 
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.02em;
+
+  @media screen and (min-width: 768px) {
+    height: 354px;
+  }
+}
+
+.container__card--list {
+  position: relative;
+  @media screen and (min-width: 768px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.categories__card--list {
+  display: block;
+  width: 290px;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 306px;
+  }
+}
+
+.categories__card {
+  display: block;
+  margin: 0 auto;
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-left: 0px;
+    height: 306px;
+    &:not(:last-child) {
+      margin-right: 20px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.categories__name {
+  display: flex;
+  align-self: baseline;
+  width: 290px;
+  margin-bottom: 24px;
+
+  & .categories__titel {
+    font-family: Montserrat;
+    align-self: baseline;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    margin-right: 12px;
+  }
+  & .categories__titel--allCard {
+    align-self: baseline;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.02em;
+    text-decoration-line: underline;
+
+    color: #ff6b09;
+  }
+
+  @media screen and (min-width: 768px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.button__arow--left,
+.button__arow-right {
+  display: none;
+
+  cursor: pointer;
+
+  &.icon {
+    fill: black;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: #ff6b09;
+    .icon {
+      fill: white;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    display: block;
+    background-color: #f4f4f4;
+    border: 0px;
+    position: absolute;
+    top: 137px;
+    width: 32px;
+    height: 60px;
+    z-index: 2;
+
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+  }
+
+  @media screen and (min-width: 1280px) {
+    position: absolute;
+    top: 113px;
+  }
+}
+.button__arow--left {
+  left: 0px;
+}
+
+.button__arow-right {
+  right: 0px;
 }
