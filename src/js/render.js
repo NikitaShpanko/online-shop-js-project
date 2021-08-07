@@ -21,7 +21,7 @@ export default class Render {
 
   /**
    * Родительский элемент, HTML которого и будет перезаписываться.
-   * Задаётся и проверяется в конструкторе.
+   * Задаётся и проверяется в конструкторе и в сеттере (на всякий случай).
    */
   #parent;
 
@@ -171,8 +171,28 @@ export default class Render {
 
   /**
    * Достучаться до родительского элемента можно здесь.
+   *
    */
   get parent() {
     return this.#parent;
+  }
+
+  /**
+   * Вообще не рекомендовал бы перезадавать родительский элемент,
+   * но на тот случай, если DOM перерисовали, и старые ссылки на
+   * элементы безвозвратно утеряны, то можно перезадать родителя,
+   * просто изменив это свойство на новый элемент или строку-селектор
+   * нового элемента.
+   * @param {Element|string} newParent Для чтения здесь всегда
+   * хранится сам элемент. Но записывать можно и строку-селектор.
+   */
+  set parent(newParent) {
+    if (typeof newParent === 'string') {
+      newParent = document.querySelector(newParent);
+    }
+    if (!newParent instanceof Element) {
+      throw "Parameter 'parent' doesn't represent a valid DOM Element.";
+    }
+    this.#parent = newParent;
   }
 }
