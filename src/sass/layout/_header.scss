@@ -227,6 +227,10 @@
       display: flex;
       flex-direction: column;
     }
+
+    &__user-account-item:hover {
+      color: var(--color-highlight);
+    }
   
     &__user-account-item:not(:last-child) {
       margin-bottom: 20px;
