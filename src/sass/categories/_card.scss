@@ -1,47 +1,64 @@
-.card__article {
-  width: 290px;
-  height: 300px;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+.card__all--content {
+  display: block;
+  margin: 0 auto;
 
+  @media screen and (min-width: 768px) {
+    margin-left: 0px;
+    height: 306px;
+    &:not(:last-child) {
+      margin-right: 22px;
+    }
+  }
+}
+
+.card__article {
   margin-bottom: 22px;
 
   @media screen and (min-width: 768px) {
-    width: 334px;
-    height: 306px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    width: 286px;
-    height: 306px;
+    margin-bottom: 0px;
   }
 }
 
 .card {
-  position: relative;
-  width: inherit;
-  height: inherit;
-}
+  display: block;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
-.card__img {
-  margin: 0 auto;
-
-  width: 288px;
+  width: 290px;
   height: 300px;
 
   @media screen and (min-width: 768px) {
     width: 334px;
-    height: 304px;
+    height: 306px;
   }
 
   @media screen and (min-width: 1280px) {
     width: 286px;
-    height: 304px;
+    height: 306px;
+  }
+}
+
+.card__conteiner {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 240px;
+
+  & .card__img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 768px) {
+    height: 244px;
   }
 }
 
 .card__name--price {
-  position: absolute;
-  width: inherit;
+  display: block;
+  width: 100%;
+  height: 67px;
   left: auto;
   right: auto;
 
