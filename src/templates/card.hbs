@@ -1,10 +1,16 @@
 {{#each this}}
-  <article>
-    <div class='card'>
-      <img class='card__img' src='{{imageUrls.[0]}}' alt='{{description}}' />
-      <h3 class='card__title'>{{title}}</h3>
-      {{#if isOnSale}}<span class='card__Old-price'>{{price}}</span>{{/if}}
-      <span class='card__New-price'>{{price}}</span>
+<article class="card__article">
+    <div class="card">
+        <div class="card__conteiner">
+            <img class="card__img" src="{{imageUrls.[0]}}" alt="{{title}}">
+        </div>
+        <div class="card__name--price">
+            <h3 class="card__title">{{title}}</h3>
+            <div class="card__price">
+            {{#if (isOnSale)}}<span class="card__old-price">{{oldPrice}}</span> {{/if}}
+                <span class="card__new-price">{{price}}</span>
+            </div>
+        </div>
     </div>
   </article>
 {{/each}}
