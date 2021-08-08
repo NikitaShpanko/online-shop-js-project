@@ -1,4 +1,5 @@
 import './sass/main.scss';
+import './js/cardButton';
 
 import cardTpl from './templates/card.hbs';
 import categoriesTpl from './templates/categories.hbs';

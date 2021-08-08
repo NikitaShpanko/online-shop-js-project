@@ -134,13 +134,13 @@
 }
 
 .icon-heart-wihte,
-.icon-fullscreen,
-.icon-heart {
+.icon-fullscreen {
   display: none;
   cursor: pointer;
   position: absolute;
   border: none;
   background-color: inherit;
+  z-index: 1;
 
   @media screen and (min-width: 1280px) {
     display: block;
@@ -159,9 +159,13 @@
 }
 
 .icon-heart {
+  cursor: pointer;
+  position: absolute;
+  border: none;
+  background-color: inherit;
   fill: var(--color-highlight);
 }
 
 .isInvisible {
-  display: none;
+  opacity: 0;
 }
