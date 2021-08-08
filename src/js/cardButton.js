@@ -7,13 +7,7 @@ allCategorys.addEventListener('click', (e) => {
 
     if (buttonClick.classList.contains('icon-heart-wihte')) {
 
-        buttonClick.classList.toggle('isInvisible');
-        
-        // heartIcon.forEach(e => {
-            
-        //     e.classList.toggle('isInvisible');
-        // });
-
+        buttonClick.classList.toggle('isFavorites');
         
     }
   });

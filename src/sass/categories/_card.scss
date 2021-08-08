@@ -158,14 +158,15 @@
   bottom: 19px;
 }
 
-.icon-heart {
-  cursor: pointer;
-  position: absolute;
-  border: none;
-  background-color: inherit;
+.icon-heart-wihte .icon-heart--favorites {
+  display: none;
+}
+
+.icon-heart-wihte.isFavorites .icon-heart--favorites {
+  display: block;
   fill: var(--color-highlight);
 }
 
-.isInvisible {
-  opacity: 0;
+.icon-heart-wihte.isFavorites .icon-heart {
+  display: none;
 }
