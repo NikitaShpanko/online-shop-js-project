@@ -48,3 +48,20 @@ categoryNames().then(rusCategoryNames => {
     return [{ name: rusCategoryNames[link.slice('/category'.length + 1)], card: cardTpl(data) }];
   }
 });
+
+
+
+
+
+
+
+
+
+
+// Это просто тест:
+// const mainRender = new Render(document.querySelector('main'));
+// mainRender.dataTransform = data => Object.values(data);
+// mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
+// mainRender.changeLink = true;
+// mainRender.changeLinkOnRoot = true;
+// mainRender.render().then(console.log(mainRender.parent));

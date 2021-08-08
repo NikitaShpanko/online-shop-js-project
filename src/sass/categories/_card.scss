@@ -4,6 +4,10 @@
       margin-right: 22px;
     }
   }
+  .icon-heart-wihte,
+  .icon-fullscreen {
+    fill: none;
+  }
 
   @media screen and (min-width: 768px) {
     &:not(:last-child) {
@@ -16,6 +20,10 @@
     &:focus,
     &:active {
       background-color: rgba(0, 0, 0, 0.12);
+      .icon-heart-wihte,
+      .icon-fullscreen {
+        fill: var(--color-main-background);
+      }
     }
   }
 }
@@ -128,9 +136,15 @@
 .icon-heart-wihte,
 .icon-fullscreen,
 .icon-heart {
+  display: none;
+  cursor: pointer;
   position: absolute;
   border: none;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: inherit;
+
+  @media screen and (min-width: 1280px) {
+    display: block;
+  }
 }
 
 .icon-heart-wihte,
@@ -144,6 +158,10 @@
   bottom: 19px;
 }
 
-.isHiben {
-  opacity: inherit;
+.icon-heart {
+  fill: var(--color-highlight);
+}
+
+.isInvisible {
+  display: none;
 }
