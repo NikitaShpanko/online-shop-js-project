@@ -4,10 +4,8 @@ modalContainer.addEventListener('click', onOpenModalClick);
 export function openModal(modalForm) {
   modalContainer.innerHTML = modalForm();
   document.body.classList.toggle('modal-open');
-  window.addEventListener('keydown', onOpenModalKeyPress);
-  setTimeout(() => {
-    modalContainer.classList.toggle('is-hidden');
-  }, 0);
+  window.addEventListener('keyup', onOpenModalKeyPress);
+  setTimeout(() => modalContainer.classList.toggle('is-hidden'), 0);
 }
 
 function onOpenModalClick(e) {
@@ -27,7 +25,7 @@ function onOpenModalKeyPress({ code }) {
 }
 
 export function closeModal() {
-  window.removeEventListener('keydown', onOpenModalKeyPress);
+  window.removeEventListener('keyup', onOpenModalKeyPress);
   modalContainer.classList.toggle('is-hidden');
   document.body.classList.toggle('modal-open');
   modalContainer.innerHTML = '';
