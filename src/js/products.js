@@ -3,9 +3,7 @@ import cardTpl from '../templates/card.hbs';
 import categoriesTpl from '../templates/categories.hbs';
 
 
-store.register(
-  'products', { 
-    notify(products, all) {
+store.register('products', (products, all) => {
       const toArr = Object.keys(products)
         .map(key => ({
           name: all.categories
@@ -16,8 +14,7 @@ store.register(
 
       document.querySelector('#root')
         .innerHTML = categoriesTpl(toArr);
-    },
-  }
+    }
 );
 
 

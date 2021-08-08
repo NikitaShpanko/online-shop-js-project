@@ -14,7 +14,7 @@ import './js/mobile-menu';
 import categoryNames from './js/categoryNames';
 import './js/header';
 import './js/products';
-import './js/query-parser';
+import './js/page';
 
 RenderSettings.errorTemplate = errorTpl;
 

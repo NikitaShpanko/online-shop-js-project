@@ -21,7 +21,7 @@ export default {
     this.notify('page', this.page);
   },
 
-  setPage(shownCategory) {
+  setShownCategory(shownCategory) {
     this.shownCategory = shownCategory
     this.notify('shownCategory', this.shownCategory);
   },
@@ -33,17 +33,16 @@ export default {
   },
 
   register: function(event, subscriber) {
-      if (typeof subscriber === "object" && typeof subscriber.notify === 'function') {
+      if (typeof subscriber === 'function') {
           this.addEvent(event);
           this.events[event].push(subscriber);
       }
   },
 
   notify: function(event, data) {
-      var events = this.events[event];
-      for (var e in events) {
-          events[e].notify(data, this);
+      const events = this.events[event];
+      for (let e in events) {
+          events[e](data, this);
       }
   }
-
 }

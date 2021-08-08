@@ -3,9 +3,7 @@ import headerCategoriesTpl from '../templates/header-categories.hbs';
 import headerCategoriesMobileTpl from '../templates/header-categories-mobile.hbs';
 import * as API from '../lib/api';
 
-store.register(
-  'categories', { 
-    notify(categories) {
+store.register('categories', (categories) => {
       const toArr = Object.keys(categories)
         .map(key => ({
           key,
@@ -31,10 +29,15 @@ store.register(
         if (category) {
           API.request(`/call/specific/${category}`)
             .then(data => store.setProducts({ [category]: data }));
+
+            const queryParams = new URLSearchParams(window.location.search);
+            queryParams.set('categories', category);
+
+            window.history.pushState(null, null, "?"+queryParams.toString());
         }
       }
+
     },
-  }
 );
 
 
