@@ -9,15 +9,17 @@ import config from './config.json';
 import * as API from './lib/api';
 import Render from './lib/render';
 import RenderSettings from './lib/renderSettings';
-
+import store from './lib/store';
 import './js/mobile-menu';
 import categoryNames from './js/categoryNames';
+import header from './js/header';
 
 RenderSettings.errorTemplate = errorTpl;
 
 categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
   console.log(rusCategoryNames);
+  store.setCategories(rusCategoryNames);
 
   const defaultSettings = new RenderSettings({
     acceptLink: link => link === '/' || link === '/index.html',
