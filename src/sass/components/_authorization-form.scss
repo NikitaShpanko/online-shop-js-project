@@ -70,7 +70,7 @@
   background: #fafafa;
   border: none;
 
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow-default;
   transition: background-color linear 250ms;
 
   &:hover {
@@ -92,7 +92,7 @@
   width: 100%;
   margin-bottom: 30px;
 
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--color-ghost);
   padding: 18px 25px;
 
   font-size: 12px;
@@ -109,7 +109,7 @@
   }
 
   &::placeholder {
-    color: #bbbbbb;
+    color: var(--color-ghost);
   }
 }
 
