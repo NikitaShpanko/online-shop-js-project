@@ -1,25 +1,50 @@
 import './sass/main.scss';
-import './js/mobile-menu'
 
 import cardTpl from './templates/card.hbs';
 import categoriesTpl from './templates/categories.hbs';
 import errorTpl from './templates/error.hbs';
 
-import Render from './js/render';
+import config from './config.json';
 
-Render.errorTemplate = errorTpl;
+import * as API from './lib/api';
+import Render from './lib/render';
+import RenderSettings from './lib/renderSettings';
 
-// Это просто тест:
-const mainRender = new Render(document.querySelector('main'));
-mainRender.dataTransform = data => Object.values(data);
-mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
-mainRender.changeLink = true;
-mainRender.changeLinkOnRoot = true;
-mainRender.render().then(console.log(mainRender.parent));
+import './js/mobile-menu';
+import categoryNames from './js/categoryNames';
 
-// (async () => {
-//   await mainRender.render();
-//   await mainRender.append('/call?page=2');
-//   await mainRender.append('/call?page=3');
-//   await mainRender.append('/call?page=4');
-// })();
+RenderSettings.errorTemplate = errorTpl;
+
+categoryNames().then(rusCategoryNames => {
+  rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
+  console.log(rusCategoryNames);
+
+  const defaultSettings = new RenderSettings({
+    acceptLink: link => link === '/' || link === '/index.html',
+    linkTransform: '/call?page=1',
+    dataTransform: allCatsTransform,
+    template: categoriesTpl,
+  });
+
+  const categorySettings = new RenderSettings({
+    acceptLink: link => link.includes('category'),
+    linkTransform: link => '/call/specific' + link.slice('/category'.length),
+    dataTransform: singleCatTransform,
+    template: categoriesTpl,
+    changeLink: true,
+  });
+
+  const mainRender = new Render(document.querySelector('main'), defaultSettings, categorySettings);
+  mainRender.render();
+
+  function allCatsTransform(data) {
+    return Object.entries(data).map(([name, data]) => ({
+      name: rusCategoryNames[name],
+      card: cardTpl(data),
+    }));
+  }
+
+  function singleCatTransform(data, link) {
+    return [{ name: rusCategoryNames[link.slice('/category'.length + 1)], card: cardTpl(data) }];
+  }
+});
