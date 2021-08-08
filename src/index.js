@@ -12,14 +12,16 @@ import RenderSettings from './lib/renderSettings';
 import store from './lib/store';
 import './js/mobile-menu';
 import categoryNames from './js/categoryNames';
-import header from './js/header';
+import './js/header';
+import './js/products';
+import './js/query-parser';
 
 RenderSettings.errorTemplate = errorTpl;
 
 categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
-  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
+  store.setPage(1);
 
   const defaultSettings = new RenderSettings({
     acceptLink: link => link === '/' || link === '/index.html',
@@ -50,3 +52,4 @@ categoryNames().then(rusCategoryNames => {
     return [{ name: rusCategoryNames[link.slice('/category'.length + 1)], card: cardTpl(data) }];
   }
 });
+

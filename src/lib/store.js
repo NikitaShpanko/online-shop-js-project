@@ -1,10 +1,29 @@
 export default {
-  categories: null,
   events: {},
+
+  categories: null,
+  products: null,
+  page: null,
+  shownCategory: null,
 
   setCategories(categories) {
       this.categories = categories;
       this.notify('categories', this.categories);
+  },
+
+  setProducts(products) {
+    this.products = products;
+    this.notify('products', this.products);
+  },
+
+  setPage(page) {
+    this.page = page
+    this.notify('page', this.page);
+  },
+
+  setPage(shownCategory) {
+    this.shownCategory = shownCategory
+    this.notify('shownCategory', this.shownCategory);
   },
 
   addEvent: function(name) {
@@ -23,7 +42,7 @@ export default {
   notify: function(event, data) {
       var events = this.events[event];
       for (var e in events) {
-          events[e].notify(data);
+          events[e].notify(data, this);
       }
   }
 
