@@ -1,5 +1,5 @@
-import * as API from './api.js';
-import config from '../config.json';
+import RenderSettings from './renderSettings.js';
+import { projectName } from '../config.json';
 
 /**
  * Класс Render прорисовывает данные API в выбранном DOM элементе.
@@ -9,21 +9,17 @@ import config from '../config.json';
  */
 export default class Render {
   /**
-   * Шаблон ошибки, по умолчанию выдаёт JSON.
-   *
-   * Это статическое свойство для всех экземпляров класса,
-   * у которых оно явно не переназначено.
-   *
-   * @param {{error: number, errorText: string}} err
-   * @returns {string}
-   */
-  static errorTemplate = err => JSON.stringify(err);
-
-  /**
    * Родительский элемент, HTML которого и будет перезаписываться.
    * Задаётся и проверяется в конструкторе и в сеттере (на всякий случай).
    */
   #parent;
+
+  #settings = [];
+
+  /**
+   * Данные, пришедшие с сервера. Будут доступны для чтения извне.
+   */
+  #data = {};
 
   /**
    * Приватная функция, возвращающая "хвост" текущего адреса страницы,
@@ -40,53 +36,29 @@ export default class Render {
    */
   #changeHistory;
 
-  /**
-   * Преобразование данных перед подстановкой в шаблон.
-   *
-   * По умолчанию ничего не делает, просто передаёт дальше.
-   *
-   * Переопределите эту функцию в экземпляре или наследнике класса.
-   * @param {object} data
-   * @returns {object}
-   */
-  dataTransform = data => data;
+  #findSetting = function (link) {
+    for (const setting of this.#settings) {
+      if (setting.acceptLink(link)) return setting;
+    }
+    return null;
+  };
 
-  /**
-   * Шаблон, т. е. преобразование данных в HTML-код.
-   *
-   * По умолчанию возвращает не HTML, а JSON, просто потому, что так проще.
-   *
-   * Переопределите эту функцию в экземпляре или наследнике класса.
-   *
-   * Можно просто присвоить переменной `template` функцию-шаблон (не вызов
-   * функции, а именно саму функцию).
-   * @param {object} data
-   * @returns {string}
-   */
-  template = data => JSON.stringify(data);
-
-  /**
-   * Шаблон ошибки для данного экземпляра класса.
-   *
-   * По умолчанию равен функции, заданной в статическом
-   * свойстве `Render.errorTemplate`.
-   * @param {{error: number, errorText: string}} err
-   * @returns {string}
-   */
-  errorTemplate = Render.errorTemplate;
-
-  /**
-   * Позволено ли этому экземпляру класса изменять адрес страницы,
-   * вписывая в неё запрос на API-сервер?
-   */
-  changeLink = false;
-
-  /**
-   * Позволено ли этому экземпляру класса изменять адрес,
-   * когда пользователь заходит на основную страницу (имитация
-   * переадресации)?
-   */
-  changeLinkOnRoot = false;
+  #work = async function (link, changeLink, workDOM, saveData, errorWorkDOM, errorSaveData) {
+    const setting = this.#findSetting(link);
+    if (!setting) return;
+    if (changeLink && setting.changeLink) this.#changeHistory(link);
+    try {
+      const data = await setting.request(setting.linkTransform(link));
+      if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
+      setting[workDOM](this.#parent, setting.template(setting.dataTransform(data, link)));
+      saveData(data);
+    } catch (err) {
+      setting[errorWorkDOM](this.#parent, setting.errorTemplate(err));
+      errorSaveData();
+      return false;
+    }
+    return true;
+  };
 
   /**
    * Конструктор создаёт экземпляр класса с достаточно примитивным поведением:
@@ -100,7 +72,7 @@ export default class Render {
    *
    * @param {Element | string} parent элемент, в котором осуществляется прорисовка
    */
-  constructor(parent = document) {
+  constructor(parent, ...settings) {
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
     }
@@ -110,44 +82,24 @@ export default class Render {
     this.#parent = parent;
 
     const link = location.href;
-    let start = link.toLowerCase().indexOf(config.projectName);
+    let start = link.toLowerCase().indexOf(projectName);
     if (start < 0) {
       this.#linkTail = () => location.pathname + location.search;
       this.#changeHistory = tail => history.pushState(null, null, tail);
     } else {
-      const cutAt = start + config.projectName.length;
+      const cutAt = start + projectName.length;
       this.#linkTail = () => link.slice(cutAt);
       const rootUrl = link.slice(0, cutAt);
       this.#changeHistory = tail => history.pushState(null, null, rootUrl + tail);
     }
+    this.addSettings(...settings);
   }
-  /**
-   * Основной метод данного класса.
-   *
-   * Отправляет GET-запрос по заданному адресу, обрабатывает ответ, как предписано
-   * функцией `dataTransform` и выдаёт результат в DOM по шаблону `template`.
-   *
-   * Умеет по умолчанию адреса работать с текущим адресом страницы
-   * и сам может изменять его без перезагрузки, если ему дадут на это
-   * полномочия свойствами `changeLink` и `changeLinkOnRoot`.
-   *
-   * @param {string} link  должен начинаться со слэша, по умолчанию -
-   * "хвост" текущего адреса страницы.
-   */
-  async render(link = this.#linkTail()) {
-    let changeLink = this.changeLink;
-    if (link === '/' || link === '/index.html') {
-      link = config.defaultServerLink;
-      changeLink = this.changeLinkOnRoot;
-    }
-    if (changeLink) this.#changeHistory(link);
 
-    try {
-      const data = await API.request(link);
-      if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      this.#parent.innerHTML = this.template(this.dataTransform(data));
-    } catch (err) {
-      this.#parent.innerHTML = this.errorTemplate(err);
+  addSettings(...settings) {
+    if (Array.isArray(settings[0])) {
+      this.#settings.push(...settings[0]);
+    } else {
+      this.#settings.push(...settings);
     }
   }
 
@@ -160,13 +112,50 @@ export default class Render {
    * параметр обязателен.
    */
   async append(link) {
-    try {
-      const data = await API.request(link);
-      if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      this.#parent.insertAdjacentHTML('beforeend', this.template(this.dataTransform(data)));
-    } catch (err) {
-      this.#parent.insertAdjacentHTML('beforeend', this.errorTemplate(err));
-    }
+    return this.#work(
+      link,
+      false,
+      'appendDOM',
+      data => {
+        if (Array.isArray(data)) {
+          this.#data.push(...data);
+        } else {
+          Object.assign(this.#data, data);
+        }
+      },
+      'errorAppendDOM',
+      () => {},
+    );
+  }
+
+  /**
+   * Основной метод данного класса.
+   *
+   * Получает адрес, проверяет и преобразует его, как предписано функцией `linkTransform`.
+   * Если от неё получен адрес GET-запроса на сервер, то запрос осуществляется, а метод
+   * обрабатывает ответ, как предписано функцией `dataTransform` и выдаёт результат в DOM
+   * по шаблону `template` методом, заданным функцией `replaceDOM`.
+   *
+   * Умеет по умолчанию адреса работать с текущим адресом страницы
+   * и сам может изменять его без перезагрузки, если ему дадут на это
+   * полномочия свойствами `changeLink` и `changeLinkOnRoot`.
+   *
+   * @param {string} link  должен начинаться со слэша, по умолчанию -
+   * "хвост" текущего адреса страницы.
+   */
+  async render(link = this.#linkTail()) {
+    return this.#work(
+      link,
+      true,
+      'replaceDOM',
+      data => {
+        this.#data = data;
+      },
+      'errorReplaceDOM',
+      () => {
+        this.#data = {};
+      },
+    );
   }
 
   /**
@@ -194,5 +183,13 @@ export default class Render {
       throw "Parameter 'parent' doesn't represent a valid DOM Element.";
     }
     this.#parent = newParent;
+  }
+
+  /**
+   * Данные, пришедшие с сервера.
+   * Доступны для чтения.
+   */
+  get data() {
+    return this.#data;
   }
 }
