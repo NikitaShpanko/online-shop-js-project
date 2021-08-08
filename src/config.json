@@ -1,4 +1,5 @@
 {
   "apiURL": "https://callboard-backend.goit.global",
-  "projectName": "online-shop-js-project"
+  "projectName": "online-shop-js-project",
+  "rusNames": { "sales": "Распродажа" }
 }

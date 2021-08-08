@@ -4,6 +4,8 @@ import cardTpl from './templates/card.hbs';
 import categoriesTpl from './templates/categories.hbs';
 import errorTpl from './templates/error.hbs';
 
+import config from './config.json';
+
 import * as API from './lib/api';
 import Render from './lib/render';
 import RenderSettings from './lib/renderSettings';
@@ -14,6 +16,7 @@ import categoryNames from './js/categoryNames';
 RenderSettings.errorTemplate = errorTpl;
 
 categoryNames().then(rusCategoryNames => {
+  rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
   console.log(rusCategoryNames);
 
   const defaultSettings = new RenderSettings({
@@ -32,7 +35,7 @@ categoryNames().then(rusCategoryNames => {
   });
 
   const mainRender = new Render(document.querySelector('main'), defaultSettings, categorySettings);
-  mainRender.render().then(() => console.log(mainRender.data));
+  mainRender.render();
 
   function allCatsTransform(data) {
     return Object.entries(data).map(([name, data]) => ({
