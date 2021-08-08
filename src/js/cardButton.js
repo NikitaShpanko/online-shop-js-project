@@ -2,12 +2,10 @@ const allCategorys = document.querySelector('body');
 
 allCategorys.addEventListener('click', (e) => {
     const buttonClick = e.target.closest('button');
-    const heartIcon = document.querySelectorAll('.icon-heart');
     if (buttonClick.nodeName !== 'BUTTON') return false;
 
-    if (buttonClick.classList.contains('icon-heart-wihte')) {
+    if (buttonClick.classList.contains('icon-heart-white')) {
 
-        buttonClick.classList.toggle('isFavorites');
-        
+        buttonClick.classList.toggle('isFavorites');    
     }
   });

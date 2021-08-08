@@ -29,10 +29,12 @@
   margin-bottom: 24px;
 
   & .categories__titel {
+    display: inline-block;
     align-self: baseline;
     font-weight: bold;
     font-size: 20px;
-    margin-right: 12px;
+    line-height: 1.2;
+    margin-right: 10px;
   }
   & .categories__titel--allCard {
     font-size: 12px;

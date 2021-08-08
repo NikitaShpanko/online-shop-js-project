@@ -4,7 +4,7 @@
       margin-right: 22px;
     }
   }
-  .icon-heart-wihte,
+  .icon-heart-white,
   .icon-fullscreen {
     fill: none;
   }
@@ -20,7 +20,7 @@
     &:focus,
     &:active {
       background-color: rgba(0, 0, 0, 0.12);
-      .icon-heart-wihte,
+      .icon-heart-white,
       .icon-fullscreen {
         fill: var(--color-main-background);
       }
@@ -133,7 +133,7 @@
   }
 }
 
-.icon-heart-wihte,
+.icon-heart-white,
 .icon-fullscreen {
   display: none;
   cursor: pointer;
@@ -147,8 +147,7 @@
   }
 }
 
-.icon-heart-wihte,
-.icon-heart {
+.icon-heart-white {
   top: 16px;
   right: 17px;
 }
@@ -158,11 +157,15 @@
   bottom: 19px;
 }
 
-.icon-heart-wihte .icon-heart--favorites {
+.icon-heart-white .icon-heart--favorites {
   display: none;
 }
 
-.icon-heart-wihte.isFavorites .icon-heart--favorites {
+.icon-heart-white.isFavorites {
+  display: block;
+}
+
+.icon-heart-white.isFavorites .icon-heart--favorites {
   display: block;
   fill: var(--color-highlight);
 }
