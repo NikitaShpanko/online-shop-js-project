@@ -11,8 +11,21 @@ Render.errorTemplate = errorTpl;
 
 // Это просто тест:
 const mainRender = new Render(document.querySelector('main'));
-mainRender.dataTransform = data => Object.values(data);
-mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
+mainRender.linkTransform = link => (link.slice(0, link.length - 1) === '/call?page=' ? link : '');
+mainRender.dataTransform = data =>
+  Object.entries(data).map(([name, data]) => ({
+    name,
+    card: cardTpl(data),
+  }));
+mainRender.template = categoriesTpl;
+// data => categoriesTpl(data);
 mainRender.changeLink = true;
 mainRender.changeLinkOnRoot = true;
-mainRender.render().then(console.log(mainRender.parent));
+mainRender.render().then(() => console.log(mainRender.data));
+
+// (async () => {
+//   await mainRender.render('/call?page=1');
+//   await mainRender.append('/call?page=2');
+//   await mainRender.append('/call?page=3');
+//   console.log(Object.entries(mainRender.data));
+// })();

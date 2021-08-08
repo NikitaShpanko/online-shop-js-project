@@ -1,5 +1,5 @@
 import * as API from './api.js';
-import config from '../config.json';
+import { projectName } from '../config.json';
 
 /**
  * Класс Render прорисовывает данные API в выбранном DOM элементе.
@@ -90,6 +90,11 @@ export default class Render {
   #parent;
 
   /**
+   * Данные, пришедшие с сервера. Будут доступны для чтения извне.
+   */
+  #data = {};
+
+  /**
    * Приватная функция, возвращающая "хвост" текущего адреса страницы,
    * независимо от того, находится ли она на ГитХабе или на наших локальных
    * серверах.
@@ -103,6 +108,23 @@ export default class Render {
    * @type {function (string)}
    */
   #changeHistory;
+
+  /**
+   * Преобразование ссылки на нашем сайте в ссылку-запрос
+   * на бэк-энд.
+   *
+   * По умолчанию ничего не делает, просто передаёт дальше.
+   *
+   * Переопределите эту функцию в экземпляре или наследнике класса.
+   *
+   * Обе ссылки должны начинаться со слэша `/`, но если
+   * `link` непригоден для данного экземпляра класса, то
+   * функция должна вернуть пустую строку `''` или что-то другое,
+   * приводимое к `false`.
+   * @param {string} link
+   * @returns {string}
+   */
+  linkTransform = link => link;
 
   /**
    * Преобразование данных перед подстановкой в шаблон.
@@ -208,7 +230,7 @@ export default class Render {
    *
    * @param {Element | string} parent элемент, в котором осуществляется прорисовка
    */
-  constructor(parent = document) {
+  constructor(parent) {
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
     }
@@ -218,12 +240,12 @@ export default class Render {
     this.#parent = parent;
 
     const link = location.href;
-    let start = link.toLowerCase().indexOf(config.projectName);
+    let start = link.toLowerCase().indexOf(projectName);
     if (start < 0) {
       this.#linkTail = () => location.pathname + location.search;
       this.#changeHistory = tail => history.pushState(null, null, tail);
     } else {
-      const cutAt = start + config.projectName.length;
+      const cutAt = start + projectName.length;
       this.#linkTail = () => link.slice(cutAt);
       const rootUrl = link.slice(0, cutAt);
       this.#changeHistory = tail => history.pushState(null, null, rootUrl + tail);
@@ -232,8 +254,10 @@ export default class Render {
   /**
    * Основной метод данного класса.
    *
-   * Отправляет GET-запрос по заданному адресу, обрабатывает ответ, как предписано
-   * функцией `dataTransform` и выдаёт результат в DOM по шаблону `template`.
+   * Получает адрес, проверяет и преобразует его, как предписано функцией `linkTransform`.
+   * Если от неё получен адрес GET-запроса на сервер, то запрос осуществляется, а метод
+   * обрабатывает ответ, как предписано функцией `dataTransform` и выдаёт результат в DOM
+   * по шаблону `template` методом, заданным функцией `replaceDOM`.
    *
    * Умеет по умолчанию адреса работать с текущим адресом страницы
    * и сам может изменять его без перезагрузки, если ему дадут на это
@@ -243,19 +267,24 @@ export default class Render {
    * "хвост" текущего адреса страницы.
    */
   async render(link = this.#linkTail()) {
-    let changeLink = this.changeLink;
-    if (link === '/' || link === '/index.html') {
-      link = config.defaultServerLink;
-      changeLink = this.changeLinkOnRoot;
-    }
-    if (changeLink) this.#changeHistory(link);
+    if (!this.linkTransform(link)) return;
+
+    link = this.linkTransform(link);
+    //let changeLink = this.changeLink;
+    // if (link === '/' || link === '/index.html') {
+    //   link = config.defaultServerLink;
+    //   changeLink = this.changeLinkOnRoot;
+    // }
+    if (this.changeLink) this.#changeHistory(link);
 
     try {
       const data = await API.request(link);
       if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
       this.replaceDOM(this.#parent, this.template(this.dataTransform(data)));
+      this.#data = data;
     } catch (err) {
       this.errorReplaceDOM(this.#parent, this.errorTemplate(err));
+      this.#data = {};
     }
   }
 
@@ -268,10 +297,19 @@ export default class Render {
    * параметр обязателен.
    */
   async append(link) {
+    if (!this.linkTransform(link)) return;
+
+    link = this.linkTransform(link);
     try {
       const data = await API.request(link);
       if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
       this.appendDOM(this.#parent, this.template(this.dataTransform(data)));
+
+      if (Array.isArray(data)) {
+        this.#data.push(...data);
+      } else {
+        Object.assign(this.#data, data);
+      }
     } catch (err) {
       this.errorAppendDOM(this.#parent, this.errorTemplate(err));
     }
@@ -302,5 +340,13 @@ export default class Render {
       throw "Parameter 'parent' doesn't represent a valid DOM Element.";
     }
     this.#parent = newParent;
+  }
+
+  /**
+   * Данные, пришедшие с сервера.
+   * Доступны для чтения.
+   */
+  get data() {
+    return this.#data;
   }
 }
