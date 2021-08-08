@@ -1,18 +1,30 @@
 .card__all--content {
-  display: block;
-  margin: 0 auto;
-
   @media screen and (min-width: 768px) {
-    margin-left: 0px;
-    height: 306px;
     &:not(:last-child) {
       margin-right: 22px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: rgba(0, 0, 0, 0.12);
     }
   }
 }
 
 .card__article {
+  display: block;
   margin-bottom: 22px;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   @media screen and (min-width: 768px) {
     margin-bottom: 0px;
@@ -20,9 +32,8 @@
 }
 
 .card {
+  position: relative;
   display: block;
-  box-shadow: $shadow-default;
-
   width: 290px;
   height: 300px;
 
@@ -38,42 +49,28 @@
 }
 
 .card__conteiner {
-  display: block;
-  margin: 0 auto;
   width: 100%;
   height: 240px;
 
   & .card__img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-  }
-
-  @media screen and (min-width: 768px) {
-    height: 244px;
   }
 }
 
 .card__name--price {
-  display: block;
-  width: 100%;
-  height: 67px;
-  left: auto;
-  right: auto;
-
-  text-align: center;
-  bottom: 30px;
+  height: 60px;
+  @media screen and (min-width: 768px) {
+    height: 66px;
+  }
 }
 
 .card__title {
   margin-bottom: 3px;
-  font-style: normal;
   font-weight: bold;
   font-size: 12px;
-  line-height: 15px;
   text-align: center;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
@@ -90,22 +87,14 @@
   text-decoration: line-through;
   margin-right: 25px;
   font-weight: bold;
-  font-size: 12px;
-  line-height: 15px;
   text-align: center;
-  letter-spacing: 0.04em;
   color: var(--color-ghost);
 }
 
 .card__new-price {
   display: block;
   font-weight: bold;
-  font-size: 12px;
-  line-height: 15px;
-  text-align: center;
-  letter-spacing: 0.04em;
-
-  color: #ff6b09;
+  color: var(--color-highlight);
 }
 
 .card__poiter--list {
@@ -132,6 +121,29 @@
   border-radius: 50%;
 
   &.active__color {
-    background: #ff6b09;
+    background: var(--color-highlight);
   }
+}
+
+.icon-heart-wihte,
+.icon-fullscreen,
+.icon-heart {
+  position: absolute;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon-heart-wihte,
+.icon-heart {
+  top: 16px;
+  right: 17px;
+}
+
+.icon-fullscreen {
+  right: 15px;
+  bottom: 19px;
+}
+
+.isHiben {
+  opacity: inherit;
 }

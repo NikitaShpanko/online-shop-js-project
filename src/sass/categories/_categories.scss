@@ -4,24 +4,48 @@
 }
 
 .categories__container {
-  height: 376px;
-  margin: 0 auto;
-
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.02em;
-  &:not(:last-child) {
-    margin-right: 22px;
-  }
+  height: 374px;
 
   @media screen and (min-width: 768px) {
     height: 354px;
+    &:not(:last-child) {
+      margin-right: 22px;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    width: 1266px;
   }
 }
+
 .container__card--list {
   position: relative;
+  height: 308px;
+  width: auto;
   overflow: hidden;
+}
+
+.categories__name {
+  display: flex;
+  margin-bottom: 24px;
+
+  & .categories__titel {
+    align-self: baseline;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 12px;
+  }
+  & .categories__titel--allCard {
+    font-size: 12px;
+    align-self: baseline;
+    text-decoration-line: underline;
+    & .categories__titel--link {
+      color: var(--color-highlight);
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 0px 16px;
+  }
 }
 
 .categories__card--list {
@@ -30,49 +54,8 @@
 
   @media screen and (min-width: 768px) {
     height: 306px;
-
-    padding: 0 16px;
+    padding: 0px 16px;
   }
-}
-
-.categories__name {
-  display: flex;
-  align-self: baseline;
-  width: 290px;
-  margin-bottom: 24px;
-
-  & .categories__titel {
-    font-family: Montserrat;
-    align-self: baseline;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 0.02em;
-    margin-right: 12px;
-  }
-  & .categories__titel--allCard {
-    align-self: baseline;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: 0.02em;
-    text-decoration-line: underline;
-
-    color: #ff6b09;
-  }
-
-  @media screen and (min-width: 768px) {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
-.icon {
-  z-index: 4;
-  fill: black;
 }
 
 .button__arow--left,
@@ -80,31 +63,33 @@
   display: none;
   cursor: pointer;
 
+  & .icon {
+    display: block;
+    fill: var(--color-main-text);
+  }
+
   @media screen and (min-width: 768px) {
     display: block;
+    position: absolute;
     background-color: #f4f4f4;
     border: 0px;
-    position: absolute;
     top: 123px;
     width: 32px;
     height: 60px;
-    z-index: 2;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
-    &:hover,
-    &:focus {
-      background-color: #ff6b09;
-      .icon {
-        fill: white;
-      }
+    &:active {
+      background-color: var(--color-highlight);
     }
-
-    box-shadow: $shadow-default;
-    transform: matrix(-1, 0, 0, 1, 0, 0);
   }
 
   @media screen and (min-width: 1280px) {
-    position: absolute;
     top: 113px;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--color-highlight);
+    }
   }
 }
 .button__arow--left {
@@ -113,4 +98,8 @@
 
 .button__arow-right {
   right: 0px;
+}
+
+.icon {
+  fill: var(--color-main-background);
 }
