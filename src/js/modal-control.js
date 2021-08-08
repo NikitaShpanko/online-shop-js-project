@@ -1,13 +1,8 @@
-import authModal from '../templates/authorization-form.hbs';
-
-const openBtn = document.querySelectorAll('.header__account-link');
 const modalContainer = document.querySelector('.modal-container');
-
-openBtn.forEach(e => e.addEventListener('click', openAuthModal));
 modalContainer.addEventListener('click', onOpenModalClick);
 
-function openAuthModal() {
-  modalContainer.innerHTML = authModal();
+export function openModal(modalForm) {
+  modalContainer.innerHTML = modalForm();
   document.body.classList.toggle('modal-open');
   window.addEventListener('keydown', onOpenModalKeyPress);
   setTimeout(() => {
@@ -31,7 +26,7 @@ function onOpenModalKeyPress({ code }) {
   }
 }
 
-function closeModal() {
+export function closeModal() {
   window.removeEventListener('keydown', onOpenModalKeyPress);
   modalContainer.classList.toggle('is-hidden');
   document.body.classList.toggle('modal-open');
