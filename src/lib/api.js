@@ -9,8 +9,11 @@ import config from '../config.json';
 export function request(link = '/', method = 'GET', body = {}) {
   method = method.toUpperCase();
   const param = { method };
-  if (method !== 'GET' && method !== 'HEAD') {
-    param.body = body;
+  if (method !== 'GET' && method !== 'HEAD' && method !== 'DELETE') {
+    param.body = JSON.stringify(body);
+    param.headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
   }
   return fetch(config.apiURL + link, param).then(data =>
     data.ok ? data.json() : { error: data.status, errorText: data.statusText },
