@@ -1,0 +1,17 @@
+.load__more--button {
+  width: 100%;
+  height: 70px;
+  border: none;
+  background-color: #02172a;
+  color: var(--color-main-background);
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+
+  @media screen and (min-width: 768px) {
+    height: 96px;
+  }
+  @media screen and (min-width: 1280px) {
+    height: 106px;
+  }
+}

@@ -18,14 +18,15 @@
     />
   </head>
   <body>
+    <include src="./partials/header.html"></include>
     <!-- Так добавляются фрагменты в главные HTML-файлы страниц. -->
-    <!-- <include src="./html/categories.html"></include> -->
-    <main></main>
-    <include src="./partials/hero.html"></include>
-    <include src="./partials/authorization-form.html"></include>
+    <main id="root"></main>
+    <include src="./partials/load-more.html"></include>
     <include src="./partials/footer.html"></include>
     <include src="./partials/modal-advert.html"></include>
     <include src="./partials/modal-advert-edit.html"></include>
+    <div class="modal-container is-hidden">
+    </div>
     <!-- Скрипт идёт последним в разметке. В нём уже подключен главный SASS-файл. -->
     <script src="./index.js"></script>
   </body>

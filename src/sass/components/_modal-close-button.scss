@@ -16,13 +16,13 @@
   background-color: var(--color-main-background);
 
   transition-property: color, background-color, box-shadow;
-  transition-timing-function: linear;
-  transition-duration: 250ms;
+  transition-timing-function: $trans-func;
+  transition-duration: $trans-dur;
 
   &:hover {
     color: var(--color-main-background);
     background-color: var(--color-highlight);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: $shadow-default;
   }
 }
 

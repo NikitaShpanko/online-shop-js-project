@@ -4,124 +4,109 @@
 }
 
 .categories__container {
-  height: 354px;
-  margin: 0 auto;
-
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.02em;
+  height: 374px;
 
   @media screen and (min-width: 768px) {
     height: 354px;
+    &:not(:last-child) {
+      margin-right: 22px;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    width: 1266px;
   }
 }
 
 .container__card--list {
   position: relative;
-  @media screen and (min-width: 768px) {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
-.categories__card--list {
-  display: block;
-  width: 290px;
-  @media screen and (min-width: 768px) {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 306px;
-  }
-}
-
-.categories__card {
-  display: block;
-  margin: 0 auto;
-  &:not(:last-child) {
-    margin-bottom: 40px;
-  }
+  height: 328px;
+  width: auto;
+  overflow: hidden;
 
   @media screen and (min-width: 768px) {
-    margin-left: 0px;
-    height: 306px;
-    &:not(:last-child) {
-      margin-right: 20px;
-      margin-bottom: 0px;
-    }
+    height: 310px;
   }
 }
 
 .categories__name {
   display: flex;
-  align-self: baseline;
-  width: 290px;
   margin-bottom: 24px;
 
   & .categories__titel {
-    font-family: Montserrat;
+    display: inline-block;
     align-self: baseline;
-    font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 0.02em;
-    margin-right: 12px;
+    line-height: 1.2;
+    margin-right: 10px;
   }
   & .categories__titel--allCard {
-    align-self: baseline;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: normal;
     font-size: 12px;
-    line-height: 15px;
-    letter-spacing: 0.02em;
+    align-self: baseline;
     text-decoration-line: underline;
-
-    color: #ff6b09;
+    & .categories__titel--link {
+      color: var(--color-highlight);
+    }
   }
 
   @media screen and (min-width: 768px) {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 0px 16px;
+  }
+}
+
+.categories__card--list {
+  display: flex;
+  flex-wrap: nowrap;
+
+  @media screen and (min-width: 768px) {
+    height: 306px;
+    padding: 0px 16px;
   }
 }
 
 .button__arow--left,
 .button__arow-right {
   display: none;
-
   cursor: pointer;
 
-  &.icon {
-    fill: black;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: #ff6b09;
-    .icon {
-      fill: white;
-    }
+  & .icon {
+    display: block;
+    fill: var(--color-main-text);
   }
 
   @media screen and (min-width: 768px) {
     display: block;
+    position: absolute;
+    z-index: 2;
     background-color: #f4f4f4;
     border: 0px;
-    position: absolute;
-    top: 137px;
+    top: 123px;
     width: 32px;
     height: 60px;
-    z-index: 2;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    & .icon {
+      fill: var(--color-main-text);
+    }
 
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
-    transform: matrix(-1, 0, 0, 1, 0, 0);
+    &:active {
+      background-color: var(--color-highlight);
+      .icon {
+        fill: var(--color-main-background);
+      }
+    }
   }
 
   @media screen and (min-width: 1280px) {
-    position: absolute;
     top: 113px;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--color-highlight);
+
+      .icon {
+        fill: var(--color-main-background);
+      }
+    }
   }
 }
 .button__arow--left {
@@ -130,4 +115,8 @@
 
 .button__arow-right {
   right: 0px;
+}
+
+.button__noCard {
+  fill: #a2a2a2;
 }

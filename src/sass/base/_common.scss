@@ -1,12 +1,9 @@
 body {
-  margin: 0;
-  padding: 0;
   @include light-theme;
-  font-family: 'Montserrat', sans-serif;
-}
-
-body.modal-open {
-  overflow: hidden;
+  font-family: $font-family;
+  font-size: 12px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
 }
 
 h1,
@@ -29,6 +26,7 @@ ol {
 
 img {
   display: block;
+  width: 100%;
 }
 
 .list {
@@ -38,4 +36,8 @@ img {
 .link {
   text-decoration: none;
   color: inherit;
+}
+
+body.modal-open {
+  overflow: hidden;
 }

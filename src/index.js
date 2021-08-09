@@ -1,24 +1,34 @@
 import './sass/main.scss';
+import './js/cardButton';
 
+import adsTpl from './templates/advertising-card.hbs';
 import cardTpl from './templates/card.hbs';
 import categoriesTpl from './templates/categories.hbs';
 import errorTpl from './templates/error.hbs';
 
-import Render from './js/render';
+import config from './config.json';
 
-Render.errorTemplate = errorTpl;
+import * as API from './lib/api';
+import store from './lib/store';
 
-// Это просто тест:
-const mainRender = new Render(document.querySelector('main'));
-mainRender.dataTransform = data => Object.values(data);
-mainRender.template = data => categoriesTpl([{ name: 'Something', card: cardTpl(data) }]);
-mainRender.changeLink = true;
-mainRender.changeLinkOnRoot = true;
-mainRender.render().then(console.log(mainRender.parent));
+import './js/auth-form';
+import './js/mobile-menu';
+import categoryNames from './js/categoryNames';
+import './js/header';
+import './js/products';
+import './js/page';
 
-// (async () => {
-//   await mainRender.render();
-//   await mainRender.append('/call?page=2');
-//   await mainRender.append('/call?page=3');
-//   await mainRender.append('/call?page=4');
-// })();
+categoryNames().then(rusCategoryNames => {
+  rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
+  store.setCategories(rusCategoryNames);
+  store.setPage(1);
+  // document.querySelector('body').addEventListener('click', e => {
+  //   if (!e.target.closest('a')) return;
+  //   const href = e.target.closest('a').getAttribute('href');
+  //   console.log(href);
+  //   if (href[0] !== '/') return; //если вдруг где внешняя ссылка затешется
+  //   e.preventDefault();
+  //   mainRender.render(href);
+  // });
+  // window.addEventListener('popstate', () => mainRender.render());
+});
