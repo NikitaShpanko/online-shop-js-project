@@ -7,8 +7,6 @@
   box-shadow: 15px 15px 55px rgba(0, 0, 0, 0.3);
 
   background-color: var(--color-main-background);
-  transform: scale(1);
-  transition: transform linear 250ms;
 
   @media screen and (min-width: 440px) {
     width: 410px;
