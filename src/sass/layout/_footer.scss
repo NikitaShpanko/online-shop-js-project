@@ -25,7 +25,7 @@
   color: #8c9195;
 
   @media screen and (min-width: 768px) {
-    color: #8e9198;
+    color: var(--color-footer-text);
   }
 }
 
@@ -40,7 +40,7 @@
   color: #8c9195;
 
   @media screen and (min-width: 768px) {
-    color: #8e9198;
+    color: var(--color-footer-text);
   }
 }
 
