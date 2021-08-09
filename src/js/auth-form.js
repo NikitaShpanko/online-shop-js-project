@@ -7,3 +7,7 @@ openBtn.forEach(e => e.addEventListener('click', openAuthModal));
 function openAuthModal() {
   openModal(authorizationFormTpl);
 }
+
+function onSubmit(params) {
+  closeModal();
+}
