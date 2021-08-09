@@ -65,6 +65,7 @@ categoryNames().then(rusCategoryNames => {
     salesSettings,
   );
   mainRender.render();
+  window.addEventListener('popstate', () => mainRender.render());
 
   function allCatsTransform(data) {
     return Object.entries(data).map(([name, data]) => ({
