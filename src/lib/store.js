@@ -6,7 +6,6 @@
 // с другой стороны вешаете callback
 
 
-
 export default {
   events: {},
 
