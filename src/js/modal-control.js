@@ -1,11 +1,21 @@
 const modalContainer = document.querySelector('.modal-container');
-modalContainer.addEventListener('click', onOpenModalClick);
+modalContainer.addEventListener('mousedown', onOpenModalClick);
 
 export function openModal(modalForm) {
-  modalContainer.innerHTML = modalForm();
-  document.body.classList.toggle('modal-open');
+  modalContainer.innerHTML = modalForm;
   window.addEventListener('keyup', onOpenModalKeyPress);
-  setTimeout(() => modalContainer.classList.toggle('is-hidden'), 0);
+  setTimeout(toggleClass, 50);
+}
+
+export function closeModal() {
+  window.removeEventListener('keyup', onOpenModalKeyPress);
+  toggleClass();
+  modalContainer.innerHTML = '';
+}
+
+function toggleClass() {
+  modalContainer.classList.toggle('is-hidden');
+  document.body.classList.toggle('modal-open');
 }
 
 function onOpenModalClick(e) {
@@ -22,11 +32,4 @@ function onOpenModalKeyPress({ code }) {
   if (code === 'Escape') {
     closeModal();
   }
-}
-
-export function closeModal() {
-  window.removeEventListener('keyup', onOpenModalKeyPress);
-  modalContainer.classList.toggle('is-hidden');
-  document.body.classList.toggle('modal-open');
-  modalContainer.innerHTML = '';
 }

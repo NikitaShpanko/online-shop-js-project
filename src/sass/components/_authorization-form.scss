@@ -56,6 +56,10 @@
   }
 }
 
+.authorization-form__label {
+  position: relative;
+}
+
 .authorization-form__input {
   color: inherit;
   display: block;
@@ -67,10 +71,10 @@
 
   font-size: 12px;
   line-height: 1.25;
+  outline: none;
 
   @media screen and (min-width: 768px) {
     padding: 20px;
-
     font-size: 14px;
     line-height: 1.21;
     &:nth-child(5) {
@@ -80,6 +84,31 @@
 
   &::placeholder {
     color: var(--color-ghost);
+  }
+
+  &:focus {
+    border-color: var(--color-highlight);
+  }
+
+  &:not(:placeholder-shown):invalid {
+    border-color: red;
+  }
+
+  &:not(:placeholder-shown):invalid + span::after {
+    display: block;
+    width: 260px;
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: -80px;
+    left: -3px;
+  }
+
+  &[name='email']:not(:placeholder-shown):invalid + span::after {
+    content: 'Неверный email!';
+  }
+  &[name='password']:not(:placeholder-shown):invalid + span::after {
+    content: 'Неверный пароль, от 6 до 16 символов';
   }
 }
 

@@ -8,19 +8,27 @@
         </svg>
       </button>
       <p class='authorization-form__text'>Или войдите в приложение используя e-mail и пароль:</p>
-      <input
-        class='authorization-form__input'
-        type='email'
-        name='email'
-        placeholder='E-mail'
-        pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)+$'
-      />
-      <input
-        class='authorization-form__input'
-        type='password'
-        name='password'
-        placeholder='Password'
-      />
+      <label class='authorization-form__label'>
+        <input
+          class='authorization-form__input'
+          type='email'
+          name='email'
+          placeholder='E-mail'
+          pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$'
+        />
+        <span></span>
+      </label>
+      <label class='authorization-form__label'>
+        <input
+          class='authorization-form__input'
+          type='password'
+          name='password'
+          placeholder='Password'
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$"
+          title="Должен содержать 1 загланую букву и 1 цифру."
+        />
+        <span></span>
+      </label>
       <div class='authorization-form__button-wrapper'>
         <button class='primary-button button--authorization-form' type='submit'>Войти</button>
         <button
