@@ -22,14 +22,14 @@ categoryNames().then(rusCategoryNames => {
   console.log(rusCategoryNames);
 
   const adSettings = new RenderSettings({
-    acceptLink: link => link === '/' || link === '/index.html',
+    acceptLink: isRootLink,
     linkTransform: '/call/ads',
     dataTransform: data => data.slice(0, config.adCount),
     template: adsTpl,
   });
 
   const defaultSettings = new RenderSettings({
-    acceptLink: link => link === '/' || link === '/index.html',
+    acceptLink: isRootLink,
     linkTransform: '/call?page=1',
     dataTransform: allCatsTransform,
     template: categoriesTpl,
@@ -65,7 +65,18 @@ categoryNames().then(rusCategoryNames => {
     salesSettings,
   );
   mainRender.render();
+  document.querySelector('body').addEventListener('click', e => {
+    if (!e.target.closest('a')) return;
+    const href = e.target.getAttribute('href');
+    if (href[0] !== '/') return; //если вдруг где внешняя ссылка затешется
+    e.preventDefault();
+    mainRender.render(href);
+  });
   window.addEventListener('popstate', () => mainRender.render());
+
+  function isRootLink(link) {
+    return link === '/' || link === '/index.html';
+  }
 
   function allCatsTransform(data) {
     return Object.entries(data).map(([name, data]) => ({

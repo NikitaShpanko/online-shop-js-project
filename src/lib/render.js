@@ -107,15 +107,6 @@ export default class Render {
       this.#changeHistory = tail => history.pushState(null, null, rootUrl + tail);
     }
     this.addSettings(...settings);
-    this.#parent.addEventListener('click', e => {
-      if (
-        this.#currentSettings?.linkSelector &&
-        e.target.closest(this.#currentSettings.linkSelector)
-      ) {
-        e.preventDefault();
-        this.render(e.target.getAttribute('href'));
-      }
-    });
   }
 
   addSettings(...settings) {

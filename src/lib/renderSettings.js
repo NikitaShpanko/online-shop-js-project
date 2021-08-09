@@ -228,11 +228,6 @@ export default class RenderSettings {
   changeLink = false;
 
   /**
-   * Селектор ссылок, к которым применяется переход без перезагрузки.
-   */
-  linkSelector = 'a';
-
-  /**
    *
    * @param {RenderSettings} config
    */
