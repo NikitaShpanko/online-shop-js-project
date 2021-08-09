@@ -1,3 +1,6 @@
+import modalCard from '../templates/modal-card.hbs';
+import { openModal, closeModal } from './modal-control';
+
 const allCategorys = document.querySelector('body');
 
 allCategorys.addEventListener('click', (e) => {
@@ -8,4 +11,15 @@ allCategorys.addEventListener('click', (e) => {
 
         buttonClick.classList.toggle('isFavorites');    
     }
-  });
+});
+  
+
+
+const openBtnCard = document.querySelectorAll('.header__logo');
+console.log(openBtnCard);
+
+openBtnCard.forEach(e => e.addEventListener('click', openModalCard));
+
+function openModalCard() {
+  openModal(modalCard);
+}
