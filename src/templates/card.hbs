@@ -1,5 +1,5 @@
 {{#each this}}
-<div class="card__all--content data-id='{{_id}}'">
+<div class="card__all--content">
   <article class='card__article'>
     <div class='card'>
         <button class="icon-heart-white" type="button">
@@ -14,7 +14,7 @@
           </svg>
         </button>
       <div class='card__conteiner'>
-        <img class='card__img' src='{{imageUrls.[0]}}' alt='{{title}}' />
+        <img class='card__img' data-id="{{_id}}" src='{{imageUrls.[0]}}' alt='{{title}}' />
       </div>
       <div class='card__name--price'>
         <h3 class='card__title'>{{title}}</h3>
