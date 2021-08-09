@@ -2,7 +2,6 @@
   const menuBtnRef = document.querySelector("[data-menu-button]");
   const mobileMenuRef = document.querySelector("[data-menu]");
   const mobileBtnClose = document.querySelector("[data-menu-close]");
-  const mobileFilter = document.querySelector("[data-mobile-filter]");
   const mobileFilterBtn = document.querySelector("[data-mobile-filter-btn]");
   const tabletFilter = document.querySelector("[data-tab-filter]");
   const tabletFilterBtn = document.querySelector("[data-tab-filter-btn]");
@@ -16,7 +15,8 @@
   });
 
   mobileFilterBtn.addEventListener("click", () => {
-    mobileFilter.classList.toggle("is-open-filter");
+    document.querySelector("[data-mobile-filter]")
+      .classList.toggle("is-open-filter");
   });
 
   tabletFilterBtn.addEventListener("click", () => {

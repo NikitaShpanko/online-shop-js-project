@@ -1,6 +1,6 @@
 .header {
-  background-color: #122438;
-  color: #5E6671;
+  background-color: var(--color-header-footer-back);
+  color: var(--color-header-text-ads-back);
   font-size: 12px;
   line-height: 1.25;
 
@@ -19,22 +19,27 @@
   }
 
   &__icon {
-    fill: #5E6671;
+    fill: var(--color-header-text-ads-back);
+    &:hover {
+      fill: var(--color-highlight)
+    }
   }
 
-  &__mobile-btn {
-    color: #5E6671;
+  &__btn {
+    color: var(--color-header-text-ads-back);
     background-color: transparent;
     border: none;
+    cursor: pointer;
   }
 
   &__mobile-menu {
     position: fixed;
+    z-index: 100;
     top: 0;
     left: 0;
     width: 95vw;
     height: 100vh;
-    background-color: #122438;
+    background-color: var(--color-header-footer-back);
     padding-top: 73px;
     padding-left: 14px;
 
@@ -53,12 +58,40 @@
     margin-left: 70px;
     margin-bottom: 40px;
   }
+
+  &__account.registration {
+    display: none;
+  }
+
+  &__account.user-account {
+    display: flex;
+    position: relative;
+    padding: 12px 0;
+  }
+
+  .user-account .link{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      span {
+        margin-left: 10px;
+      }
+  }
+
   &__account-link:not(:first-child) {
     padding-left: 12px;
   }
-  &__account-link:not(:last-child) {
-    border-right: 2px solid #5E6671;
+
+  &__account-link:first-child {
+    border-right: 2px solid var(--color-header-text-ads-back);
     padding-right: 12px;
+  }
+
+  &__account-link:hover {
+    &:hover,
+    &:focus {
+      color: var(--color-highlight)
+    }
   }
   
   &__controls {
@@ -74,6 +107,9 @@
     span {
       margin-left: 13px;
     }
+    &:hover {
+      color: var(--color-highlight)
+    }
   }
   .controls-btn:not(:last-child) {
     margin-right: 55px;
@@ -87,11 +123,15 @@
   }
 
   &__filter-item {
-    border: 1px solid #5E6671;
+    border: 1px solid var(--color-header-text-ads-back);
     border-radius: 20px;
     padding: 8px 21px;
     margin-right: 8px;
     margin-bottom: 20px;
+    &:hover {
+      color: var(--color-highlight);
+      border: 1px solid var(--color-highlight);
+    }
   }
 
   &__desk,
@@ -128,11 +168,27 @@
       display: inline-block;
       margin-bottom: 20px;
     }
-   
 
     &__input-search {
       width: 410px;
       height: 44px;
+    }
+
+    &__search-wrapper {
+      position: relative;
+    }
+
+    &__input-search-btn {
+      position: absolute;
+      top: 12px;
+      left: 365px;
+    }
+
+    &__search-icon {
+      fill: black;
+      &:hover {
+        fill: var(--color-highlight)
+      }
     }
 
     &__left-container {
@@ -142,16 +198,47 @@
       right: 38px;
       top: 35px;
     }
+
     &__right-container {
       display: flex;
       flex-direction: column;
-
     }
 
     &__account {
       margin-right: 24px;
       margin-bottom: 0;
       margin-left: 0;
+    }
+
+    &__user-account-wrapper {
+      width: 206px;
+      height: 94px;
+      padding: 20px;
+      background-color: #FFFFFF;
+      position: absolute;
+      z-index: 200;
+      top: 40px;
+      right: -20px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+  
+    &__user-account-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__user-account-item:hover {
+      color: var(--color-highlight);
+    }
+  
+    &__user-account-item:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  
+    .user-account:hover &__user-account-wrapper,
+    &__user-account-wrapper:hover {
+      display: block;
     }
 
     &__create-btn {
@@ -166,6 +253,7 @@
     &__desk-filter-relative {
       position: relative;
       width: 100%;
+      z-index: 100;
     }
 
     &__filter {
@@ -174,7 +262,7 @@
       left: 0;
       height: 0;
       width: 100%;
-      background-color: #122438;
+      background-color: var(--color-header-footer-back);
       padding-top: 30px;
       padding-bottom: 32px;
       overflow: hidden;
@@ -195,7 +283,7 @@
       display: flex;
       right: 38px;
       top: 108px;
-      z-index: 1;
+      z-index: 300;
     }
 
     &__filter-item {
@@ -212,7 +300,6 @@
     }
 
     &__desk-main {
-      
       margin-bottom: 24px;
     }
 
