@@ -12,8 +12,8 @@ export default {
 
   categories: null,
   products: null,
-  page: null,
-  shownCategory: null,
+  query: null,
+  isOnline: false,
 
   setCategories(categories) {
       this.categories = categories;
@@ -25,14 +25,14 @@ export default {
     this.notify('products', this.products);
   },
 
-  setPage(page) {
-    this.page = page
-    this.notify('page', this.page);
+  setQuery(query) {
+    this.query = query
+    this.notify('query', this.query);
   },
 
-  setShownCategory(shownCategory) {
-    this.shownCategory = shownCategory
-    this.notify('shownCategory', this.shownCategory);
+  setIsOnline(isOnline) {
+    this.isOnline = isOnline;
+    this.notify('isOnline', this.isOnline);
   },
 
   addEvent: function(name) {
