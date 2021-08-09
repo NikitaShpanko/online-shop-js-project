@@ -45,6 +45,7 @@ categoryNames().then(rusCategoryNames => {
     errorReplaceDOM: (el, tpl) => {
       RenderSettings.errorAppendDOM(el, tpl);
     },
+    changeLink: true,
   });
 
   const categorySettings = new RenderSettings({
@@ -73,7 +74,8 @@ categoryNames().then(rusCategoryNames => {
   mainRender.render();
   document.querySelector('body').addEventListener('click', e => {
     if (!e.target.closest('a')) return;
-    const href = e.target.getAttribute('href');
+    const href = e.target.closest('a').getAttribute('href');
+    console.log(href);
     if (href[0] !== '/') return; //если вдруг где внешняя ссылка затешется
     e.preventDefault();
     mainRender.render(href);
@@ -100,4 +102,3 @@ categoryNames().then(rusCategoryNames => {
     ];
   }
 });
-
