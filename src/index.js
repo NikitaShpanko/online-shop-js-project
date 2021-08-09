@@ -39,12 +39,17 @@ categoryNames().then(rusCategoryNames => {
 
   function allCatsTransform(data) {
     return Object.entries(data).map(([name, data]) => ({
+      link: `/category/${name}`,
       name: rusCategoryNames[name],
       card: cardTpl(data),
+      changeLink: true,
     }));
   }
 
-  function singleCatTransform(data, link) {
-    return [{ name: rusCategoryNames[link.slice('/category'.length + 1)], card: cardTpl(data) }];
+  /** @param {Render} renderObj */
+  function singleCatTransform(data, renderObj) {
+    return [
+      { name: rusCategoryNames[renderObj.link.slice('/category'.length + 1)], card: cardTpl(data) },
+    ];
   }
 });

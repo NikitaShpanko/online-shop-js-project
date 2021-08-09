@@ -87,11 +87,18 @@ export default class RenderSettings {
    * @returns {boolean}
    */
   #acceptLink = link => false;
+  /**
+   * Какого вида ссылки должны обрабатываться
+   * по этим настройкам? Если проверка на точное совпадение
+   * (безразличное к регистрам), то можно задать просто
+   * строку, а не стрелочную функцию.
+   * @type {acceptLink}
+   */
   set acceptLink(link) {
     if (typeof link === 'function') {
       this.#acceptLink = link;
     } else {
-      this.#acceptLink = smth => smth == link;
+      this.#acceptLink = smth => smth.toLowerCase() == link.toLowerCase();
     }
   }
   get acceptLink() {
@@ -99,21 +106,22 @@ export default class RenderSettings {
   }
 
   /**
+   * @param {string} link
+   * @returns {string}
+   */
+  #linkTransform = link => link;
+  /**
    * Преобразование ссылки на нашем сайте в ссылку-запрос
    * на бэк-энд.
    *
    * По умолчанию ничего не делает, просто передаёт дальше.
    *
-   * Переопределите эту функцию в экземпляре или наследнике класса.
+   * Обе ссылки должны начинаться со слэша `/`.
    *
-   * Обе ссылки должны начинаться со слэша `/`, но если
-   * `link` непригоден для данного экземпляра класса, то
-   * функция должна вернуть пустую строку `''` или что-то другое,
-   * приводимое к `false`.
-   * @param {string} link
-   * @returns {string}
+   * Если нужно передать неизменную строку, можно писать здесь
+   * строку, а не стрелочную функцию.
+   * @type {linkTransform}
    */
-  #linkTransform = link => link;
   set linkTransform(link) {
     if (typeof link === 'function') {
       this.#linkTransform = link;
@@ -125,6 +133,11 @@ export default class RenderSettings {
     return this.#linkTransform;
   }
 
+  /**
+   * Как
+   * @callback request
+   * @type {request}
+   */
   request = API.request;
 
   /**
@@ -134,10 +147,11 @@ export default class RenderSettings {
    *
    * Переопределите эту функцию в экземпляре или наследнике класса.
    * @param {object} data
-   * @param {string} link необязательный параметр
+   * @param {object} renderObj необязательный параметр, позволяет "достучаться"
+   * к другим публичным свойствам вызвавшего функцию экземпляра класса Render
    * @returns {object}
    */
-  dataTransform = (data, link) => data;
+  dataTransform = (data, renderObj) => data;
 
   /**
    * Шаблон, т. е. преобразование данных в HTML-код.
