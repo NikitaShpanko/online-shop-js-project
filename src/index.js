@@ -10,7 +10,7 @@ import config from './config.json';
 import * as API from './lib/api';
 import Render from './lib/render';
 import RenderSettings from './lib/renderSettings';
-
+import './js/auth-form';
 import './js/mobile-menu';
 import categoryNames from './js/categoryNames';
 

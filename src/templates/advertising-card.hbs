@@ -1,0 +1,13 @@
+{{#each this}}
+  <li class='advertising-list__item advertising-list__item--main-item'>
+    <div class='advertising-list__shell'>
+      <div class='advertising-list__img-wrapper'>
+        <img src='{{imageUrl}}' alt='{{title}}' />
+      </div>
+      <div class='advertising-list__content-wrapper'>
+        <h3 class='advertising-list__title'>{{title}}</h3>
+        <p class='advertising-list__price'>{{price}}</p>
+      </div>
+    </div>
+  </li>
+{{/each}}
