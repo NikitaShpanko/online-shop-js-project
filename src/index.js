@@ -23,7 +23,7 @@ categoryNames().then(rusCategoryNames => {
   store.setCategories(rusCategoryNames);
 
   const categories = getUrlCategories();
-  store.setQuery(categories);
+  store.setQuery({ categories });
   // document.querySelector('body').addEventListener('click', e => {
   //   if (!e.target.closest('a')) return;
   //   const href = e.target.closest('a').getAttribute('href');

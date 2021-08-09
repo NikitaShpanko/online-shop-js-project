@@ -2,15 +2,12 @@ import store from '../lib/store';
 import * as API from '../lib/api';
 
 store.register('query', (query) => {
-  if (query.length === 0) {
-    const page = 1
-      API.request(`/call?page=${page}`)
-    .then(data => store.setProducts(data));
-
+  if (query && query.search && query.search.length) {
     return;
   }
 
-    const currentCategoriesUrl = query;
+  if (query && query.categories && query.categories.length) {
+    const currentCategoriesUrl = query.categories;
     const allPromise = [];
     currentCategoriesUrl.forEach(currentCategoryUrl => {
       allPromise.push(API.request(`/call/specific/${currentCategoryUrl}`))
@@ -31,7 +28,14 @@ store.register('query', (query) => {
           }
         })
       }
-
       store.setProducts(res)
     });
+
+    return;
+  }
+
+  const page = 1
+    API.request(`/call?page=${page}`)
+    .then(data => store.setProducts(data));
+
 });

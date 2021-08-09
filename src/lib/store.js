@@ -12,8 +12,13 @@ export default {
 
   categories: null,
   products: null,
-  query: null,
+  query: null, // { categories: [], search: '' }
   isOnline: false,
+
+  // set(prop, value) {
+  //   this[prop] = value;
+  //   this.notify(prop, this[prop]);
+  // },
 
   setCategories(categories) {
       this.categories = categories;

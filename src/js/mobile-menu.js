@@ -22,3 +22,5 @@
   tabletFilterBtn.addEventListener("click", () => {
     tabletFilter.classList.toggle("is-open-filter");
   });
+
+  

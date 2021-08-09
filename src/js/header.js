@@ -52,7 +52,7 @@ store.register('categories', (categories) => {
             // }
           }
 
-          store.setQuery(currentCategoriesUrl);
+          store.setQuery({ categories: currentCategoriesUrl });
         }
       }
 
