@@ -14,14 +14,16 @@ import store from './lib/store';
 import './js/auth-form';
 import './js/mobile-menu';
 import categoryNames from './js/categoryNames';
-import './js/header';
+import { getUrlCategories } from './js/header';
 import './js/products';
-import './js/page';
+import './js/query';
 
 categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
   store.setCategories(rusCategoryNames);
-  store.setPage(1);
+
+  const categories = getUrlCategories();
+  store.setQuery({ categories });
   // document.querySelector('body').addEventListener('click', e => {
   //   if (!e.target.closest('a')) return;
   //   const href = e.target.closest('a').getAttribute('href');
