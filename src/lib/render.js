@@ -52,41 +52,35 @@ export default class Render {
    */
   #changeHistory;
 
-  #findSetting = function (link) {
-    for (const setting of this.#settings) {
-      if (setting.acceptLink(link)) return setting;
-    }
-    return null;
-  };
-
   #work = async function (link, changeLink, workDOM, saveData, errorWorkDOM, errorSaveData) {
-    const setting = this.#findSetting(link);
-    if (!setting) return;
-    this.#currentSettings = setting;
-    this.#link = link;
-    if (changeLink && setting.changeLink) this.#changeHistory(link);
-    try {
-      const data = await setting.request(setting.linkTransform(link));
-      if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      saveData(data);
-      setting[workDOM](this.#parent, setting.template(setting.dataTransform(data, this)));
-    } catch (err) {
-      setting[errorWorkDOM](this.#parent, setting.errorTemplate(err));
-      errorSaveData();
-      return false;
+    const settings = this.#settings.filter(setting => setting.acceptLink(link));
+    for (const setting of settings) {
+      //console.log(setting);
+      this.#currentSettings = setting;
+      this.#link = link;
+      if (changeLink && setting.changeLink) this.#changeHistory(link);
+      try {
+        const data = await setting.request(setting.linkTransform(link));
+        if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
+        saveData(data);
+        setting[workDOM](this.#parent, setting.template(setting.dataTransform(data, this)));
+      } catch (err) {
+        setting[errorWorkDOM](this.#parent, setting.errorTemplate(err));
+        errorSaveData();
+        return false;
+      }
     }
     return true;
   };
 
   /**
-   * Конструктор создаёт экземпляр класса с достаточно примитивным поведением:
-   * выдающий в DOM-элемент JSON, пришедший с сервера. Без всякого форматирования.
+   * Конструктор создаёт экземпляр класса, привязанный к одному селектору,
+   * но с произвольным количеством настроек.
    *
-   * Но поведение экземпляра можно и нужно изменять, переопределяя его функции
-   * (точнее, свойства-ссылки на функции), а именно `dataTransform` и `template`.
-   *
-   * Также, если это необходимо, можно включить изменение адреса без перезагрузки
-   * страницы, с помощью свойств `changeLink` и `changeLinkOnRoot`.
+   * ВНИМАНИЕ! Если ссылка удовлетворяет условиям нескольких наборов настроек,
+   * то соответствующие им действия выполнятся одно за другим. Соответственно,
+   * один `render` может удалить другой. Впрочем, переопределив методы `replaceDOM`
+   * и `errorReplaceDOM` условия, идущего ниже, можно избежать такой проблемы.
    *
    * @param {Element | string} parent элемент, в котором осуществляется прорисовка
    * @param {...RenderSettings} settings настройки, которые должен "уметь"

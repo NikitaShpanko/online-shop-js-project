@@ -136,7 +136,7 @@
   }
 }
 
-.advertising-list__item--main-item .advertising-list__img-wrapper {
+.advertising-list__item:first-child .advertising-list__img-wrapper {
   @media screen and (min-width: 768px) {
     width: 360px;
   }
