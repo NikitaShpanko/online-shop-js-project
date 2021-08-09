@@ -17,6 +17,8 @@
 }
 
 .modal {
+  position: relative;
+  margin: auto;
   transform: scale(1);
   transition: transform linear 250ms;
 }
