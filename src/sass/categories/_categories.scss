@@ -19,9 +19,13 @@
 
 .container__card--list {
   position: relative;
-  height: 308px;
+  height: 328px;
   width: auto;
   overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    height: 310px;
+  }
 }
 
 .categories__name {
@@ -29,10 +33,12 @@
   margin-bottom: 24px;
 
   & .categories__titel {
+    display: inline-block;
     align-self: baseline;
     font-weight: bold;
     font-size: 20px;
-    margin-right: 12px;
+    line-height: 1.2;
+    margin-right: 10px;
   }
   & .categories__titel--allCard {
     font-size: 12px;
@@ -71,15 +77,22 @@
   @media screen and (min-width: 768px) {
     display: block;
     position: absolute;
+    z-index: 2;
     background-color: #f4f4f4;
     border: 0px;
     top: 123px;
     width: 32px;
     height: 60px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    & .icon {
+      fill: var(--color-main-text);
+    }
 
     &:active {
       background-color: var(--color-highlight);
+      .icon {
+        fill: var(--color-main-background);
+      }
     }
   }
 
@@ -89,6 +102,10 @@
     &:focus,
     &:active {
       background-color: var(--color-highlight);
+
+      .icon {
+        fill: var(--color-main-background);
+      }
     }
   }
 }
@@ -100,6 +117,6 @@
   right: 0px;
 }
 
-.icon {
-  fill: var(--color-main-background);
+.button__noCard {
+  fill: #a2a2a2;
 }
