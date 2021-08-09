@@ -9,6 +9,7 @@
   const tabletFilterBtn = document.querySelector("[data-tab-filter-btn]");
   const clearBtnsRef = document.querySelectorAll(".js-clear");
   const headerInputRef = document.querySelector(".js-input-search");
+  
 
   menuBtnRef.addEventListener("click", () => {
     mobileMenuRef.classList.toggle("is-open");
@@ -25,6 +26,13 @@
 
   tabletFilterBtn.addEventListener("click", () => {
     tabletFilter.classList.toggle("is-open-filter");
+  });
+
+  document.addEventListener('click', (e) =>{
+    if (e.target.closest(".is-open-filter") === null 
+      && !(e.target.closest('.header__filter-buttons'))) {
+      tabletFilter.classList.remove("is-open-filter");
+    }
   });
 
   clearBtnsRef[0].addEventListener("click", () => {
