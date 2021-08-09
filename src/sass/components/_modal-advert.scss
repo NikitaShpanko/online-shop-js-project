@@ -1,0 +1,230 @@
+.backdrop__modal-adv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1000;
+  display: flex;
+
+  padding-top: 13px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.25);
+  overflow-y: scroll;
+
+  transition: opacity linear 250ms;
+
+  @media screen and (min-width: 768px) {
+    padding: 163px 22px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 76px 165px;
+  }
+
+  &.is-hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    & .modal-adv {
+      transform: scale(0.9);
+    }
+  }
+}
+
+.modal-adv {
+  position: relative;
+  width: 100%;
+  min-height: 845px;
+  padding-top: 54px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  margin: auto;
+
+  box-shadow: 15px 15px 55px rgba(0, 0, 0, 0.3);
+
+  background-color: var(--color-main-background);
+  transform: scale(1);
+  transition: transform linear 250ms;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 53px;
+    padding-right: 55px;
+    padding-bottom: 60px;
+    width: 724px;
+    height: 698px;
+  }
+  @media screen and (min-width: 1200px) {
+    padding-left: 57px;
+    padding-right: 58px;
+    width: 950px;
+  }
+}
+
+.form-modal-adv__title {
+  margin-bottom: 30px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+.form-modal-adv__label {
+  justify-content: space-between;
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin-top: 30px;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    margin-bottom: 20px;
+  }
+}
+.form-modal-adv__text {
+  display: flex;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+
+  @media screen and (min-width: 768px) {
+    align-items: center;
+  }
+}
+.form-modal-adv__wrapper {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+
+  @media screen and (min-width: 768px) {
+    min-width: 458px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    min-width: 610px;
+  }
+}
+.form-modal-adv__input {
+  width: 100%;
+  height: 56px;
+  margin: 0;
+  padding-left: 23px;
+  border: 1px solid #bbbbbb;
+
+  &::placeholder {
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: #bbbbbb;
+  }
+
+  &:focus {
+    outline: none;
+    cursor: pointer;
+    border-color: var(--color-highlight);
+  }
+}
+
+.form-modal-adv__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: calc(-1 * 10px);
+}
+
+.form-modal-adv__desc {
+  resize: vertical;
+  width: 100%;
+  height: 56px;
+  border: 1px solid #bbbbbb;
+  padding: 18px 23px;
+
+  &:focus {
+    outline: none;
+    cursor: pointer;
+    border-color: var(--color-highlight);
+  }
+}
+
+.form-modal-adv__select {
+  display: flex;
+  width: 100%;
+  height: 56px;
+  border: 1px solid #bbbbbb;
+
+  &:focus {
+    outline: none;
+    cursor: pointer;
+    border-color: var(--color-highlight);
+  }
+}
+
+// .form-modal-adv__icon {
+//   position: absolute;
+//   display: block;
+//   top: 50%;
+//   right: 20px;
+//   transform: translateY(-50%);
+//   fill: var(--color-main-text);
+// }
+
+.form-modal-adv__button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 41px;
+  width: 286px;
+  height: 60px;
+  text-transform: uppercase;
+  transition: background-color 250ms linear 250ms;
+}
+
+.form-modal-adv__add-photo {
+  width: 78px;
+  height: 50px;
+  margin-left: 10px;
+  background: #f5f6fb;
+  border: none;
+  appearance: none;
+}
+
+.form-modal-adv__upload-file-input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+  width: 0.4px;
+  height: 0.4px;
+}
+.form-modal-adv__upload-file-label {
+  position: relative;
+  flex-basis: calc(100% / 3 - 10px);
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 78px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  color: #bbbbbb;
+  background: #f5f6fb;
+
+  @media screen and (min-width: 768px) {
+    flex-basis: calc(100% / 5 - 10px);
+  }
+}
+.form-modal-adv__upload-file-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-modal-adv__upload-file-label-is-hidden {
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}

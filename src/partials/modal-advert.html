@@ -1,0 +1,155 @@
+<div class="backdrop__modal-adv is-hidden">
+  <div class="modal-adv">
+    <button type="button" class="modal-close-button">
+      <svg class="modal-close-button__icon" width="14px" height="14px">
+        <use href="./images/sprite.svg#icon-close"></use>
+      </svg>
+    </button>
+    <form class="form-modal-adv">
+      <p class="form-modal-adv__title">Создать объявление</p>
+      <label for="product-name" class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Название товара</span>
+        <span class="form-modal-adv__wrapper">
+          <input type="text" class="form-modal-adv__input" name="product-name" id="product-name" />
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Фото</span>
+        <div class="form-modal-adv__wrapper form-modal-adv__list">
+          <label
+            class="form-modal-adv__upload-file-label"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text">+</span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+          <label
+            class="form-modal-adv__upload-file-label"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text"></span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+          <label
+            class="form-modal-adv__upload-file-label"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text"></span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+          <label
+            class="form-modal-adv__upload-file-label"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text"></span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+          <label
+            class="form-modal-adv__upload-file-label"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text"></span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+          <label
+            class="form-modal-adv__upload-file-label form-modal-adv__upload-file-label-is-hidden"
+            for="form-modal-adv__upload-file-input-id"
+          >
+            <span class="form-modal-adv__upload-file-text"></span>
+            <input
+              type="file"
+              name="files[]"
+              id="form-modal-adv__upload-file-input-id"
+              class="form-modal-adv__upload-file-input"
+              accept=".jpg, .jpeg, .png"
+              multiple
+            />
+          </label>
+        </div>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Описание товара</span>
+        <span class="form-modal-adv__wrapper">
+          <textarea class="form-modal-adv__desc" name="product__description"></textarea>
+      </label>
+        </span>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Категория товара</span>
+        <span class="form-modal-adv__wrapper">
+          <select name="product-category" class="form-modal-adv__select">
+            <!-- <svg class="form-modal-adv__icon" width="10px" height="5px">
+                <use href="./images/sprite.svg#icon-arrow-black"></use>
+            </svg> -->
+            <option value=""></option>
+            <option value="">Недвижимость</option>
+            <option value="">Транспорт</option>
+            <option value="">Работа</option>
+            <option value="">Электроника</option>
+            <option value="">Бизнес и услуги</option>
+            <option value="">Отдых и спорт</option>
+            <option value="">Отдам бесплатно</option>
+            <option value="">Обмен</option>
+          </select>
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Цена</span>
+        <span class="form-modal-adv__wrapper">
+          <input
+            type="text"
+            class="form-modal-adv__input"
+            name="product-price"
+            placeholder="0.00 €"
+          />
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Телефон</span>
+        <span class="form-modal-adv__wrapper">
+          <input
+            type="tel"
+            class="form-modal-adv__input"
+            name="product-tel"
+            placeholder="+38 (0--) --- -- --"
+          />
+        </span>
+      </label>
+      <button type="submit" class="primary-button form-modal-adv__button">Добавить</button>
+    </form>
+  </div>
+</div>
