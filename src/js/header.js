@@ -23,6 +23,7 @@ store.register('categories', (categories) => {
         .addEventListener('click', handler)
 
       function handler(e) {
+        e.preventDefault();
         const category = e.target.getAttribute('data-category')
         console.log(e.target.getAttribute('data-category'))
 
