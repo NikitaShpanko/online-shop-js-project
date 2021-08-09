@@ -14,7 +14,23 @@ export default class Render {
    */
   #parent;
 
+  /**
+   * Список настроек, которые "умеет" применять данный класс.
+   * Формируется в конструкторе или методом `addSetting`.
+   */
   #settings = [];
+
+  /**
+   * Какие настройки использовались последним на данный момент
+   * методом `render` или `append`? Будут доступны для чтения.
+   */
+  #currentSettings;
+
+  /**
+   * Ссылка, по которой отработал последний на данный момент
+   * метод `render` или `append`. Будет доступна для чтения.
+   */
+  #link;
 
   /**
    * Данные, пришедшие с сервера. Будут доступны для чтения извне.
@@ -46,12 +62,14 @@ export default class Render {
   #work = async function (link, changeLink, workDOM, saveData, errorWorkDOM, errorSaveData) {
     const setting = this.#findSetting(link);
     if (!setting) return;
+    this.#currentSettings = setting;
+    this.#link = link;
     if (changeLink && setting.changeLink) this.#changeHistory(link);
     try {
       const data = await setting.request(setting.linkTransform(link));
       if (data.hasOwnProperty('error')) throw { error: data.error, errorText: data.errorText };
-      setting[workDOM](this.#parent, setting.template(setting.dataTransform(data, link)));
       saveData(data);
+      setting[workDOM](this.#parent, setting.template(setting.dataTransform(data, this)));
     } catch (err) {
       setting[errorWorkDOM](this.#parent, setting.errorTemplate(err));
       errorSaveData();
@@ -71,6 +89,7 @@ export default class Render {
    * страницы, с помощью свойств `changeLink` и `changeLinkOnRoot`.
    *
    * @param {Element | string} parent элемент, в котором осуществляется прорисовка
+   * @param {...RenderSettings} settings настройки, которые должен "уметь"
    */
   constructor(parent, ...settings) {
     if (typeof parent === 'string') {
@@ -191,5 +210,26 @@ export default class Render {
    */
   get data() {
     return this.#data;
+  }
+
+  /**
+   * Текущая ссылка, то есть ссылка, по которой отработал
+   * последний на данный момент метод `render` или `append`.
+   * Доступна для чтения.
+   * @type {string}
+   */
+  get link() {
+    return this.#link;
+  }
+
+  /**
+   * Текущие настройки, то есть настройки, по которым отработал
+   * последний на данный момент метод `render` или `append`.
+   * Доступны для чтения (хотя, поскольку это объект, изменить
+   * их никто не запретит, но делать это нежелательно).
+   * @type {RenderSettings}
+   */
+  get settings() {
+    return this.#currentSettings;
   }
 }
