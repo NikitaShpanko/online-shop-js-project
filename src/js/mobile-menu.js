@@ -45,19 +45,22 @@
   clearBtnsRef[1].addEventListener("click", () => {
     document.querySelectorAll('.header__filter-item').forEach(ref => {
       ref.classList.remove('is-orange')
-      console.log(document.querySelectorAll('.header__filter-item'))
     })
     store.setQuery(null);
   });
 
-  headerInputRef.addEventListener('input', e => {
-   const search = e.currentTarget.value;
-      if (search && search.length) {
-        store.setQuery({ search })
+  const searchBtnRef = document.querySelector('.js-search');
+   
+ searchBtnRef.addEventListener('click', () => {
+   let search = headerInputRef.value;
+   if (search && search.length) {
+     store.setQuery({ search });
+     headerInputRef.value = '';
       } else {
-        store.setQuery(null)
-      }
+      store.setQuery(null)
+    }
   });
+
 
 
 

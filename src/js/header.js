@@ -2,6 +2,8 @@ import store from '../lib/store';
 import headerCategoriesTpl from '../templates/header-categories.hbs';
 import headerCategoriesMobileTpl from '../templates/header-categories-mobile.hbs';
 
+//Возвращает массив выбранных категорий по URL
+// или пустой массив, если не выбрано ничего
 export function getUrlCategories() {
   const queryParams = new URLSearchParams(window.location.search);
   let currentCategoriesUrl = queryParams.getAll('categories');

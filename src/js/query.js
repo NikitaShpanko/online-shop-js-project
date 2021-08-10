@@ -9,20 +9,8 @@ store.register('query', (query) => {
     window.history.pushState(null, null, "?"+queryParams.toString());
     
     API.request(`/call/find?search=${query.search}`)
-    .then(data => {
-      const res = {};
-      if (data && data.length) {
-        data.forEach(element => {
-          if (!res[element.category]) {
-            res[element.category] = [element];
-          } else {
-            res[element.category].push(element);
-          }
-        })
+      .then(data => store.setProducts(data));
 
-        store.setProducts(res)
-      }
-    });
     return;
   }
 
@@ -52,6 +40,33 @@ store.register('query', (query) => {
 
     return;
   }
+  // запрос для поиска "смотреть все""
+  // if (query && query.chosenCategory) {
+  //   const currentCategoriesUrl = [query.chosenCategory];
+  //   const allPromise = [];
+  //   currentCategoriesUrl.forEach(currentCategoryUrl => {
+  //     allPromise.push(API.request(`/call/specific/${currentCategoryUrl}`))
+  //   })
+
+  //   const queryParams = new URLSearchParams();
+  //   queryParams.set('categories', currentCategoriesUrl);
+  //   window.history.pushState(null, null, "?"+queryParams.toString());
+    
+  //   Promise.all(allPromise).then(data => {
+  //     const res = {};
+  //     if (data && data.length) {
+  //       data.forEach(row => {
+  //         if (row && row.length) {
+  //           const cat = row[0].category;
+  //           res[cat] = row;
+  //         }
+  //       })
+  //     }
+  //     store.setProducts(res)
+  //   });
+
+  //   return;
+  // }
 
   window.history.pushState(null, null, '/');
 
@@ -60,3 +75,4 @@ store.register('query', (query) => {
     .then(data => store.setProducts(data));
 
 });
+
