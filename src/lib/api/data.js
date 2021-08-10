@@ -58,19 +58,9 @@ export default class Data extends Item {
    * @param {string} query
    * @returns {Category[]}
    */
-  filter(query) {
-    if (!query) return this;
-    const queryList = query.split(',');
-    const found = [];
-    queryList.forEach(name => {
-      for (const category of this.categoryList) {
-        if (category.name === name) {
-          found.push(category);
-          return;
-        }
-      }
-    });
-    return found;
+  filter(query, param = 'category') {
+    if (!query) return this.getCategoryList();
+    return Item.filter(this.categoryList, query, param);
   }
 
   constructor(data) {

@@ -1,16 +1,23 @@
 export default class Item {
-  static copy = function (obj) {
-    if (typeof obj !== 'object') return obj;
-    if (Array.isArray(obj)) return obj.map(elem => Item.copy(elem));
-    else {
-      const newObj = {};
-      Object.entries(obj).forEach(([key, value]) => (newObj[key] = Item.copy(value)));
-      return newObj;
-    }
+  /**
+   *
+   * @param {object} obj
+   * @param {string} param
+   * @param {string} query уже проверена, что ненулевая
+   * @returns {array}
+   */
+  static filter = function (obj, query, param = 'category') {
+    const queryList = query.split(',');
+    return obj.filter(elem => {
+      for (const item of queryList) {
+        if (elem && elem[param] === item) return true;
+      }
+      return false;
+    });
   };
   constructor(data) {
     Object.entries(data).forEach(([key, value]) => {
-      this[key] = value; //Item.copy(value);
+      this[key] = value;
     });
   }
 }
