@@ -2,6 +2,7 @@ import modalCard from '../templates/modal-card.hbs';
 import allCardCategoryTpl from '../templates/categories-allcard.hbs';
 import cardCategoryTpl from '../templates/categories-allcard.hbs';
 import { openModal, closeModal } from './modal-control';
+import * as API from './lib/api'
 // import Handlebars from 'handlebars';
 
 // Handlebars.registerHelper ('loud', function(cardsvg) {
