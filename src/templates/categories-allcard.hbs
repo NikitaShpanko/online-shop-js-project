@@ -1,0 +1,14 @@
+{{#each this}}
+<section class="categories">
+    <div class="categories__container container">
+        <div class="categories__name">
+            <h2 class="categories__titel">{{this.name}}</h2>
+        </div>
+        <div class="container__card--list">
+                <div class="categories__card--all">
+                    {{{card}}}
+                </div>
+        </div>
+    </div>
+</section>
+{{/each}}
