@@ -1,4 +1,5 @@
 import data from './data';
 import categoryNames from './categoryNames';
+import user from './user';
 
-export { data, categoryNames };
+export { data, categoryNames, user };
