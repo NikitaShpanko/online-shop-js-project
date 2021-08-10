@@ -20,7 +20,6 @@ allCategorys.addEventListener('click', (e) => {
             buttonClick.classList.toggle('isFavorites')
         else if (buttonClick.classList.contains('icon-fullscreen'))
             openModalCard();
-        console.log(store.products);
     };
 
     if (modalCard) openModalCard();

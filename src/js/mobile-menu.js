@@ -1,5 +1,4 @@
   import store from '../lib/store';
-  import * as API from '../lib/api';
 
   const menuBtnRef = document.querySelector("[data-menu-button]");
   const mobileMenuRef = document.querySelector("[data-menu]");
@@ -36,10 +35,18 @@
   });
 
   clearBtnsRef[0].addEventListener("click", () => {
+     document.querySelectorAll('.header__filter-item').forEach(ref => {
+      ref.classList.remove('is-orange')
+    })
     store.setQuery(null);
+   
   });
 
   clearBtnsRef[1].addEventListener("click", () => {
+    document.querySelectorAll('.header__filter-item').forEach(ref => {
+      ref.classList.remove('is-orange')
+      console.log(document.querySelectorAll('.header__filter-item'))
+    })
     store.setQuery(null);
   });
 
@@ -50,7 +57,7 @@
       } else {
         store.setQuery(null)
       }
-  })
+  });
 
 
 

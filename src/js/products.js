@@ -16,5 +16,3 @@ store.register('products', (products, all) => {
         .innerHTML = categoriesTpl(toArr);
     }
 );
-
-
