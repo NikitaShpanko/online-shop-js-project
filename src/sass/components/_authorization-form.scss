@@ -90,11 +90,11 @@
     border-color: var(--color-highlight);
   }
 
-  &:not(:placeholder-shown):invalid {
+  &:not(:placeholder-shown):required:invalid {
     border-color: red;
   }
 
-  &:not(:placeholder-shown):invalid + span::after {
+  &:not(:placeholder-shown):required:invalid + span::after {
     display: block;
     width: 260px;
     color: red;
@@ -104,10 +104,10 @@
     left: -3px;
   }
 
-  &[name='email']:not(:placeholder-shown):invalid + span::after {
+  &[name='email']:not(:placeholder-shown):required:invalid + span::after {
     content: 'Неверный email!';
   }
-  &[name='password']:not(:placeholder-shown):invalid + span::after {
+  &[name='password']:not(:placeholder-shown):required:invalid + span::after {
     content: 'Неверный пароль, от 6 до 16 символов';
   }
 }
