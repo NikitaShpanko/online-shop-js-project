@@ -10,27 +10,25 @@ const mainNode = document.querySelector('#root');
 
 allCategorys.addEventListener('click', (e) => {
     const buttonClick = e.target.closest('button');
-    const modalCard = e.target.classList.contains('card__img');
+    const modalCard = e.target.closest('.card__all--content');
     const allCardCategory = e.target.classList.contains('categories__titel--link');
-
-    // console.log(store.categories);
     
     if (buttonClick?.nodeName === 'BUTTON') {
         if (buttonClick.classList.contains('icon-heart-white'))
             buttonClick.classList.toggle('isFavorites')
         else if (buttonClick.classList.contains('icon-fullscreen'))
             openModalCard();
-        console.log(store.products);
     };
 
-    if (modalCard) openModalCard();
+    if (modalCard) openModalCard(modalCard.dataset.id);
 });
  
+function openModalCard(id) {
+    console.log(id);
 
-
-function openModalCard() {
-        openModal(modalCard);
-        }
+    openModal(modalCard());
+}
+    
 function onSubmit(params) {
     closeModal();
 }
