@@ -3,12 +3,18 @@ import confirmModal from '../templates/confirm-modal.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
+import { loadJSON, saveJSON } from '../lib/use-json';
+
+if (localStorage.accessToken) {
+  store.setIsOnline(loadJSON('userData'));
+}
 
 store.register('isOnline', storeIsOnline => {
+  console.log('store', storeIsOnline);
   if (storeIsOnline) {
-    // do smth
+    // render home and logout
   } else {
-    // do smth else
+    // render auth and reg
   }
 });
 
@@ -56,7 +62,7 @@ async function onAuthBtnClick(obj) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    store.setIsOnline(data);
+    store.setIsOnline(new API.LoginData(data));
     saveToken(data);
     closeModal();
   }
@@ -73,7 +79,7 @@ async function onRegBtnClick(obj) {
     const userId = dataReg.id;
     const dataAuth = await authUser(obj);
     console.log('Пользователь авторизирован и зарегистрирован');
-    store.setIsOnline(dataAuth);
+    store.setIsOnline(new API.LoginData(dataAuth));
     saveToken(dataAuth);
     closeModal();
   }
@@ -82,11 +88,13 @@ async function onRegBtnClick(obj) {
 function saveToken(data) {
   localStorage.accessToken = data.accessToken;
   localStorage.refreshToken = data.refreshToken;
+  saveJSON('userData', new API.LoginData(data));
 }
 
 function deleteToken() {
   localStorage.accessToken = '';
   localStorage.refreshToken = '';
+  localStorage.userData = '';
 }
 
 function regUser(obj) {
@@ -97,13 +105,13 @@ function authUser(obj) {
   return API.request('/auth/login', 'POST', obj);
 }
 
-// ============================ TEST ======================================
+// ============================ LogoutUser ======================================
 
 const btnExit = document.querySelector('.primary-button');
 btnExit.addEventListener('click', confirmLogoutUser);
 
 function confirmLogoutUser() {
-  if (!localStorage.refreshToken) {
+  if (!localStorage.accessToken) {
     return;
   }
   openModal(confirmModal());

@@ -10,7 +10,7 @@ import config from './config.json';
 
 import * as API from './lib/api';
 import store from './lib/store';
-
+import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
@@ -38,5 +38,3 @@ API.get.categoryNames().then(rusCategoryNames => {
   const categories = getUrlCategories();
   store.setQuery({ categories });
 });
-
-
