@@ -1,18 +1,14 @@
 import modalCard from '../templates/modal-card.hbs';
 import allCardCategoryTpl from '../templates/categories-allcard.hbs';
 import cardCategoryTpl from '../templates/categories-allcard.hbs';
-import Handlebars from 'handlebars';
 import { openModal, closeModal } from './modal-control';
-import store from '../lib/store';
-import * as API from '../lib/api';
+// import Handlebars from 'handlebars';
 
-Handlebars.registerHelper('url', (svg) => {
-    const svgUrl = "./images/svg#icon-arrow_left";
-    return svgUrl;    
-})
+// Handlebars.registerHelper ('loud', function(cardsvg) {
+//  return '<use href="./images/sprite.svg#icon-arrow_left"></use>';
+// })
 
-const svgLink = cardCategoryTpl(Handlebars);
-
+// const html = cardCategoryTpl(Handlebars);
 
 
 const bodyNode = document.querySelector('body');
