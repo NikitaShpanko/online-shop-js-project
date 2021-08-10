@@ -8,5 +8,6 @@ import Category from './api/category';
 import Data from './api/data';
 import LoginData from './api/loginData';
 import UserData from './api/userData';
+import MainData from './api/mainData';
 
-export { request, get, login, Item, Card, Category, Data, LoginData, UserData };
+export { request, get, login, Item, Card, Category, Data, LoginData, UserData, MainData };

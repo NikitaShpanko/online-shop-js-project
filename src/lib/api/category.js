@@ -17,8 +17,8 @@ export default class Category extends Item {
   getCardList(start = 0, length = Infinity) {
     return this.cardList.slice(start, length);
   }
-  filter(query, param = 'category') {
+  filter(query) {
     if (!query) return this.getCardList();
-    return Item.filter(this.cardList, query, param);
+    return Item.filter(this.cardList, query, 'category', true);
   }
 }
