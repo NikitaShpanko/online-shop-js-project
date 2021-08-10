@@ -1,11 +1,11 @@
-import UserData from '../data';
-import data from './data';
+import UserData from '../userData';
+import request from './request';
 
 /**
  *
  * @param {string} token
- * @returns
+ * @returns {UserData}
  */
 export default async function user(token) {
-  return await new UserData(data('/user', token));
+  return new UserData(await request('/user', token));
 }

@@ -17,6 +17,20 @@ import { getUrlCategories } from './js/header';
 import './js/products';
 import './js/query';
 
+API.Card.tpl = cardTpl;
+
+//////////
+// TEST //
+//////////
+const email = 'user@example.com';
+const password = 'qwerty123';
+API.login(email, password)
+  //.then(data => data.accessToken)
+  //.then(token => API.get.user(token))
+  .then(data => console.log(data.getCard('5fda748df548230017d87db9')));
+///////////
+///////////
+
 API.get.categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
   store.setCategories(rusCategoryNames);
