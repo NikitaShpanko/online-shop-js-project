@@ -25,9 +25,13 @@ API.Card.tpl = cardTpl;
 const email = 'user@example.com';
 const password = 'qwerty123';
 API.login(email, password)
-  //.then(data => data.accessToken)
-  //.then(token => API.get.user(token))
+  .then(data => data.accessToken)
+  .then(token => API.get.user(token))
   .then(data => console.log(data.getCard('5fda748df548230017d87db9')));
+//.then(data => console.log(data.filter('transport')));
+///////////
+///////////
+API.request('/call?page=1').then(data => console.log(data.filter('businessAndServices')));
 ///////////
 ///////////
 
@@ -38,5 +42,3 @@ API.get.categoryNames().then(rusCategoryNames => {
   const categories = getUrlCategories();
   store.setQuery({ categories });
 });
-
-
