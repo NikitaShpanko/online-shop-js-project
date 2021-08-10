@@ -23,9 +23,6 @@ allCategorys.addEventListener('click', (e) => {
     };
 
     if (modalCard) openModalCard();
-    
-    if (allCardCategory) { mainNode.innerHTML = allCardCategoryTpl ()};
-
 });
 
 function buttonClickKard() {
