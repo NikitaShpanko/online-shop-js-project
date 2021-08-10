@@ -1,14 +1,14 @@
-import * as API from '../lib/api';
+import request from '../request';
 
-export default async () => {
-  const names = await API.request('/call/categories');
-  const rusNames = await API.request('/call/russian-categories');
+export default async function categoryNames() {
+  const names = await request('/call/categories');
+  const rusNames = await request('/call/russian-categories');
   const catObj = {};
   names.forEach((name, i) => {
     catObj[toCamelCase(name)] = rusNames[i];
   });
   return catObj;
-};
+}
 
 function toCamelCase(str) {
   let newStr = '';

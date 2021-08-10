@@ -85,6 +85,8 @@ function authUser(obj) {
 //   console.log(data);
 // });
 
+//request('/auth/login', 'POST', obj).then(console.log);
+
 // const obj = {
 //   accessToken: localStorage.token,
 // };

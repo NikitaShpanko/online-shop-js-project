@@ -1,4 +1,4 @@
-// Это обьект, который хранит данные. 
+// Это обьект, который хранит данные.
 //С одной стороны изменяем данные (например store.setCategories),
 // с другой реагируем на изменения вешая callback (например, store.register('categories', () => {}).
 
@@ -19,8 +19,8 @@ export default {
   // },
 
   setCategories(categories) {
-      this.categories = categories;
-      this.notify('categories', this.categories);
+    this.categories = categories;
+    this.notify('categories', this.categories);
   },
 
   setProducts(products) {
@@ -29,7 +29,7 @@ export default {
   },
 
   setQuery(query) {
-    this.query = query
+    this.query = query;
     this.notify('query', this.query);
   },
 
@@ -38,23 +38,23 @@ export default {
     this.notify('isOnline', this.isOnline);
   },
 
-  addEvent: function(name) {
-      if (typeof this.events[name] === "undefined") {
-          this.events[name] = [];
-      }
+  addEvent: function (name) {
+    if (typeof this.events[name] === 'undefined') {
+      this.events[name] = [];
+    }
   },
 
-  register: function(event, subscriber) {
-      if (typeof subscriber === 'function') {
-          this.addEvent(event);
-          this.events[event].push(subscriber);
-      }
+  register: function (event, subscriber) {
+    if (typeof subscriber === 'function') {
+      this.addEvent(event);
+      this.events[event].push(subscriber);
+    }
   },
 
-  notify: function(event, data) {
-      const events = this.events[event];
-      for (let e in events) {
-          events[e](data, this);
-      }
-  }
-}
+  notify: function (event, data) {
+    const events = this.events[event];
+    for (let e in events) {
+      events[e](data, this);
+    }
+  },
+};
