@@ -1,8 +1,19 @@
 import modalCard from '../templates/modal-card.hbs';
 import allCardCategoryTpl from '../templates/categories-allcard.hbs';
+import cardCategoryTpl from '../templates/categories-allcard.hbs';
+import Handlebars from 'handlebars';
 import { openModal, closeModal } from './modal-control';
 import store from '../lib/store';
 import * as API from '../lib/api';
+
+Handlebars.registerHelper('url', (svg) => {
+    const svgUrl = "./images/svg#icon-arrow_left";
+    return svgUrl;    
+})
+
+const svgLink = cardCategoryTpl(Handlebars);
+
+
 
 const bodyNode = document.querySelector('body');
 
@@ -27,7 +38,6 @@ bodyNode.addEventListener('click', (e) => {
             console.log("Товар справа");
         else if (buttonClick.classList.contains('categories__titel--allCard'))
             console.log("Загружается шаблон со всеми карточками");
-        
     };
 
     if (cardId && buttonClick?.nodeName !== 'BUTTON') openModalCard(cardId.dataset.id);
