@@ -1,26 +1,39 @@
 import Item from './item';
 import Card from './card';
+import Category from './category';
 
 export default class Data extends Item {
-  #getCard;
-  #getCardList;
-  #getCategory;
-  #getCategoryList;
-  #filter;
+  /**
+   * @type {Category[]}
+   */
+  categoryList = [];
+
+  /**
+   *
+   * @param {string} name
+   * @param {string} link
+   * @param {Card[]} cardList
+   */
+  addCategory(name, link, cardList) {
+    this.categoryList.push(
+      new Category({
+        name,
+        link,
+        cardList,
+      }),
+    );
+  }
+
   /**
    * @param {string} id
    * @returns {Card}
    */
   getCard(id) {
-    return this.#getCard(id);
-  }
-
-  /**
-   * @param {string} name
-   * @returns {Card[]}
-   */
-  getCardList(start = 0, length = Infinity) {
-    return this.#getCardList(start, length);
+    for (const category of this.categoryList) {
+      const card = category.getCard(id);
+      if (card) return card;
+    }
+    return null;
   }
 
   /**
@@ -28,21 +41,36 @@ export default class Data extends Item {
    * @returns {Data}
    */
   getCategory(name) {
-    return this.#getCategory(name);
+    return this.categoryList.find(category => category.name === name);
   }
 
-  /**  */
+  /**
+   *
+   * @param {number} start
+   * @param {number} length
+   * @returns {Category[]}
+   */
   getCategoryList(start = 0, length = Infinity) {
-    return this.#getCategoryList(start, length);
+    return this.categoryList.slice(start, length);
   }
 
   /**
    * @param {string} query
-   * @returns {Data}
+   * @returns {Category[]}
    */
-  filter(categories) {
-    if (categories) return this.#filter(categories);
-    else return this;
+  filter(query) {
+    if (!query) return this;
+    const queryList = query.split(',');
+    const found = [];
+    queryList.forEach(name => {
+      for (const category of this.categoryList) {
+        if (category.name === name) {
+          found.push(category);
+          return;
+        }
+      }
+    });
+    return found;
   }
 
   constructor(data) {

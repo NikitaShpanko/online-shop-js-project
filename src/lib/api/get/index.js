@@ -1,5 +1,5 @@
-import data from './data';
+import request from './request';
 import categoryNames from './categoryNames';
 import user from './user';
 
-export { data, categoryNames, user };
+export { request, categoryNames, user };
