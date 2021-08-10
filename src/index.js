@@ -38,3 +38,5 @@ API.get.categoryNames().then(rusCategoryNames => {
   const categories = getUrlCategories();
   store.setQuery({ categories });
 });
+
+
