@@ -1,55 +1,18 @@
-.backdrop__modal-adv {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 1000;
-  display: flex;
-
-  padding-top: 13px;
-  padding-left: 15px;
-  padding-right: 15px;
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.25);
-  overflow-y: scroll;
-
-  transition: opacity linear 250ms;
-
-  @media screen and (min-width: 768px) {
-    padding: 163px 22px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    padding: 76px 165px;
-  }
-
-  &.is-hidden {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-
-    & .modal-adv {
-      transform: scale(0.9);
-    }
-  }
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
-
 .modal-adv {
-  position: relative;
   width: 100%;
   min-height: 845px;
   padding-top: 54px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 40px;
-  margin: auto;
 
   box-shadow: 15px 15px 55px rgba(0, 0, 0, 0.3);
 
   background-color: var(--color-main-background);
-  transform: scale(1);
-  transition: transform linear 250ms;
 
   @media screen and (min-width: 768px) {
     padding-left: 53px;
@@ -71,7 +34,7 @@
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: 0.02em;
-  color: #000000;
+  color: var(--color-main-text);
 }
 .form-modal-adv__label {
   justify-content: space-between;
@@ -114,12 +77,12 @@
   height: 56px;
   margin: 0;
   padding-left: 23px;
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--color-ghost);
 
   &::placeholder {
     line-height: 1.2;
     letter-spacing: 0.02em;
-    color: #bbbbbb;
+    color: var(--color-ghost);
   }
 
   &:focus {
@@ -139,7 +102,7 @@
   resize: vertical;
   width: 100%;
   height: 56px;
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--color-ghost);
   padding: 18px 23px;
 
   &:focus {
@@ -153,7 +116,10 @@
   display: flex;
   width: 100%;
   height: 56px;
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--color-ghost);
+  background: url(../images/arrow-black.png) no-repeat transparent;
+  background-position: 95% 49%;
+  appearance: none;
 
   &:focus {
     outline: none;
@@ -161,15 +127,6 @@
     border-color: var(--color-highlight);
   }
 }
-
-// .form-modal-adv__icon {
-//   position: absolute;
-//   display: block;
-//   top: 50%;
-//   right: 20px;
-//   transform: translateY(-50%);
-//   fill: var(--color-main-text);
-// }
 
 .form-modal-adv__button {
   display: block;
@@ -208,7 +165,7 @@
   height: 50px;
   border: none;
   cursor: pointer;
-  color: #bbbbbb;
+  color: var(--color-ghost);
   background: #f5f6fb;
 
   @media screen and (min-width: 768px) {
@@ -227,4 +184,8 @@
   @media screen and (min-width: 768px) {
     display: none;
   }
+}
+
+input:invalid {
+  border: 2px solid red;
 }
