@@ -74,7 +74,6 @@ export default class Data extends Item {
       }
     }
     return filtered;
-    //return Item.filter(this.categoryList, query, 'name');
   }
 
   constructor(data) {
