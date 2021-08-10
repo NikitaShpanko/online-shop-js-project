@@ -46,6 +46,12 @@
       display: none;
     }
   }
+
+  @media screen and (min-width: 1280px) {
+    &:nth-child(n + 7) {
+      display: none;
+    }
+  }
 }
 
 // .advertising-list__item--main-item {}
