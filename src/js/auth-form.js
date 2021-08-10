@@ -62,7 +62,7 @@ async function onAuthBtnClick(obj) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    store.setIsOnline(new API.LoginData(data));
+    store.setIsOnline(data);
     saveToken(data);
     closeModal();
   }
@@ -79,7 +79,7 @@ async function onRegBtnClick(obj) {
     const userId = dataReg.id;
     const dataAuth = await authUser(obj);
     console.log('Пользователь авторизирован и зарегистрирован');
-    store.setIsOnline(new API.LoginData(dataAuth));
+    store.setIsOnline(dataAuth);
     saveToken(dataAuth);
     closeModal();
   }
@@ -88,7 +88,7 @@ async function onRegBtnClick(obj) {
 function saveToken(data) {
   localStorage.accessToken = data.accessToken;
   localStorage.refreshToken = data.refreshToken;
-  saveJSON('userData', new API.LoginData(data));
+  saveJSON('userData', data);
 }
 
 function deleteToken() {

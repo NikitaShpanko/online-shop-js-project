@@ -11,8 +11,8 @@ import MainData from './mainData';
  * @param {string} method по умолчанию GET.
  * @param {object} body если не нужен, передаём `null`*.
  * @param {string} token если не нужен, передаём `null`*.
- * @param {boolean} requireJSON нужно ли выдавать JSON, если
- * нет, придёт простая строка `"Success!"`
+ * @param {boolean} requireJSON нужно ли выдавать JSON,
+ * если нет, придёт сам объект Response
  *
  * \* - или что-то другое, что вернёт `false` при проверке.
  */
