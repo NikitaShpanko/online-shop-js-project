@@ -31,7 +31,7 @@ export default function request(
     data.ok
       ? requireJSON
         ? data.json()
-        : 'Success!'
+        : data
       : { error: data.status, errorText: data.statusText },
   );
 }
