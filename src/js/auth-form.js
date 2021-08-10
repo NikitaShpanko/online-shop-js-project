@@ -17,4 +17,4 @@ const obj = {
   password: 'Qwerty12',
 };
 
-request('/auth/login', 'POST', obj).then(console.log);
+//request('/auth/login', 'POST', obj).then(console.log);
