@@ -89,22 +89,29 @@ const btnExit = document.querySelector('.primary-button');
 btnExit.addEventListener('click', logoutUser);
 
 function logoutUser() {
-  if (!localStorage.refreshToken) {
-    return;
-  }
-
-  fetch('https://callboard-backend.goit.global/auth/logout', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.accessToken}`,
-    },
-  })
-    .then(data => {
-      if (data.status === 204) {
-        console.log(data);
-        deleteToken();
-        console.log(localStorage.accessToken);
-      }
-    })
-    .catch(e => console.log('error', e));
+  // if (!localStorage.refreshToken) {
+  //   return;
+  // }
+  API.request('/auth/logout', 'POST', '', localStorage.accessToken, false).then(data => {
+    console.log(data);
+    if (data.status === 204) {
+      console.log(data);
+      deleteToken();
+      console.log(localStorage.accessToken);
+    }
+  });
+  // fetch('https://callboard-backend.goit.global/auth/logout', {
+  //   method: 'POST',
+  //   headers: {
+  //     Authorization: `Bearer ${localStorage.accessToken}`,
+  //   },
+  // })
+  //   .then(data => {
+  //     if (data.status === 204) {
+  //       console.log(data);
+  //       deleteToken();
+  //       console.log(localStorage.accessToken);
+  //     }
+  //   })
+  //   .catch(e => console.log('error', e));
 }
