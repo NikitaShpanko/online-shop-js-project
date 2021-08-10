@@ -1,13 +1,16 @@
 export default class Item {
-  // /**
-  //  * @param {Item} obj
-  //  * @returns {string}
-  //  */
-  // static template = obj => '';
+  static copy = function (obj) {
+    if (typeof obj !== 'object') return obj;
+    if (Array.isArray(obj)) return obj.map(elem => Item.copy(elem));
+    else {
+      const newObj = {};
+      Object.entries(obj).forEach(([key, value]) => (newObj[key] = Item.copy(value)));
+      return newObj;
+    }
+  };
   constructor(data) {
-    // Это грубое копирование, но это неважно:
     Object.entries(data).forEach(([key, value]) => {
-      this[key] = value;
+      this[key] = value; //Item.copy(value);
     });
   }
 }
