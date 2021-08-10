@@ -35,7 +35,7 @@ export default class Category extends Data {
     return null;
   }
   #getCategoryList(start, length) {
-    return;
+    return [this];
   }
   #filter(categories) {
     categories.split(',').forEach(category => {
