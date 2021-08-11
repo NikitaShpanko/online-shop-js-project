@@ -4,13 +4,12 @@ import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
 
-store.register('isOnline', storeIsOnline => {
-  // console.log('store', storeIsOnline);
-  if (storeIsOnline) {
-    // render home and logout
-  } else {
-    // render auth and reg
-  }
+const headerRegContiner = document.querySelectorAll('[data-account-registration]');
+const headerCabContiner = document.querySelectorAll('[data-account-user]');
+
+store.register('isOnline', () => {
+  headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
+  headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
 });
 
 (async () => {
@@ -26,11 +25,25 @@ store.register('isOnline', storeIsOnline => {
   }
 })();
 
-const openBtn = document.querySelectorAll('.header__account-link');
-openBtn.forEach(e => e.addEventListener('click', openAuthModal));
+const headerListener = document.querySelector('header');
+headerListener.addEventListener('click', userAccountControl);
 
-function openAuthModal(e) {
+function userAccountControl(e) {
+  const controlBtn = e.target.closest('A');
+  if (!controlBtn?.classList.contains('header__account-link')) {
+    return;
+  }
+
   e.preventDefault();
+  if (controlBtn?.dataset.user === 'regAuth') {
+    openAuthModal();
+  }
+  if (controlBtn?.dataset.user === 'exit') {
+    confirmLogoutUser();
+  }
+}
+
+function openAuthModal() {
   openModal(authorizationFormTpl());
   const form = document.body.querySelector('.authorization-form');
   form.addEventListener('click', e => {
@@ -59,6 +72,33 @@ function openAuthModal(e) {
     }
     if (regBtn) {
       onRegBtnClick(obj);
+    }
+  });
+}
+
+function confirmLogoutUser() {
+  if (!localStorage.accessToken) {
+    return;
+  }
+  openModal(confirmModal());
+  document.body.querySelector('.modal-confirm').addEventListener('click', e => {
+    if (!e.target.closest('Button')?.classList.contains('confirm__button')) {
+      return;
+    }
+    if (+e.target.dataset.confirm) {
+      logoutUser();
+      closeModal();
+    } else {
+      closeModal();
+    }
+  });
+}
+
+function logoutUser() {
+  API.request('/auth/logout', 'POST', false, localStorage.accessToken, false).then(data => {
+    if (data.status === 204) {
+      store.setIsOnline(false);
+      deleteToken();
     }
   });
 }
@@ -107,36 +147,4 @@ function regUser(obj) {
 
 function authUser(obj) {
   return API.request('/auth/login', 'POST', obj);
-}
-
-// ============================ LogoutUser ======================================
-
-const btnExit = document.querySelector('.primary-button');
-btnExit.addEventListener('click', confirmLogoutUser);
-
-function confirmLogoutUser() {
-  if (!localStorage.accessToken) {
-    return;
-  }
-  openModal(confirmModal());
-  document.body.querySelector('.modal-confirm').addEventListener('click', e => {
-    if (!e.target.closest('Button')?.classList.contains('confirm__button')) {
-      return;
-    }
-    if (+e.target.dataset.confirm) {
-      logoutUser();
-      closeModal();
-    } else {
-      closeModal();
-    }
-  });
-}
-
-function logoutUser() {
-  API.request('/auth/logout', 'POST', false, localStorage.accessToken, false).then(data => {
-    if (data.status === 204) {
-      store.setIsOnline(false);
-      deleteToken();
-    }
-  });
 }
