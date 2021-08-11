@@ -21,37 +21,42 @@
       <button type="button" class="header__btn close-btn" data-menu-close><svg class="header__icon close" width="14" height="14">
             <use href="./images/sprite.svg#icon-close"></use>
       </svg></button>
-      <div class="header__account registration">
-        <a href="#" class="header__account-link link">Регистрация</a>
-        <a href="#" class="header__account-link link">Войти</a>
+
+<!-- //пользователь н7е зарегистророван -->
+      <div class="header__account registration" data-account-registration>
+        <a href="#" class="header__account-link link" data-account-registration>Регистрация</a>
+        <a href="#" class="header__account-link link" data-account-exit>Войти</a>
       </div>
-      <div class="header__account user-account">
-        <a href="#" class="header__account-link link">
-          <svg class="header__icon" width="20" height="20">
-            <use href="./images/sprite.svg#icon-user-profile-1"></use>
-          </svg><span>Мой кабинет</span>
-        </a>
-        <a href="#" class="header__account-link link">
-          <svg class="header__icon" width="20" height="20">
-            <use href="./images/sprite.svg#icon-user-profile-2"></use>
-          </svg>
-        </a>
+
+        <!-- пользователь зарегистророван -->
+      <div class="header__account user-account" data-account-user>
+         <a href="#" class="header__account-link link" data-user-cabinet>
+            <svg class="header__icon" width="20" height="20">
+              <use href="./images/sprite.svg#icon-user-profile-1"></use>
+            </svg><span>Мой кабинет</span>
+         </a>
+         <a href="#" class="header__account-link link" data-user-exit>
+             <svg class="header__icon" width="20" height="20">
+                <use href="./images/sprite.svg#icon-user-profile-2"></use>
+              </svg>
+          </a>
       </div>
+
       <div class="header__controls">
         <button type="button" class="header__btn controls-btn filter-btn" data-mobile-filter-btn>
           <svg class="header__icon" width="24" height="24">
             <use href="./images/sprite.svg#icon-filter"></use>
       </svg><span>Фильтры</span></button>
-        <button type="button" class="header__btn controls-btn">
+        <button type="button" class="header__btn controls-btn js-clear">
           <svg class="header__icon" width="24" height="24">
             <use href="./images/sprite.svg#icon-reset"></use>
-      </svg><span>Очистить</span></button>
+        </svg><span>Очистить</span></button>
       </div>
       <div id="header-categories-mobile"></div>
     </div>
   </div>
 
-
+  <!-- header desk -->
 
   <div class="header__desk container">
     <div class="header__desk-main">
@@ -62,8 +67,8 @@
           </svg>
         </a>
         <div class="header__search-wrapper">
-          <input type="text" class="header__input-search">
-          <button type="button" class="header__btn header__input-search-btn">
+          <input type="text" class="header__input-search js-input-search">
+          <button type="button" class="header__btn header__input-search-btn js-search">
             <svg class="header__search-icon" width="20" height="20">
                 <use href="./images/sprite.svg#icon-search"></use>
           </svg>
@@ -71,33 +76,35 @@
         </div>
       </div>
       <div class="header__left-container">
-        <div class="header__account registration">
-          <a href="#" class="header__account-link link">Регистрация</a>
-          <a href="#" class="header__account-link link">Войти</a>
-        </div>
 
-        <div class="header__account user-account">
-          <a href="#" class="header__account-link link">
+ <!-- //пользователь н7е зарегистророван -->
+      <div class="header__account registration" data-account-registration>
+        <a href="#" class="header__account-link link" data-account-registration>Регистрация</a>
+        <a href="#" class="header__account-link link" data-account-exit>Войти</a>
+      </div>
+        <!-- пользователь зарегистророван -->
+      <div class="header__account user-account" data-account-user>
+         <a href="#" class="header__account-link link" data-user-cabinet>
             <svg class="header__icon" width="20" height="20">
               <use href="./images/sprite.svg#icon-user-profile-1"></use>
             </svg><span>Мой кабинет</span>
+         </a>
+         <a href="#" class="header__account-link link" data-user-exit>
+             <svg class="header__icon" width="20" height="20">
+                <use href="./images/sprite.svg#icon-user-profile-2"></use>
+              </svg>
           </a>
-          <a href="#" class="header__account-link link">
-            <svg class="header__icon" width="20" height="20">
-              <use href="./images/sprite.svg#icon-user-profile-2"></use>
-            </svg>
-          </a>
-          <div class="header__user-account-wrapper"> 
-            <ul class="header__user-account-list list">
-               <li class="header__user-account-item">
-                 <a href="" class="header__user-account-link link">Мои обьявления</a>
-               </li>
-               <li class="header__user-account-item">
-                 <a href="" class="header__user-account-link link">Избранное</a>
-               </li>
-            </ul>
-           </div>
-        </div>
+      </div>
+      <div class="header__user-account-wrapper"> 
+        <ul class="header__user-account-list list">
+           <li class="header__user-account-item">
+             <a href="" class="header__user-account-link link">Мои обьявления</a>
+           </li>
+           <li class="header__user-account-item">
+             <a href="" class="header__user-account-link link">Избранное</a>
+           </li>
+        </ul>
+       </div>
 
         <button type="button" class="header__create-btn primary-button">Создать объявление</button>
       </div>
@@ -110,7 +117,7 @@
           <use href="./images/sprite.svg#icon-filter"></use>
         </svg><span>Фильтры</span>
       </button>
-      <button type="button" class="header__btn controls-btn">
+      <button type="button" class="header__btn controls-btn js-clear">
         <svg class="header__icon reset" width="24" height="24">
           <use href="./images/sprite.svg#icon-reset"></use>
         </svg><span>Очистить</span>
@@ -125,4 +132,3 @@
   </div>
     
 </header>
-

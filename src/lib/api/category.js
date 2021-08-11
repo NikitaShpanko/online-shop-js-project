@@ -1,46 +1,24 @@
 import Item from './item';
-import Data from './data';
 import Card from './card';
 
-export default class Category extends Data {
-  /**
-   * @type {string}
-   */
-  name;
-  /**
-   * @type {string}
-   */
-  link;
-  /**
-   * @type {Card[]}
-   */
-  card;
-  /**
-   * @param {Category} data
-   */
+export default class Category extends Item {
   constructor(data) {
     super(data);
+    if (this.cardList && !this.card) {
+      this.card = Card.tpl(this.cardList);
+    }
   }
-  #getCard(id) {
-    for (const item of this.card) {
+  getCard(id) {
+    for (const item of this.cardList) {
       if (item._id === id) return item;
     }
     return null;
   }
-  #getCardList(start, length) {
-    //return
+  getCardList(start = 0, length = Infinity) {
+    return this.cardList.slice(start, length);
   }
-  #getCategory(name) {
-    if (name === this.name) return this;
-    return null;
-  }
-  #getCategoryList(start, length) {
-    return;
-  }
-  #filter(categories) {
-    categories.split(',').forEach(category => {
-      if (this.name === category) return this;
-    });
-    return null;
+  filter(query) {
+    if (!query) return this.getCardList();
+    return Item.filter(this.cardList, query, 'category', true);
   }
 }

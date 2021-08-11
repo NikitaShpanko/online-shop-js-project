@@ -1,8 +1,9 @@
 import store from '../lib/store';
 import headerCategoriesTpl from '../templates/header-categories.hbs';
 import headerCategoriesMobileTpl from '../templates/header-categories-mobile.hbs';
-import * as API from '../lib/api';
 
+//Возвращает массив выбранных категорий по URL
+// или пустой массив, если не выбрано ничего
 export function getUrlCategories() {
   const queryParams = new URLSearchParams(window.location.search);
   let currentCategoriesUrl = queryParams.getAll('categories');
@@ -17,10 +18,8 @@ store.register('categories', (categories) => {
       const toArr = Object.keys(categories)
         .map(key => ({
           key,
-          name: categories[key]
+          name: categories[key],
         })).slice(1, 8);
-
-      let urlCat = getUrlCategories();
 
       document.querySelector('#header-categories-mobile')
         .outerHTML = headerCategoriesMobileTpl(toArr);
@@ -36,6 +35,7 @@ store.register('categories', (categories) => {
 
       function handler(e) {
         e.preventDefault();
+
         if (!e.target.closest('a')) return false;
         const category = e.target.getAttribute('data-category')
 
@@ -46,16 +46,19 @@ store.register('categories', (categories) => {
           } else {
             if (!currentCategoriesUrl.includes(category)){
               currentCategoriesUrl.push(category);
+            } else {
+              const index = currentCategoriesUrl.indexOf(category);
+              currentCategoriesUrl.splice(index, 1);
             }
-            // } else {
-            //   // filter currentCategoriesUrl from category
-            // }
           }
+
+          document.querySelectorAll(`[data-category="${[category]}"]`).forEach(ref => {
+            ref.parentNode.classList.toggle('is-orange')
+          })
 
           store.setQuery({ categories: currentCategoriesUrl });
         }
       }
-
     },
 );
 
