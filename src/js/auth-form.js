@@ -3,20 +3,28 @@ import confirmModal from '../templates/confirm-modal.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
-import { loadJSON, saveJSON } from '../lib/use-json';
-
-if (localStorage.accessToken) {
-  store.setIsOnline(loadJSON('userData'));
-}
 
 store.register('isOnline', storeIsOnline => {
-  console.log('store', storeIsOnline);
+  // console.log('store', storeIsOnline);
   if (storeIsOnline) {
     // render home and logout
   } else {
     // render auth and reg
   }
 });
+
+(async () => {
+  const accToken = localStorage.accessToken;
+  if (accToken) {
+    const userData = await API.request('/user', 'GET', false, accToken, true);
+    store.setIsOnline(new API.LoginData(userData));
+
+    const body = { sid: localStorage.sid };
+    const refToken = localStorage.refreshToken;
+    const newTokenData = await API.request('/auth/refresh', 'POST', body, refToken, true);
+    saveToken(newTokenData, true);
+  }
+})();
 
 const openBtn = document.querySelectorAll('.header__account-link');
 openBtn.forEach(e => e.addEventListener('click', openAuthModal));
@@ -57,12 +65,12 @@ function openAuthModal(e) {
 
 async function onAuthBtnClick(obj) {
   const data = await authUser(obj);
-  // console.log(data);
+
   if (data.error === 403) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    store.setIsOnline(new API.LoginData(data));
+    store.setIsOnline(new API.LoginData(data.user));
     saveToken(data);
     closeModal();
   }
@@ -70,31 +78,27 @@ async function onAuthBtnClick(obj) {
 
 async function onRegBtnClick(obj) {
   const dataReg = await regUser(obj);
-  // console.log(dataReg);
   if (dataReg.error === 409) {
     console.log('Пользователь с таким "email" уже существует');
-    // console.log(dataReg);
   } else if (dataReg.id) {
-    // console.log(dataReg.id);
-    const userId = dataReg.id;
     const dataAuth = await authUser(obj);
-    console.log('Пользователь авторизирован и зарегистрирован');
-    store.setIsOnline(new API.LoginData(dataAuth));
+    console.log('Пользователь зарегистрирован и авторизирован');
+    store.setIsOnline(new API.LoginData(dataAuth.user));
     saveToken(dataAuth);
     closeModal();
   }
 }
 
-function saveToken(data) {
-  localStorage.accessToken = data.accessToken;
-  localStorage.refreshToken = data.refreshToken;
-  saveJSON('userData', new API.LoginData(data));
+function saveToken(data, ref = false) {
+  localStorage.accessToken = data[ref ? 'newAccessToken' : 'accessToken'];
+  localStorage.refreshToken = data[ref ? 'newRefreshToken' : 'refreshToken'];
+  localStorage.sid = data[ref ? 'newSid' : 'sid'];
 }
 
 function deleteToken() {
   localStorage.accessToken = '';
   localStorage.refreshToken = '';
-  localStorage.userData = '';
+  localStorage.sid = '';
 }
 
 function regUser(obj) {
@@ -131,7 +135,6 @@ function confirmLogoutUser() {
 function logoutUser() {
   API.request('/auth/logout', 'POST', false, localStorage.accessToken, false).then(data => {
     if (data.status === 204) {
-      // console.log(data);
       store.setIsOnline(false);
       deleteToken();
     }
