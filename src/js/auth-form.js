@@ -13,13 +13,26 @@ store.register('isOnline', () => {
 });
 
 (async () => {
-  const accToken = localStorage.accessToken;
-  if (accToken) {
-    const userData = await API.request('/user', 'GET', false, accToken, true);
+  const url = new URL(document.location).searchParams;
+  const urlToken = url.get('accessToken');
+
+  if (urlToken) {
+    localStorage.accessToken = urlToken;
+    localStorage.refreshToken = url.get('refreshToken');
+    localStorage.sid = url.get('sid');
+  }
+
+  if (localStorage.accessToken) {
+    const userData = await API.request('/user', 'GET', false, localStorage.accessToken, true);
+    if (userData.error) {
+      deleteToken();
+      return;
+    }
     store.setIsOnline(userData);
 
     const body = { sid: localStorage.sid };
     const refToken = localStorage.refreshToken;
+
     const newTokenData = await API.request('/auth/refresh', 'POST', body, refToken, true);
     saveToken(newTokenData, true);
   }
@@ -38,6 +51,7 @@ function userAccountControl(e) {
   if (controlBtn?.dataset.user === 'regAuth') {
     openAuthModal();
   }
+
   if (controlBtn?.dataset.user === 'exit') {
     confirmLogoutUser();
   }
@@ -47,8 +61,6 @@ function openAuthModal() {
   openModal(authorizationFormTpl());
   const form = document.body.querySelector('.authorization-form');
   form.addEventListener('click', e => {
-    e.preventDefault();
-
     const authBtn = e.target.closest('Button')?.classList.contains('button-auth');
     const regBtn = e.target.closest('Button')?.classList.contains('button-registration');
 
@@ -77,9 +89,6 @@ function openAuthModal() {
 }
 
 function confirmLogoutUser() {
-  if (!localStorage.accessToken) {
-    return;
-  }
   openModal(confirmModal());
   document.body.querySelector('.modal-confirm').addEventListener('click', e => {
     if (!e.target.closest('Button')?.classList.contains('confirm__button')) {
@@ -87,6 +96,7 @@ function confirmLogoutUser() {
     }
     if (+e.target.dataset.confirm) {
       logoutUser();
+      console.log('Вы успешно вышли из акаунта');
       closeModal();
     } else {
       closeModal();
