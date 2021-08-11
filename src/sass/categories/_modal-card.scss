@@ -63,6 +63,7 @@
 
 .modal-card--img {
   margin: 0 auto;
+  object-fit: cover;
   width: 253px;
   height: 253px;
   margin-bottom: 15px;
@@ -79,8 +80,10 @@
 }
 
 .modal-card--imgCard {
-  width: 100%;
-  object-fit: contain;
+  display: block;
+  max-width: 100%;
+  height: auto;
+
   margin-bottom: 15px;
 }
 .modal-card--list {
@@ -95,12 +98,14 @@
 }
 
 .modal-card--poiner {
+  overflow: hidden;
+  object-fit: contain;
+
   &:not(:last-child) {
     margin-right: 5px;
   }
 
   list-style: none;
-  background: #cdcdcd;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -112,7 +117,6 @@
   @media screen and (min-width: 768px) {
     width: 52px;
     height: 56px;
-    background: #f5f6fb;
     border-radius: 0%;
   }
 
@@ -126,12 +130,9 @@
 }
 
 .modal-card--imgPreview {
-  display: none;
-  @media screen and (min-width: 768px) {
-    display: bloke;
-    width: 100%;
-    object-fit: cover;
-  }
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 .modal-card--price {
