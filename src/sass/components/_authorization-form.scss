@@ -29,16 +29,18 @@
 
 .authorization-form__google-button {
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
 
   margin-bottom: 30px;
   cursor: pointer;
 
   height: 50px;
   min-width: 150px;
-  background: var(--color-google-btn);
+  background-color: var(--color-google-btn);
   border: none;
+
+  background-image: url(../images/google.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 
   box-shadow: $shadow-default;
   transition: background-color linear 250ms;
