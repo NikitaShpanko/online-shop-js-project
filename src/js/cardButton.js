@@ -18,8 +18,33 @@ bodyNode.addEventListener('click', e => {
       buttonClick.classList.contains('icon-heart-white') ||
       buttonClick.classList.contains('modal-card--buttonIsFavorite')
     ) {
+      //   const getIsFavoritesCard = API.request(
+      //     '/call/favourites',
+      //     'GET',
+      //     false,
+      //     localStorage.accessToken,
+      //   ).then(id =>
+      //     id.cardList.map(e => {
+      //       console.log(e._id);
+      //     }),
+      //   );
+
       buttonClick.classList.toggle('isFavorites');
-      console.log('добавить товар в избранное');
+      if (buttonClick.classList.contains('isFavorites')) {
+        const postIsFavoritesCard = API.request(
+          `/call/favourite/${cardId.dataset.id}`,
+          'POST',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      } else {
+        const deleteIsFavoritesCard = API.request(
+          `/call/favourite/${cardId.dataset.id}`,
+          'DELETE',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      }
     } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
     else if (buttonClick.classList.contains('load__more--button'))
       console.log('Загрузка следующей страницы');
@@ -43,8 +68,6 @@ bodyNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
-  console.log(localStorage.accessToken);
-
   const data = store.products.getCard(id);
   const dataUserId = data.userId;
 
