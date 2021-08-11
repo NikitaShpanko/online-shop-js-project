@@ -157,6 +157,20 @@
   border: none;
   margin-bottom: 20px;
 }
+
+.modal-card--userInfo {
+  width: 100%;
+  height: 60px;
+  padding: 16px 58px;
+  background-color: var(--color-highlight);
+  color: var(--color-main-background);
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  margin-bottom: 20px;
+}
+
 .modal-card--isFavorite {
   display: flex;
   flex-wrap: nowrap;
@@ -192,4 +206,8 @@
 
 .modal-card--descriptionAll {
   font-weight: 300;
+}
+
+.isDispleyNone {
+  display: none;
 }

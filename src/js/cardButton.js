@@ -4,14 +4,14 @@ import cardCategoryTpl from '../templates/categories-allcard.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
+import { from } from 'form-data';
 
-const bodyNode = document.querySelector('body');
+const mainNode = document.querySelector('main');
 
-bodyNode.addEventListener('click', e => {
+mainNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__all--content');
   const imgPrev = e.target.closest('.modal-card--poiner');
-  e.preventDefault();
 
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
@@ -26,9 +26,10 @@ bodyNode.addEventListener('click', e => {
       console.log('Загружается шаблон со всеми карточками');
     else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
       console.log('Добавление товара в избранное');
-    else if (buttonClick.classList.contains('modal-card--bnInfo'))
-      console.log('Инофрмация о  прадовце');
-    else if (buttonClick.classList.contains('modal-card--buttonToShare'))
+    else if (buttonClick.classList.contains('modal-card--bnInfo')) {
+      e.target.classList.toggle('isDispleyNone');
+      document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
+    } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
       console.log('Поделиться товаром с дрзьями чере социальные сети (допустим)');
   }
 
@@ -44,7 +45,6 @@ bodyNode.addEventListener('click', e => {
 
 function openModalCard(id) {
   const data = store.products.getCard(id);
-  console.log(data);
   openModal(modalCard({ data }));
 }
 
