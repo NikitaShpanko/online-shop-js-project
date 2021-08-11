@@ -2,15 +2,10 @@ import modalCard from '../templates/modal-card.hbs';
 import allCardCategoryTpl from '../templates/categories-allcard.hbs';
 import cardCategoryTpl from '../templates/categories-allcard.hbs';
 import { openModal, closeModal } from './modal-control';
-import * as API from './lib/api'
-// import Handlebars from 'handlebars';
+import * as API from '../lib/api';
+import store from '../lib/store'
 
-// Handlebars.registerHelper ('loud', function(cardsvg) {
-//  return '<use href="./images/sprite.svg#icon-arrow_left"></use>';
-// })
-
-// const html = cardCategoryTpl(Handlebars);
-
+console.log(store);
 
 const bodyNode = document.querySelector('body');
 
@@ -37,11 +32,14 @@ bodyNode.addEventListener('click', (e) => {
             console.log("Загружается шаблон со всеми карточками");
     };
 
-    if (cardId && buttonClick?.nodeName !== 'BUTTON') openModalCard(cardId.dataset.id);
+    if (cardId && buttonClick?.nodeName !== 'BUTTON') {
+        openModalCard(cardId.dataset.id);
+    }
 });
 
  
 function openModalCard(id) {
+    console.log(id);
     openModal(modalCard());
 }
     
