@@ -6,12 +6,10 @@
 .categories__container {
   height: 374px;
 
-
   @media screen and (min-width: 768px) {
     height: 354px;
     &:not(:last-child) {
       margin-right: 22px;
-
     }
   }
   @media screen and (min-width: 1280px) {
@@ -119,10 +117,6 @@
         fill: var(--color-main-background);
       }
     }
-    .swiper-container {
-      width: 1227px;
-
-    }
   }
 }
 .button__arow--left {
@@ -136,5 +130,3 @@
 .button__noCard {
   fill: #a2a2a2;
 }
-
-
