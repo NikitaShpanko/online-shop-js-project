@@ -13,9 +13,18 @@ store.register('isOnline', () => {
 });
 
 (async () => {
-  const accToken = localStorage.accessToken;
-  if (accToken) {
-    const userData = await API.request('/user', 'GET', false, accToken, true);
+  const url = new URL(document.location).searchParams;
+  const urlToken = url.get('accessToken');
+  if (urlToken) {
+    localStorage.accessToken = urlToken;
+    localStorage.refreshToken = url.get('refreshToken');
+  }
+  if (localStorage.accessToken) {
+    const userData = await API.request('/user', 'GET', false, localStorage.accessToken, true);
+    if (userData.error) {
+      deleteToken();
+      return;
+    }
     store.setIsOnline(userData);
 
     const body = { sid: localStorage.sid };
@@ -110,7 +119,7 @@ async function onAuthBtnClick(obj) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    store.setIsOnline(data.user);
+    store.setIsOnline(data);
     saveToken(data);
     closeModal();
   }
@@ -123,7 +132,7 @@ async function onRegBtnClick(obj) {
   } else if (dataReg.id) {
     const dataAuth = await authUser(obj);
     console.log('Пользователь зарегистрирован и авторизирован');
-    store.setIsOnline(dataAuth.user);
+    store.setIsOnline(dataAuth);
     saveToken(dataAuth);
     closeModal();
   }
