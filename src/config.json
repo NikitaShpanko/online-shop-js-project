@@ -3,5 +3,6 @@
   "projectName": "online-shop-js-project",
   "rusNames": { "sales": "Распродажа" },
   "specialCategory": "sales",
-  "adCount": 6
+  "adCount": 6,
+  "searchParams": ["categories", "query", "redirect"]
 }

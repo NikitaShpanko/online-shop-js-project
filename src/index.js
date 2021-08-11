@@ -9,6 +9,7 @@ import errorTpl from './templates/error.hbs';
 import config from './config.json';
 
 import * as API from './lib/api';
+import * as Link from './lib/link';
 import store from './lib/store';
 import './js/hero';
 import './js/auth-form';
@@ -25,5 +26,7 @@ API.Card.tpl = cardTpl;
   store.setCategories(rusCategoryNames);
 
   const categories = getUrlCategories();
-  store.setQuery({ categories });
+  // store.setQuery({ categories });
+
+  console.log(await Link.goTo(location.href));
 })();
