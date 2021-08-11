@@ -64,5 +64,13 @@ function setDataType(obj, link) {
       link: '/home/own',
       cardList: Object.values(obj)[0],
     });
+  if (link.includes('/specific')) {
+    const catName = link.slice(link.indexOf('/specific') + '/specific'.length + 1);
+    return new Category({
+      name: catName,
+      link: `/category${catName}`,
+      cardList: obj,
+    });
+  }
   return obj;
 }

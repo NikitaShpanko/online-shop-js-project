@@ -1,3 +1,5 @@
+import 'swiper/swiper-bundle.css';
+
 import './sass/main.scss';
 import './js/cardButton';
 
@@ -26,7 +28,7 @@ API.Card.tpl = cardTpl;
   store.setCategories(rusCategoryNames);
 
   const categories = getUrlCategories();
-  // store.setQuery({ categories });
+  //store.setQuery({ categories });
 
   console.log(await Link.goTo(location.href));
 })();

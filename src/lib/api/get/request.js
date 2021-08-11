@@ -1,10 +1,10 @@
-import request from '../request';
+import { request as commonRequest } from '../../api';
 /**
  *
  * @param {string} link
  * @param {string} token
  * @returns {object}
  */
-export default async function data(link = '/', token = '') {
-  return await request(link, 'GET', null, token);
+export default async function request(link = '/', token = '') {
+  return await commonRequest(link, 'GET', null, token);
 }

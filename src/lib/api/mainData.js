@@ -15,7 +15,6 @@ export default class MainData extends Data {
    * @param  {...MainData} newMainData
    */
   append(...newMainData) {
-    console.log('APPEND', newMainData);
     newMainData.forEach(mainData => {
       Object.entries(mainData).forEach(([key, value]) => {
         if (typeof this[key] === 'undefined') {

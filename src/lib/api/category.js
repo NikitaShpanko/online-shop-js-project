@@ -8,6 +8,9 @@ export default class Category extends Item {
       this.card = Card.tpl(this.cardList);
     }
   }
+  // get card() {
+  //   return Card.tpl(this.cardList);
+  // }
   getCard(id) {
     for (const item of this.cardList) {
       if (item._id === id) return item;

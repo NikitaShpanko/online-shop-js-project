@@ -10,7 +10,7 @@ import config from '../../config.json';
  * @param {string} link
  * @returns {linkData}
  */
-export default function parse(link, lowerCase = true) {
+export default function parse(link, lowerCase = false) {
   let pathname;
   if (link[0] === '/') {
     const paramIndex = link.indexOf('?');
