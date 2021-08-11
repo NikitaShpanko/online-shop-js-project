@@ -16,7 +16,7 @@ store.register('isOnline', () => {
   const accToken = localStorage.accessToken;
   if (accToken) {
     const userData = await API.request('/user', 'GET', false, accToken, true);
-    store.setIsOnline(new API.LoginData(userData));
+    store.setIsOnline(userData);
 
     const body = { sid: localStorage.sid };
     const refToken = localStorage.refreshToken;
@@ -110,7 +110,7 @@ async function onAuthBtnClick(obj) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    store.setIsOnline(new API.LoginData(data.user));
+    store.setIsOnline(data.user);
     saveToken(data);
     closeModal();
   }
@@ -123,7 +123,7 @@ async function onRegBtnClick(obj) {
   } else if (dataReg.id) {
     const dataAuth = await authUser(obj);
     console.log('Пользователь зарегистрирован и авторизирован');
-    store.setIsOnline(new API.LoginData(dataAuth.user));
+    store.setIsOnline(dataAuth.user);
     saveToken(dataAuth);
     closeModal();
   }
