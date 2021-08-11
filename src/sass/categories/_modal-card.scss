@@ -65,8 +65,9 @@
   margin: 0 auto;
   width: 253px;
   height: 253px;
-  background: #000;
   margin-bottom: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
   @media screen and (min-width: 768px) {
     width: 281px;
     height: 333px;
@@ -78,6 +79,8 @@
 }
 
 .modal-card--imgCard {
+  width: 100%;
+  object-fit: contain;
   margin-bottom: 15px;
 }
 .modal-card--list {
@@ -85,6 +88,10 @@
   justify-content: center;
   flex-wrap: nowrap;
   margin-bottom: 30px;
+
+  @media screen and (min-width: 768px) {
+    justify-content: start;
+  }
 }
 
 .modal-card--poiner {
@@ -100,6 +107,30 @@
 
   &.active__color {
     background: var(--color-highlight);
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 52px;
+    height: 56px;
+    background: #f5f6fb;
+    border-radius: 0%;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 77px;
+    height: 73px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.modal-card--imgPreview {
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: bloke;
+    width: 100%;
+    object-fit: cover;
   }
 }
 
