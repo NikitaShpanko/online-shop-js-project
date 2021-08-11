@@ -38,7 +38,7 @@ export default class Data extends Item {
 
   /**
    * @param {string} name
-   * @returns {Data}
+   * @returns {Category}
    */
   getCategory(name) {
     return this.categoryList.find(category => category.name === name);
@@ -59,18 +59,21 @@ export default class Data extends Item {
    * @returns {Category[]}
    */
   filter(query) {
-    if (!query) return this;
-    const queryList = query.split(',');
-    const found = [];
-    queryList.forEach(name => {
-      for (const category of this.categoryList) {
-        if (category.name === name) {
-          found.push(category);
-          return;
-        }
+    if (!query) return this.getCategoryList();
+    const filtered = [];
+    for (const category of this.categoryList) {
+      const catFiltered = category.filter(query);
+      if (catFiltered.length) {
+        filtered.push(
+          new Category({
+            name: category.name,
+            link: `/category/${category.name}`,
+            cardList: catFiltered,
+          }),
+        );
       }
-    });
-    return found;
+    }
+    return filtered;
   }
 
   constructor(data) {
