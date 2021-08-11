@@ -6,9 +6,9 @@ import * as API from '../lib/api';
 import store from '../lib/store';
 import { from } from 'form-data';
 
-const mainNode = document.querySelector('main');
+const bodyNode = document.querySelector('body');
 
-mainNode.addEventListener('click', e => {
+bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__all--content');
   const imgPrev = e.target.closest('.modal-card--poiner');
@@ -20,11 +20,9 @@ mainNode.addEventListener('click', e => {
     } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
     else if (buttonClick.classList.contains('load__more--button'))
       console.log('Загрузка следующей страницы ');
-    else if (buttonClick.classList.contains('button__arow--left')) console.log('Товар слева');
-    else if (buttonClick.classList.contains('button__arow-right')) console.log('Товар справа');
-    else if (buttonClick.classList.contains('categories__titel--allCard'))
+    else if (buttonClick.classList.contains('categories__titel--allCard')) {
       console.log('Загружается шаблон со всеми карточками');
-    else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
+    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
       console.log('Добавление товара в избранное');
     else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
@@ -45,7 +43,13 @@ mainNode.addEventListener('click', e => {
 
 function openModalCard(id) {
   const data = store.products.getCard(id);
-  openModal(modalCard({ data }));
+  const dataUserId = data.userId;
+
+  const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
+    const obj = { ...data, ...id };
+    console.log(obj);
+    openModal(modalCard({ obj }));
+  });
 }
 
 function onSubmit(params) {
