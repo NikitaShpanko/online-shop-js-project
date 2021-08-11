@@ -14,17 +14,18 @@ bodyNode.addEventListener('click', e => {
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
-    if (buttonClick.classList.contains('icon-heart-white')) {
+    if (
+      buttonClick.classList.contains('icon-heart-white') ||
+      buttonClick.classList.contains('modal-card--buttonIsFavorite')
+    ) {
       buttonClick.classList.toggle('isFavorites');
       console.log('добавить товар в избранное');
     } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
     else if (buttonClick.classList.contains('load__more--button'))
-      console.log('Загрузка следующей страницы ');
+      console.log('Загрузка следующей страницы');
     else if (buttonClick.classList.contains('categories__titel--allCard')) {
       console.log('Загружается шаблон со всеми карточками');
-    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
-      console.log('Добавление товара в избранное');
-    else if (buttonClick.classList.contains('modal-card--bnInfo')) {
+    } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
@@ -42,6 +43,8 @@ bodyNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
+  console.log(localStorage.accessToken);
+
   const data = store.products.getCard(id);
   const dataUserId = data.userId;
 
