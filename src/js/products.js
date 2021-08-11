@@ -1,74 +1,48 @@
 import store from '../lib/store';
 import cardTpl from '../templates/card.hbs';
 import categoriesTpl from '../templates/categories.hbs';
-import searchCardTpl from '../templates/search-allcard.hbs'
+import searchCardTpl from '../templates/search-allcard.hbs';
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 
-
-store.register('products', (products, all) => {
-  if (all.query !== null 
-    && (all.query.search || all.query.chosenCategory)
-  ) {
-    document.querySelector('#root')
-      .innerHTML = searchCardTpl({
-        name: 'Результат поиска',
-        card:  cardTpl(products)
-      });
-
-      return;
+store.register('products', (pr, all) => {
+  let products = null;
+  if (typeof pr === Array.isArray(pr)) {
+    products = pr;
+  } else {
+    products = { ...pr };
+    delete products.categoryList;
   }
-      const toArr = Object.keys(products)
-        .map(key => ({
-          name: all.categories
-            ? all.categories[key]
-            : key,
-          card: cardTpl(products[key])
-        }))
 
-      document.querySelector('#root')
-        .innerHTML = categoriesTpl(toArr);
+  if (all.query !== null && (all.query.search || all.query.chosenCategory)) {
+    document.querySelector('#root').innerHTML = searchCardTpl({
+      name: 'Результат поиска',
+      card: cardTpl(products),
+    });
 
-         // можно сделать по клику "Смотреть все"
-        // const test = document.querySelector('.js-show-all')
-        // console.log(document.querySelector('.js-show-all'))
-        // test.addEventListener('click', () => {
-        //   store.setQuery({ chosenCategory });
-        // })
-        const swiper = new Swiper('.swiper-container', {
-          slidesPerView: 4,
-          spaceBetween: 20,
-          slidesPerGroup: 4,
-          loopFillGroupWithBlank: true,
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
+    return;
+  }
 
-          breakpoints: {
-            320: {
-              slidesPerView: 1,
-              pagination: {
-              el: ".swiper-pagination",
-              clickable: true,
-              },
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-              
-            },
-            1280: {
-              slidesPerView: 4,
-              spaceBetween: 40,
-            }
-          },
-          
-        })
-    }
-);
+  const toLower = {};
 
+  Object.keys(all.categories).forEach(key => (toLower[key.toLowerCase()] = all.categories[key]));
 
+  const toArr = Object.keys(products).map(key => ({
+    name: toLower[key.toLowerCase().replace(/ /g, '')],
+    card: cardTpl(products[key]),
+    key,
+  }));
 
+  document.querySelector('#root').innerHTML = categoriesTpl(toArr);
 
+  const showAllArr = document.querySelectorAll('.js-show-all');
+
+  showAllArr.forEach(cat => {
+    cat.addEventListener('click', e => {
+      const chosenCategory = e.target.getAttribute('data-key');
+      console.log(chosenCategory);
+      store.setQuery({ chosenCategory });
+    });
+  });
+});
