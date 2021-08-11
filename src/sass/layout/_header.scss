@@ -64,14 +64,15 @@
     margin-bottom: 40px;
   }
 
-  &__account.registration {
-    display: none;
+  .registration {
+    display: block;
   }
 
-  &__account.user-account {
+  .user-account {
     display: flex;
     position: relative;
     padding: 12px 0;
+    display: none;
   }
 
   .user-account .link{
