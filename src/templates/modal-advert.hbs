@@ -1,4 +1,4 @@
-<div class="backdrop">
+<div class="backdrop is-hidden announcement">
   <div class="modal modal-adv">
     <button type="button" class="modal-close-button">
       <svg class="modal-close-button__icon" width="14px" height="14px">
@@ -10,7 +10,14 @@
       <label for="product-name" class="form-modal-adv__label">
         <span class="form-modal-adv__text">Название товара</span>
         <span class="form-modal-adv__wrapper">
-          <input type="text" class="form-modal-adv__input" name="product-name" id="product-name" />
+          <input 
+            type="text" 
+            class="form-modal-adv__input _hvr" 
+            name="product-name" 
+            id="product-name" 
+            required
+            minlength="2"
+          />
         </span>
       </label>
       <label class="form-modal-adv__label">
@@ -105,14 +112,14 @@
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Описание товара</span>
         <span class="form-modal-adv__wrapper">
-          <textarea class="form-modal-adv__desc" name="product__description"></textarea>
+          <textarea class="form-modal-adv__desc _hvr" name="product__description"></textarea>
       </label>
         </span>
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Категория товара</span>
         <span class="form-modal-adv__wrapper">
           <select name="product-category" class="form-modal-adv__select">
-            <option value=""></option>
+            <!-- <option value=""></option>
             <option value="">Недвижимость</option>
             <option value="">Транспорт</option>
             <option value="">Работа</option>
@@ -120,7 +127,7 @@
             <option value="">Бизнес и услуги</option>
             <option value="">Отдых и спорт</option>
             <option value="">Отдам бесплатно</option>
-            <option value="">Обмен</option>
+            <option value="">Обмен</option> -->
           </select>
         </span>
       </label>
@@ -128,8 +135,8 @@
         <span class="form-modal-adv__text">Цена</span>
         <span class="form-modal-adv__wrapper">
           <input
-            type="text"
-            class="form-modal-adv__input"
+            type=""
+            class="form-modal-adv__input _hvr inpur-peice"
             name="product-price"
             placeholder="0.00 €"
           />
@@ -140,9 +147,12 @@
         <span class="form-modal-adv__wrapper">
           <input
             type="tel"
-            class="form-modal-adv__input"
+            class="form-modal-adv__input _hvr"
             name="product-tel"
             placeholder="+38 (0--) --- -- --"
+            pattern="^\+380\d{3}\d{2}\d{2}\d{2}$"
+            title="+38 (0--) --- -- --"
+            required
           />
         </span>
       </label>

@@ -16,6 +16,7 @@ import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
 import './js/products';
 import './js/query';
+import './js/modal-advert'
 
 API.get.categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
