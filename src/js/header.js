@@ -1,4 +1,3 @@
-
 //Возвращает массив выбранных категорий по URL
 // или пустой массив, если не выбрано ничего
 export default function getUrlCategories() {

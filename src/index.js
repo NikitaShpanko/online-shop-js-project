@@ -1,3 +1,5 @@
+import 'swiper/swiper-bundle.css';
+
 import './sass/main.scss';
 import initCardButton from './js/cardButton';
 
@@ -14,6 +16,7 @@ import storeQuery from './js/storeQuery';
 import config from './config.json';
 
 import * as API from './lib/api';
+import * as Link from './lib/link';
 import store from './lib/store';
 
 import renderHero from './js/hero';
@@ -41,6 +44,8 @@ store.register('query', storeQuery); // поисковые запросы
   store.setCategories(await API.get.categoryNames());
   await checkLogin();
   await renderHero();
-  const categories = getUrlCategories();
-  store.setQuery({ categories });
+  //const categories = getUrlCategories();
+  //store.setQuery({ categories });
+  Link.init();
+  Link.goTo(location.href);
 })();
