@@ -10,16 +10,20 @@ import config from './config.json';
 
 import * as API from './lib/api';
 import store from './lib/store';
-
+import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
 import './js/products';
 import './js/query';
 import './js/modal-advert'
+import './js/load-more';
+
+API.Card.tpl = cardTpl;
 
 API.get.categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
+  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
 
   const categories = getUrlCategories();

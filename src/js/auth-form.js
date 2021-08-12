@@ -1,23 +1,74 @@
 import authorizationFormTpl from '../templates/authorization-form.hbs';
+import confirmModal from '../templates/confirm-modal.hbs';
 import { openModal, closeModal } from './modal-control';
-import { request } from '../lib/api';
+import * as API from '../lib/api';
+import store from '../lib/store';
 
-const openBtn = document.querySelectorAll('.header__account-link');
-openBtn.forEach(e => e.addEventListener('click', openAuthModal));
+const headerRegContiner = document.querySelectorAll('[data-account-registration]');
+const headerCabContiner = document.querySelectorAll('[data-account-user]');
+
+store.register('isOnline', () => {
+  headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
+  headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
+});
+
+(async () => {
+  const url = new URL(document.location).searchParams;
+  const urlToken = url.get('accessToken');
+
+  if (urlToken) {
+    localStorage.accessToken = urlToken;
+    localStorage.refreshToken = url.get('refreshToken');
+    localStorage.sid = url.get('sid');
+  }
+
+  if (localStorage.accessToken) {
+    const userData = await API.request('/user', 'GET', false, localStorage.accessToken, true);
+    if (userData.error) {
+      deleteToken();
+      return;
+    }
+    store.setIsOnline(userData);
+
+    const body = { sid: localStorage.sid };
+    const refToken = localStorage.refreshToken;
+
+    const newTokenData = await API.request('/auth/refresh', 'POST', body, refToken, true);
+    saveToken(newTokenData, true);
+  }
+})();
+
+const headerListener = document.querySelector('header');
+headerListener.addEventListener('click', userAccountControl);
+
+function userAccountControl(e) {
+  const controlBtn = e.target.closest('A');
+  if (!controlBtn?.classList.contains('header__account-link')) {
+    return;
+  }
+
+  e.preventDefault();
+  if (controlBtn?.dataset.user === 'regAuth') {
+    openAuthModal();
+  }
+
+  if (controlBtn?.dataset.user === 'exit') {
+    confirmLogoutUser();
+  }
+}
 
 function openAuthModal() {
   openModal(authorizationFormTpl());
   const form = document.body.querySelector('.authorization-form');
   form.addEventListener('click', e => {
-    e.preventDefault();
     const authBtn = e.target.closest('Button')?.classList.contains('button-auth');
     const regBtn = e.target.closest('Button')?.classList.contains('button-registration');
+
     if (!authBtn && !regBtn) return;
 
     let isValid = true;
     const obj = {};
     form.querySelectorAll('input').forEach(i => {
-      console.log(i.name, i.validity.valid);
       obj[i.name] = i.value;
       if (!i.validity.valid) {
         isValid = false;
@@ -37,62 +88,73 @@ function openAuthModal() {
   });
 }
 
+function confirmLogoutUser() {
+  openModal(confirmModal());
+  document.body.querySelector('.modal-confirm').addEventListener('click', e => {
+    if (!e.target.closest('Button')?.classList.contains('confirm__button')) {
+      return;
+    }
+    if (+e.target.dataset.confirm) {
+      logoutUser();
+      console.log('Вы успешно вышли из акаунта');
+      closeModal();
+    } else {
+      closeModal();
+    }
+  });
+}
+
+function logoutUser() {
+  API.request('/auth/logout', 'POST', false, localStorage.accessToken, false).then(data => {
+    if (data.status === 204) {
+      store.setIsOnline(false);
+      deleteToken();
+    }
+  });
+}
+
 async function onAuthBtnClick(obj) {
   const data = await authUser(obj);
-  console.log(data);
+
   if (data.error === 403) {
     console.log('Ошибка авторизации, Неверный пароль или логин');
   } else if (data.user.id) {
     console.log('Пользователь авторизирован');
-    const token = data.accessToken;
-    localStorage.token = token;
+    store.setIsOnline(data);
+    saveToken(data);
     closeModal();
   }
 }
 
 async function onRegBtnClick(obj) {
   const dataReg = await regUser(obj);
-  console.log(dataReg);
   if (dataReg.error === 409) {
     console.log('Пользователь с таким "email" уже существует');
-    console.log(dataReg);
   } else if (dataReg.id) {
-    console.log(dataReg.id);
-    const userId = dataReg.id;
     const dataAuth = await authUser(obj);
-    console.log('Пользователь авторизирован');
-    const token = dataAuth.accessToken;
-    localStorage.token = token;
+    console.log('Пользователь зарегистрирован и авторизирован');
+    store.setIsOnline(dataAuth);
+    saveToken(dataAuth);
     closeModal();
   }
 }
 
+function saveToken(data, ref = false) {
+  localStorage.accessToken = data[ref ? 'newAccessToken' : 'accessToken'];
+  localStorage.refreshToken = data[ref ? 'newRefreshToken' : 'refreshToken'];
+  localStorage.sid = data[ref ? 'newSid' : 'sid'];
+}
+
+function deleteToken() {
+  localStorage.accessToken = '';
+  localStorage.refreshToken = '';
+  localStorage.sid = '';
+}
+
 function regUser(obj) {
-  return request('/auth/register', 'POST', obj);
+  return API.request('/auth/register', 'POST', obj);
 }
 
 function authUser(obj) {
-  return request('/auth/login', 'POST', obj);
+  return API.request('/auth/login', 'POST', obj);
 }
-
-// const obj = {
-//   email: 'user31232@example.com',
-//   password: 'qwerty123',
-// };
-// request('/auth/login', 'POST', obj).then(data => {
-//   const token = data.accessToken;
-//   localStorage.token = token;
-//   console.log(data);
-// });
-
-//request('/auth/login', 'POST', obj).then(console.log);
-
-// const obj = {
-//   accessToken: localStorage.token,
-// };
-// console.log(obj.accessToken);
-// request('/auth/logout', 'POST', obj).then(data => {
-//   // const token = data.accessToken;
-//   // localStorage.token = token;
-//   console.log(data);
-// });

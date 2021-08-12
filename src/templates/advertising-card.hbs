@@ -1,5 +1,10 @@
 <section class='hero'>
   <div class='hero__container'>
+     <ul class="hero__order-list">
+     {{#each this}}
+      <li class="hero__order-item"></li>
+       {{/each}}
+       </ul>
     <h1 class='visually-hidden'>самые лучшие товары только у нас</h1>
     <ul class='advertising-list list'>
       {{#each this}}
