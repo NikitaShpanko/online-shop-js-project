@@ -32,8 +32,10 @@ bodyNode.addEventListener('click', e => {
       else deleteIsFavoritesCard(getCardId);
     }
 
-    if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
-    else if (buttonClick.classList.contains('modal-card--bnInfo')) {
+    if (buttonClick.classList.contains('icon-fullscreen')) {
+      updateURL('?card=modal');
+      openModalCard(cardId.dataset.id);
+    } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
@@ -41,6 +43,7 @@ bodyNode.addEventListener('click', e => {
   }
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
+    updateURL('?card=modal');
     openModalCard(cardId.dataset.id);
   }
 
@@ -70,4 +73,13 @@ async function postIsFavoritesCard(getCardId) {
 
 async function deleteIsFavoritesCard(getCardId) {
   return API.request(`/call/favourite/${getCardId}`, 'DELETE', false, localStorage.accessToken);
+}
+
+function updateURL(url) {
+  if (history.pushState) {
+    const baseUrl =
+      window.location.protocol + '//' + window.location.host + window.location.pathname;
+    const newUrl = baseUrl + url;
+    history.pushState(null, null, newUrl);
+  }
 }
