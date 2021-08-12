@@ -1,9 +1,12 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
-import data from '../lib/api/get/request';
 
 store.register('query', query => {
+  const loadMoreRef = document.querySelector('.js-load-more');
+  loadMoreRef.style.opacity = `1`;
+
   if (query && query.search && query.search.length) {
+    loadMoreRef.style.opacity = `0`;
     //Добавляет параметр в URL
     const queryParams = new URLSearchParams();
     queryParams.set('search', query.search);
@@ -15,6 +18,7 @@ store.register('query', query => {
   }
 
   if (query && query.categories && query.categories.length) {
+    loadMoreRef.style.opacity = `0`;
     const currentCategoriesUrl = query.categories;
     const allPromise = [];
     currentCategoriesUrl.forEach(currentCategoryUrl => {
@@ -40,8 +44,9 @@ store.register('query', query => {
 
     return;
   }
-  // запрос для поиска "смотреть все""
+  // запрос для поиска "смотреть все"
   if (query && query.chosenCategory) {
+    loadMoreRef.style.opacity = `0`;
     const queryParams = new URLSearchParams();
     queryParams.set('chosenCategory', query.chosenCategory);
     window.history.pushState(null, null, '?' + queryParams.toString());
@@ -55,6 +60,10 @@ store.register('query', query => {
   }
 
   if (query && query.page) {
+    if (store.query.page >= 3) {
+      loadMoreRef.style.opacity = `0`;
+    }
+
     API.request(`/call?page=${query.page}`).then(data => {
       if (!data.error) {
         store.setProducts({ ...store.products, ...data });
