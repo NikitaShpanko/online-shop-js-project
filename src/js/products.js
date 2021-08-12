@@ -82,15 +82,17 @@ store.register('products', (pr, all) => {
   const arrowLefttRef = document.querySelector('button[data-action="left"]');
 
   document.querySelector('#root').addEventListener('click', e => {
-    if (e.target.dataset.action === 'right') {
-      e.target
+    const button = e.target.closest('button');
+    if (!button) return;
+    if (button.dataset.action === 'right') {
+      button
         .closest('.categories__container')
         .querySelector('.swiper-container')
         .swiper.slideNext();
     }
 
-    if (e.target.dataset.action === 'left') {
-      e.target
+    if (button.dataset.action === 'left') {
+      button
         .closest('.categories__container')
         .querySelector('.swiper-container')
         .swiper.slidePrev();
