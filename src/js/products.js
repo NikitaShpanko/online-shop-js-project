@@ -43,8 +43,6 @@ store.register('products', (pr, all) => {
     cat.addEventListener('click', e => {
       e.preventDefault();
       const chosenCategory = e.target.getAttribute('data-key');
-      console.log(chosenCategory);
-      debugger;
       store.setQuery({ chosenCategory });
     });
   });
