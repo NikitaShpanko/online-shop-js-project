@@ -6,27 +6,72 @@ import * as API from '../lib/api';
 import store from '../lib/store';
 import { from } from 'form-data';
 
-const mainNode = document.querySelector('main');
+const bodyNode = document.querySelector('body');
 
-mainNode.addEventListener('click', e => {
+// console.log(bodyNode.querySelectorAll('.card__all--content'));
+
+// const getIsFavoritesCard = API.request(
+//   '/call/favourites',
+//   'GET',
+//   false,
+//   localStorage.accessToken,
+// ).then(id =>
+//   id.cardList.forEach(card => {
+//     console.log(card);
+//   }),
+// );
+
+bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__all--content');
+  const cardIdModal = e.target.closest('.modal-card-conteiner');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
+      const getCardId = cardId.dataset.id;
       buttonClick.classList.toggle('isFavorites');
-      console.log('добавить товар в избранное');
+
+      if (buttonClick.classList.contains('isFavorites')) {
+        const postIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'POST',
+          false,
+          localStorage.accessToken,
+        );
+      } else {
+        const deleteIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'DELETE',
+          false,
+          localStorage.accessToken,
+        );
+      }
+    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      const getCardId = cardIdModal.dataset.id;
+      buttonClick.classList.toggle('isFavorites');
+
+      if (buttonClick.classList.contains('isFavorites')) {
+        const postIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'POST',
+          false,
+          localStorage.accessToken,
+        );
+      } else {
+        const deleteIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'DELETE',
+          false,
+          localStorage.accessToken,
+        );
+      }
     } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
     else if (buttonClick.classList.contains('load__more--button'))
-      console.log('Загрузка следующей страницы ');
-    else if (buttonClick.classList.contains('button__arow--left')) console.log('Товар слева');
-    else if (buttonClick.classList.contains('button__arow-right')) console.log('Товар справа');
-    else if (buttonClick.classList.contains('categories__titel--allCard'))
+      console.log('Загрузка следующей страницы');
+    else if (buttonClick.classList.contains('categories__titel--allCard')) {
       console.log('Загружается шаблон со всеми карточками');
-    else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
-      console.log('Добавление товара в избранное');
-    else if (buttonClick.classList.contains('modal-card--bnInfo')) {
+    } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
@@ -45,7 +90,12 @@ mainNode.addEventListener('click', e => {
 
 function openModalCard(id) {
   const data = store.products.getCard(id);
-  openModal(modalCard({ data }));
+  const dataUserId = data.userId;
+
+  const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
+    const obj = { ...data, ...id };
+    openModal(modalCard({ obj }));
+  });
 }
 
 function onSubmit(params) {
