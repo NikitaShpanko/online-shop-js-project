@@ -43,7 +43,7 @@ store.register('query', query => {
   // запрос для поиска "смотреть все""
   if (query && query.chosenCategory) {
     const queryParams = new URLSearchParams();
-    queryParams.set('categories', query.chosenCategory);
+    queryParams.set('chosenCategory', query.chosenCategory);
     window.history.pushState(null, null, '?' + queryParams.toString());
 
     API.request(`/call/specific/${query.chosenCategory}`).then(data => {
