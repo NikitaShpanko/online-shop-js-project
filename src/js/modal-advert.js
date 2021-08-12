@@ -67,7 +67,7 @@ const chang = e => {
       const src = ev.target.result;
       containerImg.insertAdjacentHTML(
         'afterbegin',
-        `<div class="containerImgg"> <img src="${src} alt="${file.name}" class="newImg"/> </div>`,
+        `<div class="containerImgg"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
       );
     };
     reader.readAsDataURL(file);
