@@ -23,7 +23,7 @@ const bodyNode = document.querySelector('body');
 
 bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
-  const cardId = e.target.closest('.card__all--content');
+  const cardId = e.target.closest('.card__article');
   const cardIdModal = e.target.closest('.modal-card-conteiner');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
@@ -89,11 +89,18 @@ bodyNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
-  const data = store.products.getCard(id);
+  //////////////////////////////////////////////////////
+  ////  ЭТО ВРЕМЕННЫЙ КОСТЫЛЬ,  А ТО ОПЯТЬ СЛОМАЛОСЬ! //
+  ////  КОГДА ПОДТЯНУ СВОЮ ЛОГИКУ, БУДЕТ СНОВА ПРОСТО //
+  ////           store.products.getCard(id)           //
+  //////////////////////////////////////////////////////
+  const data = new API.MainData(store.products).getCard(id);
+  //////////////////////////////////////////////////////
   const dataUserId = data.userId;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
     const obj = { ...data, ...id };
+    data.userId;
     openModal(modalCard({ obj }));
   });
 }

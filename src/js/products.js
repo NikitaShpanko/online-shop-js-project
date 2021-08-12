@@ -4,7 +4,6 @@ import categoriesTpl from '../templates/categories.hbs';
 import searchCardTpl from '../templates/search-allcard.hbs';
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
-import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 
 store.register('products', (pr, all) => {
   let products = null;
@@ -14,6 +13,8 @@ store.register('products', (pr, all) => {
     products = { ...pr };
     delete products.categoryList;
   }
+
+  console.log(all.query);
 
   if (all.query !== null && (all.query.search || all.query.chosenCategory)) {
     document.querySelector('#root').innerHTML = searchCardTpl({
@@ -40,8 +41,8 @@ store.register('products', (pr, all) => {
 
   showAllArr.forEach(cat => {
     cat.addEventListener('click', e => {
+      e.preventDefault();
       const chosenCategory = e.target.getAttribute('data-key');
-      console.log(chosenCategory);
       store.setQuery({ chosenCategory });
     });
   });
@@ -51,10 +52,6 @@ store.register('products', (pr, all) => {
     spaceBetween: 20,
     slidesPerGroup: 4,
     loopFillGroupWithBlank: true,
-    // navigation: {
-    //   nextEl: '.button__arow-right',
-    //   prevEl: '.button__arow--left',
-    // },
 
     breakpoints: {
       320: {
@@ -75,22 +72,18 @@ store.register('products', (pr, all) => {
     },
   });
 
-  console.log(swiper);
-
-  const arrowRightRef = document.querySelector('button[data-action="right"]');
-  console.log(arrowRightRef.dataset.action);
-  const arrowLefttRef = document.querySelector('button[data-action="left"]');
-
   document.querySelector('#root').addEventListener('click', e => {
-    if (e.target.dataset.action === 'right') {
-      e.target
+    const button = e.target.closest('button');
+    if (!button) return;
+    if (button.dataset.action === 'right') {
+      button
         .closest('.categories__container')
         .querySelector('.swiper-container')
         .swiper.slideNext();
     }
 
-    if (e.target.dataset.action === 'left') {
-      e.target
+    if (button.dataset.action === 'left') {
+      button
         .closest('.categories__container')
         .querySelector('.swiper-container')
         .swiper.slidePrev();
