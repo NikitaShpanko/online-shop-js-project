@@ -17,7 +17,7 @@ import store from './lib/store';
 import './js/auth-form';
 import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
-import './js/products';
+//import './js/products';
 import './js/query';
 
 API.Card.tpl = cardTpl;

@@ -51,9 +51,9 @@ export default async function goTo(link) {
           }
         } else {
           ads = await API.request('/call/ads');
-          store.products = await API.request('/call?page=1');
-          //?.append(await API.request('/call?page=2'))
-          //?.append(await API.request('/call?page=3'));
+          store.products = (await API.request('/call?page=1'))
+            ?.append(await API.request('/call?page=2'))
+            ?.append(await API.request('/call?page=3'));
           shortLink = '/';
           for (const param in search) {
             shortLink = setSearchParam(shortLink, param, search[param]);
