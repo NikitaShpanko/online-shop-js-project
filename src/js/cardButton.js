@@ -8,6 +8,19 @@ import { from } from 'form-data';
 
 const bodyNode = document.querySelector('body');
 
+// console.log(bodyNode.querySelectorAll('.card__all--content'));
+
+// const getIsFavoritesCard = API.request(
+//   '/call/favourites',
+//   'GET',
+//   false,
+//   localStorage.accessToken,
+// ).then(id =>
+//   id.cardList.forEach(card => {
+//     console.log(card);
+//   }),
+// );
+
 bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__all--content');
@@ -16,30 +29,38 @@ bodyNode.addEventListener('click', e => {
   if (buttonClick?.nodeName === 'BUTTON') {
     if (
       buttonClick.classList.contains('icon-heart-white') ||
-      buttonClick.classList.contains('modal-card--buttonIsFavorite')
+      buttonClick.classList.contains('icon-heart-white')
     ) {
-      //   const getIsFavoritesCard = API.request(
-      //     '/call/favourites',
-      //     'GET',
-      //     false,
-      //     localStorage.accessToken,
-      //   ).then(id =>
-      //     id.cardList.map(e => {
-      //       console.log(e._id);
-      //     }),
-      //   );
-
+      const getCardId = cardId.dataset.id;
       buttonClick.classList.toggle('isFavorites');
       if (buttonClick.classList.contains('isFavorites')) {
         const postIsFavoritesCard = API.request(
-          `/call/favourite/${cardId.dataset.id}`,
+          `/call/favourite/${getCardId}`,
           'POST',
           false,
           localStorage.accessToken,
         ).then(id => console.log(id));
       } else {
         const deleteIsFavoritesCard = API.request(
-          `/call/favourite/${cardId.dataset.id}`,
+          `/call/favourite/${getCardId}`,
+          'DELETE',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      }
+    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      const getCardId = cardId.dataset.id;
+      buttonClick.classList.toggle('isFavorites');
+      if (buttonClick.classList.contains('isFavorites')) {
+        const postIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'POST',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      } else {
+        const deleteIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
           'DELETE',
           false,
           localStorage.accessToken,

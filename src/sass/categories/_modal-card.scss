@@ -168,13 +168,14 @@
 .modal-card--userInfo {
   width: 100%;
   height: 60px;
-  padding: 10px 20px;
-  background-color: var(--color-highlight);
-  color: var(--color-main-background);
+  padding: 5px 20px;
+  color: var(--color-highlight);
+  border: 2px solid var(--color-highlight);
+
   text-align: left;
   text-transform: none;
   font-weight: bold;
-  border: none;
+
   margin-bottom: 20px;
 }
 
