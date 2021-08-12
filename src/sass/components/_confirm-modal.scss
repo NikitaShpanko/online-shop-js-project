@@ -1,0 +1,44 @@
+.modal-confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 205px;
+  padding: 45px 18px;
+
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+  font-weight: bold;
+
+  box-shadow: 15px 15px 55px rgba(0, 0, 0, 0.3);
+
+  background-color: var(--color-main-background);
+
+  @media screen and (min-width: 320px) {
+    width: 290px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 650px;
+    min-height: 230px;
+    padding: 61px 104px;
+  }
+}
+
+.confirm__btn-wrapper {
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm__button {
+  min-width: 118px;
+  height: 50px;
+
+  @media screen and (min-width: 768px) {
+    min-width: 210px;
+    height: 60px;
+  }
+}

@@ -1,9 +1,7 @@
 import Item from './item';
 
-/**
- * Card
- */
 export default class Card extends Item {
+  static tpl;
   /**
    * @type {string[]}
    */

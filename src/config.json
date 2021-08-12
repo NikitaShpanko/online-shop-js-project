@@ -2,5 +2,6 @@
   "apiURL": "https://callboard-backend.goit.global",
   "projectName": "online-shop-js-project",
   "rusNames": { "sales": "Распродажа" },
+  "specialCategory": "sales",
   "adCount": 6
 }

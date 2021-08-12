@@ -14,12 +14,14 @@
 @import './base/container';
 
 // COMPONENTS
+@import './components/root';
 @import './components/buttons';
 @import './components/backdrop';
 @import './components/modal-close-button';
 @import './components/authorization-form';
 @import './components/modal-advert';
 @import './components/modal-advert-edit';
+@import './components/confirm-modal';
 
 // LAYOUT
 @import './layout/header';

@@ -1,6 +1,6 @@
 {{#each this}}
-<div class="card__all--content">
-  <article class='card__article'>
+<div class="card__all--content  swiper-slide">
+  <article class='card__article' data-id="{{_id}}">
     <div class='card'>
         <button class="icon-heart-white" type="button">
           <svg class="icon" width="16" height="16">
@@ -14,7 +14,7 @@
           </svg>
         </button>
       <div class='card__conteiner'>
-        <img class='card__img' data-id="{{_id}}" src='{{imageUrls.[0]}}' alt='{{title}}' />
+        <img class='card__img' src='{{imageUrls.[0]}}' alt='{{title}}' />
       </div>
       <div class='card__name--price'>
         <h3 class='card__title'>{{title}}</h3>
@@ -29,11 +29,5 @@
       </div>
     </div>
   </article>
-  <ul class="card__poiter--list">
-    <li class="card__poiter active__color"></li>
-    <li class="card__poiter"></li>
-    <li class="card__poiter"></li>
-    <li class="card__poiter"></li>
-  </ul>
 </div>
 {{/each}}

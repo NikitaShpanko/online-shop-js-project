@@ -2,6 +2,8 @@
   margin-right: auto;
   margin-left: auto;
   width: 100%;
+  position: relative;
+  user-select: none;
 
   @media screen and (min-width: 320px) {
     width: 320px;
@@ -34,6 +36,10 @@
 .advertising-list__item {
   padding: 15px;
 
+  &:not(:first-child) {
+    cursor: pointer;
+  }
+
   @media screen and (max-width: 767px) {
     min-height: 366px;
     &:not(:first-child) {
@@ -43,6 +49,12 @@
 
   @media screen and (max-width: 1279px) {
     &:nth-child(n + 4) {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    &:nth-child(n + 7) {
       display: none;
     }
   }
@@ -80,6 +92,14 @@
   }
 }
 
+.advertising-list__item:nth-child(4) {
+  order: 2;
+}
+
+.advertising-list__item:nth-child(5) {
+  order: 1;
+}
+
 .advertising-list__item:nth-child(2),
 .advertising-list__item:nth-child(4) {
   background-color: var(--color-secondary-advertising-card);
@@ -111,6 +131,7 @@
 .advertising-list__content-wrapper {
   display: flex;
   flex-direction: column;
+  text-align: right;
 }
 
 .advertising-list__title {
@@ -153,4 +174,36 @@
   @media screen and (min-width: 1280px) {
     width: 210px;
   }
+}
+
+.hero__order-list {
+  display: flex;
+  position: absolute;
+  list-style: none;
+  left: 50%;
+  top: 90%;
+  transform: translateX(-50%);
+
+  @media screen and (min-width: 768px) {
+    top: 55%;
+  }
+  @media screen and (min-width: 1280px) {
+    top: 60%;
+    left: 33%;
+  }
+}
+
+.hero__order-item {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #5e6671;
+  cursor: pointer;
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.is-active-hero-item {
+  background-color: #ffffff;
 }
