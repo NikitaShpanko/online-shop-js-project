@@ -190,7 +190,6 @@
 .modal-card--buttonToShare {
   display: flex;
   justify-items: center;
-  align-items: center;
   background-color: inherit;
   padding-left: 0px;
   text-align: center;
@@ -223,14 +222,37 @@
   display: none;
 }
 
-.modal-card--heart {
+.modal-card--heart,
+.modal-card--heartIsFavorite,
+.modal-card--share {
   width: 16px;
   height: 16px;
-  background-image: url('/images/svg/heart-red.svg');
-
   background-repeat: no-repeat;
   background-size: contain;
-  & .modal-card--button.IsFavorite {
-    background-image: url('/images/svg/heart-w.svg');
+}
+
+.modal-card--buttonIsFavorite {
+  & .modal-card--heart {
+    display: block;
+    background-image: url('/images/svg/heard-grey.svg');
   }
+
+  & .modal-card--heartIsFavorite {
+    display: none;
+    background-image: url('/images/svg/heard-red.svg');
+  }
+}
+
+.modal-card--buttonIsFavorite.isFavorites {
+  & .modal-card--heart {
+    display: none;
+  }
+
+  & .modal-card--heartIsFavorite {
+    display: block;
+  }
+}
+
+.modal-card--share {
+  background-image: url('/images/svg/share.svg');
 }
