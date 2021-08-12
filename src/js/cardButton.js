@@ -30,7 +30,6 @@ bodyNode.addEventListener('click', e => {
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
       const getCardId = cardId.dataset.id;
-      console.log(getCardId);
       buttonClick.classList.toggle('isFavorites');
 
       if (buttonClick.classList.contains('isFavorites')) {
@@ -39,18 +38,17 @@ bodyNode.addEventListener('click', e => {
           'POST',
           false,
           localStorage.accessToken,
-        ).then(id => console.log(id));
+        );
       } else {
         const deleteIsFavoritesCard = API.request(
           `/call/favourite/${getCardId}`,
           'DELETE',
           false,
           localStorage.accessToken,
-        ).then(id => console.log(id));
+        );
       }
     } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
       const getCardId = cardIdModal.dataset.id;
-      console.log(getCardId);
       buttonClick.classList.toggle('isFavorites');
 
       if (buttonClick.classList.contains('isFavorites')) {
@@ -59,32 +57,14 @@ bodyNode.addEventListener('click', e => {
           'POST',
           false,
           localStorage.accessToken,
-        ).then(id => console.log(id));
+        );
       } else {
         const deleteIsFavoritesCard = API.request(
           `/call/favourite/${getCardId}`,
           'DELETE',
           false,
           localStorage.accessToken,
-        ).then(id => console.log(id));
-      }
-    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
-      const getCardId = cardId.dataset.id;
-      buttonClick.classList.toggle('isFavorites');
-      if (buttonClick.classList.contains('isFavorites')) {
-        const postIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'POST',
-          false,
-          localStorage.accessToken,
-        ).then(id => console.log(id));
-      } else {
-        const deleteIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'DELETE',
-          false,
-          localStorage.accessToken,
-        ).then(id => console.log(id));
+        );
       }
     } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
     else if (buttonClick.classList.contains('load__more--button'))
@@ -114,7 +94,6 @@ function openModalCard(id) {
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
     const obj = { ...data, ...id };
-    console.log(obj);
     openModal(modalCard({ obj }));
   });
 }
