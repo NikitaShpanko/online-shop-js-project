@@ -45,4 +45,33 @@ store.register('products', (pr, all) => {
       store.setQuery({ chosenCategory });
     });
   });
+
+  const swiper = new Swiper('.swiper-container', {
+    slidesPerView: 4,
+    spaceBetween: 20,
+    slidesPerGroup: 4,
+    loopFillGroupWithBlank: true,
+    navigation: {
+      nextEl: '.button__arow-right',
+      prevEl: '.button__arow--left',
+    },
+
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 22,
+      },
+      1280: {
+        slidesPerView: 4,
+        spaceBetween: 20,
+      },
+    },
+  });
 });

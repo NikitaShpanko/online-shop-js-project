@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "inline-source": "^7.2.0",
+    "siema": "^1.5.1",
     "swiper": "^6.8.1"
   }
 }
