@@ -1,60 +1,65 @@
 <div class='backdrop'>
     <div class='modal modal-card'>
-        
-        <div class="modal-card-conteiner">
+        {{#each this}}
+        <div class="modal-card-conteiner" data-id="{{_id}}">
             <div class="modal-card--name isHibenTitelOne">
-                <p class="modal-card--titel">title</p>
-                <p class="modal-card--cod">Код товару | 105-С</p>
+                <p class="modal-card--titel">{{this.title}}</p>
+                <p class="modal-card--cod">Категория товара | {{this._id}}</p>
             </div>
             <div class="modal-card--imgContiner">
                 <div class="modal-card--img">
-                    <img class="modal-card--imgCard" src="#" alt="">
+                    <img class="modal-card--imgCard" src="{{this.imageUrls.[0]}}" alt="картинка">
                 </div>
                 <div>
                     <ul class="modal-card--list">
-                        <li class="modal-card--poiner"></li>
+                        {{#each imageUrls}}
+                        <li class="modal-card--poiner">
+                            <img class="modal-card--imgPreview" src="{{this}}" alt="картинка"> 
+                        </li>
+                        {{/each}}
                     </ul>
                 </div>
             </div>
 
             <div class="modal-card-descriptionAll">
                 <div class="modal-card--name isHibenTitelTwo">
-                    <p class="modal-card--titel">title</p>
-                    <p class="modal-card--cod">Код товару | 105-С</p>
+                    <p class="modal-card--titel">{{title}}</p>
+                    <p class="modal-card--cod">Категория товара | {{category}}</p>
                 </div>
-                    <p class="modal-card--price">1,200 00 €</p>
+                    <p class="modal-card--price">{{price}} &#8364</p>
                     <div class="modal-card--info">
                         <button class="modal-card--bnInfo" type="button">Информация о продавце</button>
+                    </div>
+
+                    <div class="modal-card--userInfo isDispleyNone">
+                            <p> email: {{this.email}}</p>
+                            <p> phone: {{this.phone}}</p>
+                            <p> {{this.registrationDate}}</p>
                     </div>
                     
                     <div class="modal-card--isFavorite">
                         <button class="modal-card--buttonIsFavorite" type="button">
                             <span>В избранное</span>
-                            <svg class="icon" width="16" height="16">
-                                <use class="icon-heart" href="/sprite.5ec50489.svg#icon-heart-wihte"></use>
-                                <use class="icon-heart--favorites" href="/sprite.5ec50489.svg#icon-heart"></use>
+                            <svg class="icon" width="16" height="16" class="modal-card--heart" >
+            <use class="icon-heart" href="/sprite.5ec50489.svg#icon-heart-wihte"></use>
+            <use class="icon-heart--favorites" href="/sprite.5ec50489.svg#icon-heart"></use>
                             </svg>
                         </button>
+
                         <button class="modal-card--buttonToShare" type="button">           
                             <span>Поделиться</span>
                             <svg class="icon" width="16" height="16">
-                                <use class="icon-heart" href="/sprite.5ec50489.svg#icon-Group"></use>
+                                <use class="icon-heart--share" href="/sprite.5ec50489.svg#icon-Group"></use>
                             </svg>
                         </button>
                     </div>
                     <div>
                         <p class="modal-card--description">Описание</p>
-                        <p class="modal-card--descriptionAll">Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает
-                            сосредоточиться. Lorem Ipsum используют
-                            потому, что тот обеспечивает более или менее стандартное заполнение шаблона.
-                        </p>
-                    
+                        <p class="modal-card--descriptionAll">{{description}}</p>
                     </div>
-
-
-
             </div>
         </div>
+        {{/each}}
        
         <button class='modal-close-button' type='button' aria-label='Close modal'>
             <svg class='modal-close-button__icon' width='14' height='14' viewBox='0 0 32 32'>

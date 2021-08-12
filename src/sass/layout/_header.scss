@@ -13,6 +13,11 @@
     padding-bottom: 15px;
   }
 
+  .is-orange {
+    color: var(--color-highlight);
+    border: 1px solid var(--color-highlight);
+  }
+
   &__icon-logo {
     width: 64px;
     height: 40px;
@@ -21,7 +26,7 @@
   &__icon {
     fill: var(--color-header-text-ads-back);
     &:hover {
-      fill: var(--color-highlight)
+      fill: var(--color-highlight);
     }
   }
 
@@ -59,23 +64,27 @@
     margin-bottom: 40px;
   }
 
-  &__account.registration {
+  .reg-is-hidden {
     display: none;
   }
 
-  &__account.user-account {
+  .user-account {
     display: flex;
     position: relative;
     padding: 12px 0;
   }
 
-  .user-account .link{
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      span {
-        margin-left: 10px;
-      }
+  .cab-is-hidden {
+    display: none;
+  }
+
+  .user-account .link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    span {
+      margin-left: 10px;
+    }
   }
 
   &__account-link:not(:first-child) {
@@ -90,10 +99,10 @@
   &__account-link:hover {
     &:hover,
     &:focus {
-      color: var(--color-highlight)
+      color: var(--color-highlight);
     }
   }
-  
+
   &__controls {
     margin-bottom: 30px;
     display: flex;
@@ -108,7 +117,7 @@
       margin-left: 13px;
     }
     &:hover {
-      color: var(--color-highlight)
+      color: var(--color-highlight);
     }
   }
   .controls-btn:not(:last-child) {
@@ -187,7 +196,7 @@
     &__search-icon {
       fill: black;
       &:hover {
-        fill: var(--color-highlight)
+        fill: var(--color-highlight);
       }
     }
 
@@ -214,7 +223,7 @@
       width: 206px;
       height: 94px;
       padding: 20px;
-      background-color: #FFFFFF;
+      background-color: #ffffff;
       position: absolute;
       z-index: 200;
       top: 40px;
@@ -222,7 +231,7 @@
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       display: none;
     }
-  
+
     &__user-account-list {
       display: flex;
       flex-direction: column;
@@ -231,11 +240,11 @@
     &__user-account-item:hover {
       color: var(--color-highlight);
     }
-  
+
     &__user-account-item:not(:last-child) {
       margin-bottom: 20px;
     }
-  
+
     .user-account:hover &__user-account-wrapper,
     &__user-account-wrapper:hover {
       display: block;
@@ -287,7 +296,7 @@
     }
 
     &__filter-item {
-      margin-bottom:20px;
+      margin-bottom: 20px;
       &:not(:last-child) {
         margin-right: 10px;
       }
@@ -327,8 +336,8 @@
     }
 
     &__desk-filter {
-       top: -95px;
-       opacity: 1;
+      top: -95px;
+      opacity: 1;
     }
 
     &__filter-buttons {

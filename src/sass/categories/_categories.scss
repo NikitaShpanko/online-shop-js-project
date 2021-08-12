@@ -60,17 +60,6 @@
 
   @media screen and (min-width: 768px) {
     height: 306px;
-    padding: 0px 16px;
-  }
-}
-
-.categories__card--all {
-  display: flex;
-  flex-wrap: wrap;
-
-  @media screen and (min-width: 768px) {
-    height: 306px;
-    padding: 0px 16px;
   }
 }
 
@@ -129,4 +118,54 @@
 
 .button__noCard {
   fill: #a2a2a2;
+}
+.categories__container {
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    width: 752px;
+    .swiper-container {
+      width: 688px;
+    }
+    .button__arow--left,
+    .button__arow-right {
+      top: 177px !important;
+    }
+    .button__arow-right {
+      right: 14px !important;
+    }
+
+    .button__arow--left {
+      left: 14px !important;
+    }
+    .swiper-slide {
+      width: 333px !important;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 1236px;
+    .swiper-container {
+      width: 1204px;
+    }
+
+    .swiper-slide {
+      width: 286px !important;
+    }
+
+    .swiper-wrapper {
+      padding: 0;
+    }
+    .button__arow--left,
+    .button__arow-right {
+      top: 159px !important;
+    }
+    .button__arow-right {
+      right: 0 !important;
+    }
+
+    .button__arow--left {
+      left: 0 !important;
+    }
+  }
 }

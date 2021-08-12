@@ -2,6 +2,7 @@
   margin-right: auto;
   margin-left: auto;
   width: 100%;
+  position: relative;
 
   @media screen and (min-width: 320px) {
     width: 320px;
@@ -43,6 +44,12 @@
 
   @media screen and (max-width: 1279px) {
     &:nth-child(n + 4) {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    &:nth-child(n + 7) {
       display: none;
     }
   }
@@ -153,4 +160,35 @@
   @media screen and (min-width: 1280px) {
     width: 210px;
   }
+}
+
+.hero__order-list {
+  display: flex;
+  position: absolute;
+  list-style: none;
+  left: 50%;
+  top: 90%;
+  transform: translateX(-50%);
+
+  @media screen and (min-width: 768px) {
+    top: 55%;
+  }
+  @media screen and (min-width: 1280px) {
+    top: 60%;
+    left: 33%;
+  }
+}
+
+.hero__order-item {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #5e6671;
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.is-active-hero-item {
+  background-color: #ffffff;
 }

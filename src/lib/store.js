@@ -10,8 +10,9 @@ export default {
 
   categories: null,
   products: null,
-  query: null, // { categories: [], search: '' }
+  query: null, // { categories: [], search: '', page: 1 }
   isOnline: false,
+  heroData: null,
 
   // set(prop, value) {
   //   this[prop] = value;
@@ -36,6 +37,11 @@ export default {
   setIsOnline(isOnline) {
     this.isOnline = isOnline;
     this.notify('isOnline', this.isOnline);
+  },
+
+  setHeroData(heroData) {
+    this.heroData = heroData;
+    this.notify('heroData', this.heroData);
   },
 
   addEvent: function (name) {

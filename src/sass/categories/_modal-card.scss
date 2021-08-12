@@ -63,10 +63,14 @@
 
 .modal-card--img {
   margin: 0 auto;
+  overflow: hidden;
+  object-fit: contain;
+  text-align: center;
   width: 253px;
   height: 253px;
-  background: #000;
   margin-bottom: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
   @media screen and (min-width: 768px) {
     width: 281px;
     height: 333px;
@@ -78,22 +82,33 @@
 }
 
 .modal-card--imgCard {
-  margin-bottom: 15px;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .modal-card--list {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
   margin-bottom: 30px;
+
+  @media screen and (min-width: 768px) {
+    justify-content: start;
+  }
 }
 
 .modal-card--poiner {
+  overflow: hidden;
+  cursor: pointer;
+
   &:not(:last-child) {
     margin-right: 5px;
   }
 
   list-style: none;
-  background: #cdcdcd;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -101,6 +116,28 @@
   &.active__color {
     background: var(--color-highlight);
   }
+
+  @media screen and (min-width: 768px) {
+    width: 52px;
+    height: 56px;
+    border-radius: 0%;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 77px;
+    height: 73px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.modal-card--imgPreview {
+  height: 100%;
+  object-fit: cover;
+
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .modal-card--price {
@@ -124,7 +161,26 @@
   font-weight: bold;
   border: none;
   margin-bottom: 20px;
+  cursor: pointer;
+  @media screen and (min-width: 1280px) {
+    width: 255px;
+  }
 }
+
+.modal-card--userInfo {
+  width: 100%;
+  height: 60px;
+  padding: 5px 20px;
+  color: var(--color-highlight);
+  border: 2px solid var(--color-highlight);
+
+  text-align: left;
+  text-transform: none;
+  font-weight: bold;
+
+  margin-bottom: 20px;
+}
+
 .modal-card--isFavorite {
   display: flex;
   flex-wrap: nowrap;
@@ -141,6 +197,7 @@
   border: none;
   font-weight: 300;
   color: var(--color-modal-card-code);
+  cursor: pointer;
   & span {
     display: inline-block;
     margin-right: 12px;
@@ -160,4 +217,8 @@
 
 .modal-card--descriptionAll {
   font-weight: 300;
+}
+
+.isDispleyNone {
+  display: none;
 }
