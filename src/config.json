@@ -1,8 +1,13 @@
 {
   "apiURL": "https://callboard-backend.goit.global",
   "projectName": "online-shop-js-project",
-  "rusNames": { "sales": "Распродажа" },
+  "rusNames": {
+    "sales": "Распродажа",
+    "searchResults": "Результаты поиска",
+    "own": "Мои объявления",
+    "favourite": "Избранное"
+  },
   "specialCategory": "sales",
   "adCount": 6,
-  "searchParams": ["categories", "query", "redirect"]
+  "searchParams": ["categories", "search", "redirect"]
 }

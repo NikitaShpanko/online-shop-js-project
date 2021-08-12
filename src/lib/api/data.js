@@ -41,7 +41,7 @@ export default class Data extends Item {
    * @returns {Category}
    */
   getCategory(name) {
-    return this.categoryList.find(category => category.name === name);
+    return this.categoryList.find(category => category.origName === name);
   }
 
   /**
@@ -67,7 +67,6 @@ export default class Data extends Item {
         filtered.push(
           new Category({
             name: category.name,
-            link: `/category/${category.name}`,
             cardList: catFiltered,
           }),
         );

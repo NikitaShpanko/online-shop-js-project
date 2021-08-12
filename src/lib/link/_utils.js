@@ -1,8 +1,29 @@
-// import * as API from '../api';
+import * as API from '../api';
+import store from '../store';
 import adsHero from '../../templates/advertising-card.hbs';
 import cardTpl from '../../templates/card.hbs';
 import categoriesTpl from '../../templates/categories.hbs';
 import searchCardTpl from '../../templates/search-allcard.hbs';
+
+function russify(name) {
+  const rusName = store.rusCategoryNames[name];
+  return rusName ? rusName : name;
+}
+
+/**
+ * @param {API.Category} category
+ * @param {string} linkBefore - должен начинаться и заканчиваться слэшем,
+ * иначе не создаётся вообще
+ */
+function getCatReady(name, cardList, linkBefore = '') {
+  const category = {};
+  category.name = russify(name);
+  category.card = cardTpl(cardList);
+  if (linkBefore) {
+    category.link = linkBefore + category.name;
+  }
+  return category;
+}
 
 /**
  * @param {string[]} pathList
@@ -19,12 +40,19 @@ export function textAfter(pathList, keyword) {
  * @param {string} filterString
  * @param {boolean} clear
  */
-export function renderData(data, filterString, clear = true) {
-  const html = categoriesTpl(data?.filter(filterString));
+export function renderData(data, filterString, linkBefore, clear = true) {
+  const catList = data?.filter(filterString);
+  if (!catList) return;
+
+  catList.forEach(cat => {
+    if (linkBefore) cat.link = linkBefore + cat.name;
+    cat.name = russify(cat.name);
+  });
+  const html = categoriesTpl(catList);
   if (clear) {
-    document.querySelector('main').innerHTML = html;
+    document.querySelector('#root').innerHTML = html;
   } else {
-    document.querySelector('main').insertAdjacentHTML('beforeend', html);
+    document.querySelector('#root').insertAdjacentHTML('beforeend', html);
   }
   console.log('DATA', data?.filter(filterString), filterString);
 }
@@ -33,18 +61,16 @@ export function renderData(data, filterString, clear = true) {
  * @param {object} category
  * @param {string} filterString
  */
-export function renderCategory(category, filterString) {
-  document.querySelector('main').innerHTML = searchCardTpl({
-    name: category.name,
-    card: cardTpl(category?.filter(filterString)),
-  });
-  console.log('CATEGORY', category?.filter(filterString), filterString);
+export function renderCategory(category, filterString, linkBefore) {
+  document.querySelector('#root').innerHTML = searchCardTpl(
+    getCatReady(category.name, category?.filter(filterString), linkBefore),
+  );
 }
 
 /**
  * @param {object} adsObj
  */
 export function renderAds(adsObj) {
-  document.querySelector('main').innerHTML = adsHero(adsObj);
+  document.querySelector('#hero-root').innerHTML = adsObj ? adsHero(adsObj) : '';
   console.log('ADS', adsObj);
 }

@@ -10,7 +10,7 @@ const mainNode = document.querySelector('main');
 
 mainNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
-  const cardId = e.target.closest('.card__all--content');
+  const cardId = e.target.closest('.card__article');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {

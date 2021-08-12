@@ -13,7 +13,7 @@ import config from './config.json';
 import * as API from './lib/api';
 import * as Link from './lib/link';
 import store from './lib/store';
-import './js/hero';
+//import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
@@ -24,11 +24,13 @@ API.Card.tpl = cardTpl;
 
 (async () => {
   let rusCategoryNames = await API.get.categoryNames();
-  rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
   store.setCategories(rusCategoryNames);
+
+  store.rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
 
   const categories = getUrlCategories();
   //store.setQuery({ categories });
+  Link.init();
 
-  console.log(await Link.goTo(location.href));
+  Link.goTo(location.href);
 })();

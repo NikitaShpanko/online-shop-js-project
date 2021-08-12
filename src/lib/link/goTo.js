@@ -10,24 +10,25 @@ import * as Modal from '../../js/modal-control';
 import * as API from '../api';
 import store from '../store';
 
+import config from '../../config.json';
 /**
  * @param {string} link
  */
 export default async function goTo(link) {
+  let ads = null;
+  let linkPrefix = '';
   let { pathList, search, shortLink } = parse(link);
   const filterString = search.categories;
   if (pathList.includes('profile')) {
     if (store.isOnline && !store.isOnline.error) {
+      linkPrefix = '/profile/';
       const possibleCategory = textAfter(pathList, 'profile');
       if (possibleCategory === 'own') {
-        renderCategory(await API.get.request('​/call/own', localStorage.accessToken), filterString);
+        store.products = await API.get.request('​/call/own', localStorage.accessToken);
       } else if (possibleCategory === 'favourite') {
-        renderCategory(
-          await API.get.request('​/call/favourites', localStorage.accessToken),
-          filterString,
-        );
+        store.products = await API.get.request('​/call/favourites', localStorage.accessToken);
       } else {
-        renderData(await API.get.request('/user', localStorage.accessToken), filterString);
+        store.products = await API.get.request('/user', localStorage.accessToken);
       }
     } else {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
@@ -36,24 +37,23 @@ export default async function goTo(link) {
     if (pathList.includes('login')) {
       Modal.openModal(authorizationFormTpl()); //actually need some function here
     } else {
-      if (search.query) {
-        renderCategory(
-          await API.request(setSearchParam('/call/find', 'search', search.query)),
-          filterString,
-        );
+      if (search.search) {
+        store.products = await API.request(setSearchParam('/call/find', 'search', search.search));
       } else {
+        linkPrefix = '/category/';
         const possibleCategory = textAfter(pathList, 'category');
         if (possibleCategory) {
-          renderCategory(await API.request(`/call/specific/${possibleCategory}`), filterString);
+          if (possibleCategory === config.specialCategory) {
+            if (!store.products) store.products = await API.request('/call?page=1');
+            store.products = store.products.getCategory(possibleCategory);
+          } else {
+            store.products = await API.request(`/call/specific/${possibleCategory}`);
+          }
         } else {
-          renderAds(await API.request('/call/ads'));
-          renderData(
-            (await API.request('/call?page=1'))
-              ?.append(await API.request('/call?page=2'))
-              ?.append(await API.request('/call?page=3')),
-            filterString,
-            false,
-          );
+          ads = await API.request('/call/ads');
+          store.products = await API.request('/call?page=1');
+          //?.append(await API.request('/call?page=2'))
+          //?.append(await API.request('/call?page=3'));
           shortLink = '/';
           for (const param in search) {
             shortLink = setSearchParam(shortLink, param, search[param]);
@@ -62,6 +62,17 @@ export default async function goTo(link) {
       }
     }
   }
+
+  renderAds(ads);
+
+  if (store.products instanceof API.Category) {
+    renderCategory(store.products, filterString, linkPrefix);
+  } else if (store.products instanceof API.Data) {
+    renderData(store.products, filterString, linkPrefix);
+  } else {
+    console.log('why the hell?', store.products);
+  }
+
   ////////////////////////////////////////////////
   const swiper = new Swiper('.swiper-container', {
     slidesPerView: 4,
