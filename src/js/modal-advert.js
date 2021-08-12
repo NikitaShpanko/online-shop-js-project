@@ -70,7 +70,7 @@ const chang = e => {
       // containerImg.insertAdjacentHTML('afterend', `<img src="${ev.target.result}" width='150' height='150'`)
       containerImg.insertAdjacentHTML(
         'afterbegin',
-        `<div class="addCont"> <img src="${src} alt="${file.name}" class="newImg"/></div> `,
+        `<div class="addCont"> <img src="${src}" alt="${file.name}" class="newImg"/></div> `,
       );
     };
     reader.readAsDataURL(file);
