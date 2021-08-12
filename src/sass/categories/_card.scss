@@ -183,3 +183,11 @@
 .icon-heart-wihte.isFavorites .icon-heart {
   display: none;
 }
+
+.swiper-pagination {
+  bottom: -2px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--color-highlight) !important;
+}

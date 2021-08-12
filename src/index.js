@@ -16,6 +16,7 @@ import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
 import './js/products';
 import './js/query';
+import './js/load-more';
 
 API.Card.tpl = cardTpl;
 
@@ -31,12 +32,13 @@ API.login(email, password)
 //.then(data => console.log(data.filter('transport')));
 ///////////
 ///////////
-API.request('/call?page=1').then(data => console.log(data.filter('businessAndServices')));
+//API.request('/call?page=1').then(data => console.log(data.filter('businessAndServices')));
 ///////////
 ///////////
 
 API.get.categoryNames().then(rusCategoryNames => {
   rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
+  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
 
   const categories = getUrlCategories();
