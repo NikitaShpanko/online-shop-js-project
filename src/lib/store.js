@@ -10,7 +10,7 @@ export default {
 
   categories: null,
   products: null,
-  query: null, // { categories: [], search: '' }
+  query: null, // { categories: [], search: '', page: 1 }
   isOnline: false,
   heroData: null,
 

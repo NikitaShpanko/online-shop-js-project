@@ -1,15 +1,15 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
+import data from '../lib/api/get/request';
 
-store.register('query', (query) => {
+store.register('query', query => {
   if (query && query.search && query.search.length) {
     //Добавляет параметр в URL
     const queryParams = new URLSearchParams();
     queryParams.set('search', query.search);
-    window.history.pushState(null, null, "?"+queryParams.toString());
-    
-    API.request(`/call/find?search=${query.search}`)
-      .then(data => store.setProducts(data));
+    window.history.pushState(null, null, '?' + queryParams.toString());
+
+    API.request(`/call/find?search=${query.search}`).then(data => store.setProducts(data));
 
     return;
   }
@@ -18,13 +18,13 @@ store.register('query', (query) => {
     const currentCategoriesUrl = query.categories;
     const allPromise = [];
     currentCategoriesUrl.forEach(currentCategoryUrl => {
-      allPromise.push(API.request(`/call/specific/${currentCategoryUrl}`))
-    })
+      allPromise.push(API.request(`/call/specific/${currentCategoryUrl}`));
+    });
 
     const queryParams = new URLSearchParams();
     queryParams.set('categories', currentCategoriesUrl);
-    window.history.pushState(null, null, "?"+queryParams.toString());
-    
+    window.history.pushState(null, null, '?' + queryParams.toString());
+
     Promise.all(allPromise).then(data => {
       const res = {};
       if (data && data.length) {
@@ -33,46 +33,35 @@ store.register('query', (query) => {
             const cat = row[0].category;
             res[cat] = row;
           }
-        })
+        });
       }
-      store.setProducts(res)
+      store.setProducts(res);
     });
 
     return;
   }
   // запрос для поиска "смотреть все""
-  // if (query && query.chosenCategory) {
-  //   const currentCategoriesUrl = [query.chosenCategory];
-  //   const allPromise = [];
-  //   currentCategoriesUrl.forEach(currentCategoryUrl => {
-  //     allPromise.push(API.request(`/call/specific/${currentCategoryUrl}`))
-  //   })
+  if (query && query.chosenCategory) {
+    const queryParams = new URLSearchParams();
+    queryParams.set('categories', query.chosenCategory);
+    window.history.pushState(null, null, '?' + queryParams.toString());
 
-  //   const queryParams = new URLSearchParams();
-  //   queryParams.set('categories', currentCategoriesUrl);
-  //   window.history.pushState(null, null, "?"+queryParams.toString());
-    
-  //   Promise.all(allPromise).then(data => {
-  //     const res = {};
-  //     if (data && data.length) {
-  //       data.forEach(row => {
-  //         if (row && row.length) {
-  //           const cat = row[0].category;
-  //           res[cat] = row;
-  //         }
-  //       })
-  //     }
-  //     store.setProducts(res)
-  //   });
+    API.request(`/call/specific/${query.chosenCategory}`).then(data => {
+      store.setProducts(data);
+      console.log(data);
+    });
 
-  //   return;
-  // }
+    return;
+  }
+
+  if (query && query.page) {
+    if (!data.error)
+      API.request(`/call?page=${query.page}`).then(data =>
+        store.setProducts({ ...store.products, ...data }),
+      );
+  }
 
   window.history.pushState(null, null, '/');
 
-  const page = 1
-    API.request(`/call?page=${page}`)
-    .then(data => store.setProducts(data));
-
+  API.request(`/call?page=1`).then(data => store.setProducts(data));
 });
-
