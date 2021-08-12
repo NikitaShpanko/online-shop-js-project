@@ -51,8 +51,7 @@ document.querySelector('.modal-close-button').addEventListener('click', () => {
 //     inputPrice.value = inputPrice.value.replace(/[^\d-]/g, '');
 //   });
 // });
-
-const inp = document.querySelector('.containerImg_inp');
+const inp = document.querySelector('.containerImgg_inp');
 const containerImg = document.querySelector('.containerImg');
 const chang = e => {
   if (!e.target.files.length) return;
@@ -66,11 +65,9 @@ const chang = e => {
 
     reader.onload = ev => {
       const src = ev.target.result;
-      console.log(ev.target.result);
-      // containerImg.insertAdjacentHTML('afterend', `<img src="${ev.target.result}" width='150' height='150'`)
       containerImg.insertAdjacentHTML(
         'afterbegin',
-        `<div class="addCont"> <img src="${src} alt="${file.name}" class="newImg"/></div> `,
+        `<div class="containerImgg"> <img src="${src} alt="${file.name}" class="newImg"/> </div>`,
       );
     };
     reader.readAsDataURL(file);
@@ -78,6 +75,3 @@ const chang = e => {
 };
 inp.addEventListener('change', chang);
 
-inp.addEventListener('click', () => {
-  document.querySelector('.containerImg_add').style.display = 'none';
-});

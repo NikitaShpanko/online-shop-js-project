@@ -1,4 +1,4 @@
-<div class="backdrop add">
+<div class="backdrop is-hidden add">
   <div class="modal modal-adv">
     <button type="button" class="modal-close-button">
       <svg class="modal-close-button__icon" width="14px" height="14px">
@@ -23,101 +23,12 @@
       </label>
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Фото</span>
-        <div class="form-modal-adv__wrapper form-modal-adv__list">
-         
-          <div class="containerImg">
-        
-            <span class="containerImg_add">+</span>
-            <input type="file" class="containerImg_inp" accept=".jpg, .jpeg, .png"/>
-          </div>
-
-          <!-- <label
-            class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id">
-            <div id="wrappers"></div>
-            <span class="form-modal-adv__upload-file-text">+</span>
-            <div class="containerImg">
+          <div class="containerImg form-modal-adv__wrapper form-modal-adv__list">
+            <div class="containerImgg">
+              <span class="containerImgg_add">+</span>
+              <input type="file" class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
             </div>
-            <input
-              type="file"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label> -->
-<!-- 
-          <label
-            class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id"
-          >
-            <span class="form-modal-adv__upload-file-text"></span>
-            <input
-              type="file"
-              name="files[]"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label>
-          <label
-            class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id"
-          >
-            <span class="form-modal-adv__upload-file-text"></span>
-            <input
-              type="file"
-              name="files[]"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label>
-          <label
-            class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id"
-          >
-            <span class="form-modal-adv__upload-file-text"></span>
-            <input
-              type="file"
-              name="files[]"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label>
-          <label
-            class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id"
-          >
-            <span class="form-modal-adv__upload-file-text"></span>
-            <input
-              type="file"
-              name="files[]"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label>
-          <label
-            class="form-modal-adv__upload-file-label form-modal-adv__upload-file-label-is-hidden"
-            for="form-modal-adv__upload-file-input-id"
-          >
-            <span class="form-modal-adv__upload-file-text"></span>
-            <input
-              type="file"
-              name="files[]"
-              id="form-modal-adv__upload-file-input-id"
-              class="form-modal-adv__upload-file-input"
-              accept=".jpg, .jpeg, .png"
-              multiple
-            />
-          </label> -->
-        </div>
+          </div>
       </label>
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Описание товара</span>
@@ -128,17 +39,7 @@
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Категория товара</span>
         <span class="form-modal-adv__wrapper">
-          <select name="product-category" class="form-modal-adv__select">
-            <!-- <option value=""></option>
-            <option value="">Недвижимость</option>
-            <option value="">Транспорт</option>
-            <option value="">Работа</option>
-            <option value="">Электроника</option>
-            <option value="">Бизнес и услуги</option>
-            <option value="">Отдых и спорт</option>
-            <option value="">Отдам бесплатно</option>
-            <option value="">Обмен</option> -->
-          </select>
+          <select name="product-category" class="form-modal-adv__select"></select>
         </span>
       </label>
       <label class="form-modal-adv__label">
@@ -159,9 +60,9 @@
             type="tel"
             class="form-modal-adv__input _hvr"
             name="product-tel"
-            placeholder="+38 (0--) --- -- --"
-            pattern="^\+380\d{3}\d{2}\d{2}\d{2}$"
-            title="+38 (0--) --- -- --"
+            placeholder="+380 -- --- -- --"
+            pattern="^\+?3?8?(0[\s\.-]\d{2}[\s\.-]\d{3}[\s\.-]\d{2}[\s\.-]\d{2})$"
+            title="+380 -- --- -- --"
             required
           />
         </span>
