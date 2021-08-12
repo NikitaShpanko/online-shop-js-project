@@ -1,8 +1,7 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
-import data from '../lib/api/get/request';
 
-store.register('query', query => {
+export default function storeQuery(query) {
   if (query && query.search && query.search.length) {
     //Добавляет параметр в URL
     const queryParams = new URLSearchParams();
@@ -66,4 +65,4 @@ store.register('query', query => {
   window.history.pushState(null, null, '/');
 
   API.request(`/call?page=1`).then(data => store.setProducts(data));
-});
+}

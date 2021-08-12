@@ -1,3 +1,5 @@
+import config from '../config.json';
+
 // Это обьект, который хранит данные.
 //С одной стороны изменяем данные (например store.setCategories),
 // с другой реагируем на изменения вешая callback (например, store.register('categories', () => {}).
@@ -14,10 +16,7 @@ export default {
   isOnline: false,
   heroData: null,
 
-  // set(prop, value) {
-  //   this[prop] = value;
-  //   this.notify(prop, this[prop]);
-  // },
+  rusCategoryNames: { ...config.rusNames },
 
   setCategories(categories) {
     this.categories = categories;

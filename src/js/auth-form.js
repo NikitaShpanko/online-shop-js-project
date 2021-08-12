@@ -4,15 +4,7 @@ import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
 
-const headerRegContiner = document.querySelectorAll('[data-account-registration]');
-const headerCabContiner = document.querySelectorAll('[data-account-user]');
-
-store.register('isOnline', () => {
-  headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
-  headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
-});
-
-(async () => {
+export async function checkLogin() {
   const url = new URL(document.location).searchParams;
   const urlToken = url.get('accessToken');
 
@@ -36,10 +28,12 @@ store.register('isOnline', () => {
     const newTokenData = await API.request('/auth/refresh', 'POST', body, refToken, true);
     saveToken(newTokenData, true);
   }
-})();
+}
 
-const headerListener = document.querySelector('header');
-headerListener.addEventListener('click', userAccountControl);
+export function initAccountControl() {
+  const headerListener = document.querySelector('header');
+  headerListener.addEventListener('click', userAccountControl);
+}
 
 function userAccountControl(e) {
   const controlBtn = e.target.closest('A');
@@ -57,7 +51,7 @@ function userAccountControl(e) {
   }
 }
 
-function openAuthModal() {
+export function openAuthModal() {
   openModal(authorizationFormTpl());
   const form = document.body.querySelector('.authorization-form');
   form.addEventListener('click', e => {
