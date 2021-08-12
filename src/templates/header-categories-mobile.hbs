@@ -2,9 +2,12 @@
 <ul class="header__filter list js-categories-m" data-mobile-filter>
   {{#each this}}
     <li class="header__filter-item">
-      <a href="" class="header__filter-link link" data-category="{{key}}"> 
+      
+      <a href="" class="header__filter-link link" data-category="{{key}}" {{#if activeCategories.key}}class="is-orange"{{/if}}> 
         {{name}}
       </a>
     </li>
   {{/each}}
 </ul>
+
+{{!-- {{#if activeCategories[key]}}is-orange{{/if}} --}}
