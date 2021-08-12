@@ -1,7 +1,6 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
 import data from '../lib/api/get/request';
-import Siema from 'siema';
 
 store.register('query', query => {
   if (query && query.search && query.search.length) {
