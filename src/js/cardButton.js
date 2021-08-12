@@ -24,15 +24,35 @@ const bodyNode = document.querySelector('body');
 bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__all--content');
+  const cardIdModal = e.target.closest('.modal-card-conteiner');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
-    if (
-      buttonClick.classList.contains('icon-heart-white') ||
-      buttonClick.classList.contains('icon-heart-white')
-    ) {
+    if (buttonClick.classList.contains('icon-heart-white')) {
       const getCardId = cardId.dataset.id;
+      console.log(getCardId);
       buttonClick.classList.toggle('isFavorites');
+
+      if (buttonClick.classList.contains('isFavorites')) {
+        const postIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'POST',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      } else {
+        const deleteIsFavoritesCard = API.request(
+          `/call/favourite/${getCardId}`,
+          'DELETE',
+          false,
+          localStorage.accessToken,
+        ).then(id => console.log(id));
+      }
+    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      const getCardId = cardIdModal.dataset.id;
+      console.log(getCardId);
+      buttonClick.classList.toggle('isFavorites');
+
       if (buttonClick.classList.contains('isFavorites')) {
         const postIsFavoritesCard = API.request(
           `/call/favourite/${getCardId}`,

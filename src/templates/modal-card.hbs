@@ -1,7 +1,7 @@
 <div class='backdrop'>
     <div class='modal modal-card'>
         {{#each this}}
-        <div class="modal-card-conteiner">
+        <div class="modal-card-conteiner" data-id="{{_id}}">
             <div class="modal-card--name isHibenTitelOne">
                 <p class="modal-card--titel">{{this.title}}</p>
                 <p class="modal-card--cod">Категория товара | {{this._id}}</p>
@@ -40,7 +40,7 @@
                     <div class="modal-card--isFavorite">
                         <button class="modal-card--buttonIsFavorite" type="button">
                             <span>В избранное</span>
-                            <svg class="icon" width="16" height="16">
+                            <svg class="icon" width="16" height="16" class="modal-card--heart" >
                                 <use class="icon-heart" href="/sprite.5ec50489.svg#icon-heart-wihte"></use>
                                 <use class="icon-heart--favorites" href="/sprite.5ec50489.svg#icon-heart"></use>
                             </svg>
