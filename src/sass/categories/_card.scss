@@ -190,23 +190,3 @@
 .swiper-pagination-bullet-active {
   background: var(--color-highlight) !important;
 }
-
-@media screen and (min-width: 768px) {
-  .swiper-slide {
-    width: 333px !important;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .swiper-container {
-    width: 1204px;
-  }
-
-  .swiper-slide {
-    width: 286px !important;
-  }
-
-  .swiper-wrapper {
-    padding: 0;
-  }
-}

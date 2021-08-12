@@ -51,10 +51,10 @@ store.register('products', (pr, all) => {
     spaceBetween: 20,
     slidesPerGroup: 4,
     loopFillGroupWithBlank: true,
-    navigation: {
-      nextEl: '.button__arow-right',
-      prevEl: '.button__arow--left',
-    },
+    // navigation: {
+    //   nextEl: '.button__arow-right',
+    //   prevEl: '.button__arow--left',
+    // },
 
     breakpoints: {
       320: {
@@ -73,5 +73,27 @@ store.register('products', (pr, all) => {
         spaceBetween: 20,
       },
     },
+  });
+
+  console.log(swiper);
+
+  const arrowRightRef = document.querySelector('button[data-action="right"]');
+  console.log(arrowRightRef.dataset.action);
+  const arrowLefttRef = document.querySelector('button[data-action="left"]');
+
+  document.querySelector('#root').addEventListener('click', e => {
+    if (e.target.dataset.action === 'right') {
+      e.target
+        .closest('.categories__container')
+        .querySelector('.swiper-container')
+        .swiper.slideNext();
+    }
+
+    if (e.target.dataset.action === 'left') {
+      e.target
+        .closest('.categories__container')
+        .querySelector('.swiper-container')
+        .swiper.slidePrev();
+    }
   });
 });
