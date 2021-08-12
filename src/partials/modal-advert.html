@@ -1,10 +1,11 @@
-<div class="backdrop is-hidden announcement">
+<div class="backdrop add">
   <div class="modal modal-adv">
     <button type="button" class="modal-close-button">
       <svg class="modal-close-button__icon" width="14px" height="14px">
         <use href="./images/sprite.svg#icon-close"></use>
       </svg>
     </button>
+
     <form class="form-modal-adv">
       <p class="form-modal-adv__title">Создать объявление</p>
       <label for="product-name" class="form-modal-adv__label">
@@ -23,20 +24,29 @@
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Фото</span>
         <div class="form-modal-adv__wrapper form-modal-adv__list">
-          <label
+         
+          <div class="containerImg">
+        
+            <span class="containerImg_add">+</span>
+            <input type="file" class="containerImg_inp" accept=".jpg, .jpeg, .png"/>
+          </div>
+
+          <!-- <label
             class="form-modal-adv__upload-file-label"
-            for="form-modal-adv__upload-file-input-id"
-          >
+            for="form-modal-adv__upload-file-input-id">
+            <div id="wrappers"></div>
             <span class="form-modal-adv__upload-file-text">+</span>
+            <div class="containerImg">
+            </div>
             <input
               type="file"
-              name="files[]"
               id="form-modal-adv__upload-file-input-id"
               class="form-modal-adv__upload-file-input"
               accept=".jpg, .jpeg, .png"
               multiple
             />
-          </label>
+          </label> -->
+<!-- 
           <label
             class="form-modal-adv__upload-file-label"
             for="form-modal-adv__upload-file-input-id"
@@ -106,7 +116,7 @@
               accept=".jpg, .jpeg, .png"
               multiple
             />
-          </label>
+          </label> -->
         </div>
       </label>
       <label class="form-modal-adv__label">
@@ -136,7 +146,7 @@
         <span class="form-modal-adv__wrapper">
           <input
             type="number"
-            class="form-modal-adv__input _hvr"
+            class="form-modal-adv__input _hvr input-price"
             name="product-price"
             placeholder="0.00 €"
           />

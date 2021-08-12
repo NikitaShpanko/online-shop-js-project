@@ -172,16 +172,49 @@
     flex-basis: calc(100% / 5 - 10px);
   }
 }
-.form-modal-adv__upload-file-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-}
+// .form-modal-adv__upload-file-text {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   margin-right: -50%;
+//   transform: translate(-50%, -50%);
+// }
 
 .form-modal-adv__upload-file-label-is-hidden {
   @media screen and (min-width: 768px) {
     display: none;
   }
+}
+
+.newImg {
+  width: 100%;
+  height: 100%;
+}
+
+.containerImg {
+  position: relative;
+  display: flex;
+  width: 84px;
+  height: 50px;
+  background: #f5f6fb;
+  text-align: center;
+  z-index: 5;
+
+  &_add {
+    font-size: 22px;
+    color: #bbbbbb;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+
+  &_inp {
+    display: none;
+
+  }
+}
+.addCont {
+  
 }
