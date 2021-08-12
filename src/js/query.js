@@ -55,10 +55,12 @@ store.register('query', query => {
   }
 
   if (query && query.page) {
-    if (!data.error)
-      API.request(`/call?page=${query.page}`).then(data =>
-        store.setProducts({ ...store.products, ...data }),
-      );
+    API.request(`/call?page=${query.page}`).then(data => {
+      if (!data.error) {
+        store.setProducts({ ...store.products, ...data });
+      }
+    });
+    return;
   }
 
   window.history.pushState(null, null, '/');
