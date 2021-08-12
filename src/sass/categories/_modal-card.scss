@@ -222,3 +222,15 @@
 .isDispleyNone {
   display: none;
 }
+
+.modal-card--heart {
+  width: 16px;
+  height: 16px;
+  background-image: url('/images/svg/heart-red.svg');
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  & .modal-card--button.IsFavorite {
+    background-image: url('/images/svg/heart-w.svg');
+  }
+}
