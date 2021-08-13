@@ -1,5 +1,6 @@
 import modalCard from '../templates/modal-card.hbs';
 import authorizationFormTpl from '../templates/authorization-form.hbs';
+import modalAdvertEditTpl from '../templates/new-modal-advert-edit.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
@@ -10,6 +11,8 @@ bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__article');
   const cardIdModal = e.target.closest('.modal-card-conteiner');
+  const cardModalPatsh = e.target.closest('.form-modal-push');
+  const cardModalDelete = e.target.closest('.form-modal-edit');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
@@ -33,18 +36,38 @@ bodyNode.addEventListener('click', e => {
     }
 
     if (buttonClick.classList.contains('icon-fullscreen')) {
+      const getUserId = cardId.dataset.userid;
+      user().then(e => {
+        if (e.id === getUserId) return openModal(modalAdvertEditTpl());
+      });
       updateURL('?card=modal');
       openModalCard(cardId.dataset.id);
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
-      console.log('Поделиться товаром с дрзьями чере социальные сети (допустим)');
+      console.log('Поделиться товаром с друзьями чере социальные сети (допустим)');
   }
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
+    const getUserId = cardId.dataset.userid;
+    user().then(e => {
+      if (e.id === getUserId) return openModal(modalAdvertEditTpl());
+    });
     updateURL('?card=modal');
     openModalCard(cardId.dataset.id);
+  }
+  if (cardModalDelete) {
+    const id = cardId.dataset.id;
+    deleteCard(id);
+  }
+
+  if (cardModalPatsh) {
+    const id = cardId.dataset.id;
+    let form = document.createElement('.form-modal-adv');
+    console.log(form);
+    console.log(form.submit());
+    patshCard(form.submit(), id);
   }
 
   if (imgPrev) {
@@ -55,6 +78,7 @@ bodyNode.addEventListener('click', e => {
 
 function openModalCard(id) {
   const data = store.products.getCard(id);
+
   const dataUserId = data.userId;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
@@ -83,4 +107,16 @@ function updateURL(url) {
     const newUrl = baseUrl + url;
     history.pushState(null, null, newUrl);
   }
+}
+
+async function user() {
+  return API.request(`/user`, 'GET', false, localStorage.accessToken);
+}
+
+async function patshCard(getCard, id) {
+  return API.request(`/call/${id}`, 'POST', getCard, localStorage.accessToken);
+}
+
+async function deleteCard(id) {
+  return API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken);
 }
