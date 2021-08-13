@@ -63,7 +63,9 @@
 
 .modal-card--img {
   margin: 0 auto;
-  object-fit: cover;
+  overflow: hidden;
+  object-fit: contain;
+  text-align: center;
   width: 253px;
   height: 253px;
   margin-bottom: 15px;
@@ -80,11 +82,12 @@
 }
 
 .modal-card--imgCard {
-  display: block;
-  max-width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
 
-  margin-bottom: 15px;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .modal-card--list {
   display: flex;
@@ -99,7 +102,7 @@
 
 .modal-card--poiner {
   overflow: hidden;
-  object-fit: contain;
+  cursor: pointer;
 
   &:not(:last-child) {
     margin-right: 5px;
@@ -130,9 +133,11 @@
 }
 
 .modal-card--imgPreview {
-  display: block;
-  max-width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .modal-card--price {
@@ -156,18 +161,23 @@
   font-weight: bold;
   border: none;
   margin-bottom: 20px;
+  cursor: pointer;
+  @media screen and (min-width: 1280px) {
+    width: 255px;
+  }
 }
 
 .modal-card--userInfo {
   width: 100%;
   height: 60px;
-  padding: 16px 58px;
-  background-color: var(--color-highlight);
-  color: var(--color-main-background);
-  text-align: center;
-  text-transform: uppercase;
+  padding: 5px 20px;
+  color: var(--color-highlight);
+  border: 2px solid var(--color-highlight);
+
+  text-align: left;
+  text-transform: none;
   font-weight: bold;
-  border: none;
+
   margin-bottom: 20px;
 }
 
@@ -180,13 +190,13 @@
 .modal-card--buttonToShare {
   display: flex;
   justify-items: center;
-  align-items: center;
   background-color: inherit;
   padding-left: 0px;
   text-align: center;
   border: none;
   font-weight: 300;
   color: var(--color-modal-card-code);
+  cursor: pointer;
   & span {
     display: inline-block;
     margin-right: 12px;
@@ -210,4 +220,39 @@
 
 .isDispleyNone {
   display: none;
+}
+
+.modal-card--heart,
+.modal-card--heartIsFavorite,
+.modal-card--share {
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.modal-card--buttonIsFavorite {
+  & .modal-card--heart {
+    display: block;
+    background-image: url('/images/svg/heard-grey.svg');
+  }
+
+  & .modal-card--heartIsFavorite {
+    display: none;
+    background-image: url('/images/svg/heard-red.svg');
+  }
+}
+
+.modal-card--buttonIsFavorite.isFavorites {
+  & .modal-card--heart {
+    display: none;
+  }
+
+  & .modal-card--heartIsFavorite {
+    display: block;
+  }
+}
+
+.modal-card--share {
+  background-image: url('/images/svg/share.svg');
 }

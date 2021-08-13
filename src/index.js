@@ -1,7 +1,6 @@
 import 'swiper/swiper-bundle.css';
 
 import './sass/main.scss';
-import './js/cardButton';
 
 import adsTpl from './templates/advertising-card.hbs';
 import cardTpl from './templates/card.hbs';
@@ -19,11 +18,16 @@ import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
 //import './js/products';
 import './js/query';
+import './js/modal-advert'
+import './js/load-more';
+import './js/cardButton';
+
 
 API.Card.tpl = cardTpl;
 
-(async () => {
-  let rusCategoryNames = await API.get.categoryNames();
+API.get.categoryNames().then(rusCategoryNames => {
+  rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
+  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
 
   store.rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
@@ -33,4 +37,4 @@ API.Card.tpl = cardTpl;
   Link.init();
 
   Link.goTo(location.href);
-})();
+});

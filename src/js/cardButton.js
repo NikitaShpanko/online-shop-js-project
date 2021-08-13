@@ -1,32 +1,41 @@
 import modalCard from '../templates/modal-card.hbs';
-import allCardCategoryTpl from '../templates/categories-allcard.hbs';
-import cardCategoryTpl from '../templates/categories-allcard.hbs';
+import authorizationFormTpl from '../templates/authorization-form.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
-import { from } from 'form-data';
 
-const mainNode = document.querySelector('main');
+const bodyNode = document.querySelector('body');
 
-mainNode.addEventListener('click', e => {
+bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__article');
+  const cardIdModal = e.target.closest('.modal-card-conteiner');
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
+      if (!localStorage.accessToken) return openModal(authorizationFormTpl());
+      const getCardId = cardId.dataset.id;
       buttonClick.classList.toggle('isFavorites');
-      console.log('добавить товар в избранное');
-    } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
-    else if (buttonClick.classList.contains('load__more--button'))
-      console.log('Загрузка следующей страницы ');
-    else if (buttonClick.classList.contains('button__arow--left')) console.log('Товар слева');
-    else if (buttonClick.classList.contains('button__arow-right')) console.log('Товар справа');
-    else if (buttonClick.classList.contains('categories__titel--allCard'))
-      console.log('Загружается шаблон со всеми карточками');
-    else if (buttonClick.classList.contains('modal-card--buttonIsFavorite'))
-      console.log('Добавление товара в избранное');
-    else if (buttonClick.classList.contains('modal-card--bnInfo')) {
+      if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
+      else deleteIsFavoritesCard(getCardId);
+    }
+
+    if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      if (!localStorage.accessToken) {
+        closeModal(modalCard());
+        openModal(authorizationFormTpl());
+      }
+      const getCardId = cardIdModal.dataset.id;
+      buttonClick.classList.toggle('isFavorites');
+      if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
+      else deleteIsFavoritesCard(getCardId);
+    }
+
+    if (buttonClick.classList.contains('icon-fullscreen')) {
+      updateURL('?card=modal');
+      openModalCard(cardId.dataset.id);
+    } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
@@ -34,6 +43,7 @@ mainNode.addEventListener('click', e => {
   }
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
+    updateURL('?card=modal');
     openModalCard(cardId.dataset.id);
   }
 
@@ -44,10 +54,39 @@ mainNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
-  const data = store.products.getCard(id);
-  openModal(modalCard({ data }));
+  //////////////////////////////////////////////////////
+  ////  ЭТО ВРЕМЕННЫЙ КОСТЫЛЬ,  А ТО ОПЯТЬ СЛОМАЛОСЬ! //
+  ////  КОГДА ПОДТЯНУ СВОЮ ЛОГИКУ, БУДЕТ СНОВА ПРОСТО //
+  ////           store.products.getCard(id)           //
+  //////////////////////////////////////////////////////
+  const data = new API.MainData(store.products).getCard(id);
+  //////////////////////////////////////////////////////
+  const dataUserId = data.userId;
+
+  const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
+    const obj = { ...data, ...id };
+    data.userId;
+    openModal(modalCard({ obj }));
+  });
 }
 
 function onSubmit(params) {
   closeModal();
+}
+
+async function postIsFavoritesCard(getCardId) {
+  return API.request(`/call/favourite/${getCardId}`, 'POST', false, localStorage.accessToken);
+}
+
+async function deleteIsFavoritesCard(getCardId) {
+  return API.request(`/call/favourite/${getCardId}`, 'DELETE', false, localStorage.accessToken);
+}
+
+function updateURL(url) {
+  if (history.pushState) {
+    const baseUrl =
+      window.location.protocol + '//' + window.location.host + window.location.pathname;
+    const newUrl = baseUrl + url;
+    history.pushState(null, null, newUrl);
+  }
 }
