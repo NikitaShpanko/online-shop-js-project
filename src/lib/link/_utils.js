@@ -46,11 +46,11 @@ export function textAfter(pathList, keyword) {
  * @param {string} filterString
  * @param {boolean} clear
  */
-export function renderData(data, filterString, linkBefore, method) {
-  const catList = filterAndPaginate(data, filterString, config.maxCategories);
+export function renderData(data, filterString, linkBefore, clear) {
+  const fp = filterAndPaginate(data, filterString, config.maxCategories, 'categoryList');
 
-  // const catList = data?.filter(filterString);
-  // if (!catList) return;
+  const catList = data?.filter(filterString);
+  if (!catList) return;
 
   catList.forEach(cat => {
     if (linkBefore) cat.link = linkBefore + cat.name;
@@ -62,7 +62,7 @@ export function renderData(data, filterString, linkBefore, method) {
   // } else {
   //   document.querySelector('#root').insertAdjacentHTML('beforeend', html);
   // }
-  method(categoriesTpl(catList));
+  putOnPage(clear)(categoriesTpl(catList));
   //console.log('DATA', data?.filter(filterString), filterString);
 }
 
@@ -70,58 +70,47 @@ export function renderData(data, filterString, linkBefore, method) {
  * @param {object} category
  * @param {string} filterString
  */
-export function renderCategory(category, filterString, linkBefore, method) {
+export function renderCategory(category, filterString, linkBefore, clear) {
   API.Card.tpl = categoryCardTpl;
-  const fp = filterAndPaginate(category, filterString, config.maxCards);
+  const fp = filterAndPaginate(category, filterString, config.maxCards, 'cardList');
   //console.log(getCatReady(category.name, category?.filter(filterString), linkBefore));
-  method(searchCardTpl(getCatReady(category.name, fp, linkBefore)));
+  putOnPage(clear)(
+    searchCardTpl(getCatReady(category.name, category?.filter(filterString), linkBefore)),
+  );
   API.Card.tpl = cardTpl;
 }
 
-export function render(obj, filterString, linkPrefix, method = putOnPage) {
-  obj.filterString = filterString;
-  obj.linkPrefix = linkPrefix;
-
+export function render(obj, filterString, linkPrefix, clear = true) {
+  console.log('RENDERER GETS THIS', obj);
   if (obj instanceof API.Category) {
-    renderCategory(obj, filterString, linkPrefix, method);
+    renderCategory(obj, filterString, linkPrefix, clear);
   } else if (obj instanceof API.Data) {
-    renderData(obj, filterString, linkPrefix, method);
+    renderData(obj, filterString, linkPrefix, clear);
     swiperInit();
   } else {
-    method(errorTpl(obj));
+    putOnPage(clear)(errorTpl(obj));
   }
-
-  const btnLoadMore = document.querySelector('.js-load-more');
-  if (obj.needsPagination) {
-    btnLoadMore.style.display = '';
-  } else {
-    btnLoadMore.style.display = 'none';
-  }
-  console.log(btnLoadMore.classList);
-}
-8;
-function putOnPage(html /*clear, root = document.querySelector('#root')*/) {
-  document.querySelector('#root').innerHTML = html;
-  // if (clear)
-  //   return html => {
-  //     root.innerHTML = html;
-  //   };
-  // else
-  //   return html => {
-  //     root.insertAdjacentHTML('beforeend', html);
-  //   };
 }
 
-function filterAndPaginate(obj, filterString, perPage) {
+function putOnPage(clear, root = document.querySelector('#root')) {
+  if (clear)
+    return html => {
+      root.innerHTML = html;
+    };
+  else
+    return html => {
+      root.insertAdjacentHTML('beforeend', html);
+    };
+}
+
+function filterAndPaginate(obj, filterString, perPage, objListParam) {
   const filtered = obj?.filter(filterString);
-  if (!filtered) return [];
+  if (!filtered) return false;
 
   if (!obj.page) obj.page = 1;
   const min = (obj.page - 1) * perPage;
   const max = obj.page * perPage - 1;
 
-  obj.needsPagination = max < filtered.length;
-
-  return filtered.slice(0, max);
-  //console.log(min, max, perPage, obj.needsPagination);
+  if (max <= obj[objListParam].length) {
+  }
 }
