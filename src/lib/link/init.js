@@ -1,4 +1,6 @@
 import goTo from './goTo';
+import store from '../store';
+import QueryString from 'qs';
 
 export default function init() {
   document.addEventListener('click', e => {
@@ -6,6 +8,7 @@ export default function init() {
     const href = e.target.closest('a').getAttribute('href');
     if (href[0] !== '/') return;
     e.preventDefault();
+    store.query.categories = [];
     goTo(href);
   });
 

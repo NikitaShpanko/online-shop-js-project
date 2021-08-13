@@ -10,7 +10,7 @@ export default {
 
   categories: null,
   products: null,
-  query: null, // { categories: [], search: '', page: 1 }
+  query: { categories: [], search: '' }, //, page: 1 }
   isOnline: false,
   heroData: null,
 
@@ -30,7 +30,22 @@ export default {
   },
 
   setQuery(query) {
-    this.query = query;
+    //this.query = query;
+    // console.log(query.categories);
+    if (query === null) {
+      this.query.categories = [];
+    } else if (query.categories) {
+      const alreadyExists = this.query.categories.indexOf(query.categories[0]);
+      if (alreadyExists === -1) {
+        this.query.categories.push(query.categories[0]);
+      } else {
+        this.query.categories.splice(alreadyExists, 1);
+      }
+      console.log(this.query.categories);
+    } else {
+      Object.assign(this.query, query);
+    }
+
     this.notify('query', this.query);
   },
 

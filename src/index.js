@@ -17,7 +17,6 @@ import './js/auth-form';
 import './js/mobile-menu';
 
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
-import './js/swiperInit';
 //import './js/products';
 
 import './js/query';
@@ -33,13 +32,13 @@ API.get.categoryNames().then(rusCategoryNames => {
 
   store.rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
 
-  const chosenCategory = getUrlChosenCategory();
-  if (chosenCategory) {
-    store.setQuery({ chosenCategory });
-    return;
-  }
+  // const chosenCategory = getUrlChosenCategory();
+  // if (chosenCategory) {
+  //   store.setQuery({ chosenCategory });
+  //   return;
+  // }
 
-  const categories = getUrlCategories();
+  //const categories = getUrlCategories();
   //store.setQuery({ categories });
   Link.init();
 

@@ -26,13 +26,12 @@ export function getUrlChosenCategory() {
 }
 
 store.register('categories', categories => {
-  const toArr = Object.keys(categories)
-    .map(key => ({
-      key,
-      name: categories[key],
-      activeCategories: getUrlCategories(),
-    }))
-    .slice(1, 8);
+  const toArr = Object.keys(categories).map(key => ({
+    key,
+    name: categories[key],
+    //activeCategories: getUrlCategories(),
+  }));
+  //.slice(1, 8);
 
   document.querySelector('#header-categories-mobile').outerHTML = headerCategoriesMobileTpl(toArr);
 
@@ -44,6 +43,12 @@ store.register('categories', categories => {
 
   function handler(e) {
     e.preventDefault();
+    if (!e.target.dataset.category) return;
+    store.setQuery({ categories: [e.target.dataset.category] });
+
+    console.log(e.target);
+    e.target.closest('li').classList.toggle('is-orange');
+    return;
 
     if (!e.target.closest('a')) return false;
     const category = e.target.getAttribute('data-category');
