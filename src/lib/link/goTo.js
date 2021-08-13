@@ -1,6 +1,4 @@
-import swiperInit from '../../js/swiperInit';
-
-import { textAfter, renderData, renderCategory, renderAds } from './_utils';
+import { textAfter, render } from './_utils';
 import parse from './parse';
 import setSearchParam from './setSearchParam';
 
@@ -96,16 +94,7 @@ export default async function goTo(link, refreshOnline = true) {
       );
   }
 
-  //renderAds(ads);
-
-  if (store.products instanceof API.Category) {
-    renderCategory(store.products, filterString, linkPrefix);
-  } else if (store.products instanceof API.Data) {
-    renderData(store.products, filterString, linkPrefix);
-    swiperInit();
-  } else {
-    console.log('why the hell?', store.products);
-  }
+  render(store.products, filterString, linkPrefix);
 
   history.pushState(null, null, shortLink);
   return shortLink;

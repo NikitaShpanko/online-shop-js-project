@@ -16,8 +16,8 @@ store.register('isOnline', isIt => {
     const url = new URL(location.href);
     const redirect = url.searchParams.get('redirect');
     if (redirect) Link.goTo(redirect, false);
-    else Link.goTo('/profile', false);
-  } else {
+    else if (store.products) Link.goTo('/profile', false);
+  } else if (store.products) {
     Link.goTo('/', false);
   }
 });
