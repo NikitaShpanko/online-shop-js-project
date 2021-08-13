@@ -26,11 +26,25 @@ export default async function goTo(link) {
       linkPrefix = '/profile/';
       const possibleCategory = textAfter(pathList, 'profile');
       if (possibleCategory === 'own') {
-        store.products = await API.get.request('​/call/own', localStorage.accessToken);
+        if (store.products) {
+          store.products = await API.get.request('​/call/own', localStorage.accessToken);
+        } else {
+          console.log('I SEE:', store.isOnline, 'THERE!');
+          store.products = store.isOnline.getCategory('own');
+        }
       } else if (possibleCategory === 'favourite') {
-        store.products = await API.get.request('​/call/favourites', localStorage.accessToken);
+        if (store.products) {
+          store.products = await API.get.request('​/call/favourites', localStorage.accessToken);
+        } else {
+          store.products = store.isOnline.getCategory('favourite');
+        }
       } else {
-        store.products = await API.get.request('/user', localStorage.accessToken);
+        if (store.products) {
+          store.products = await API.get.request('/user', localStorage.accessToken);
+        } else {
+          store.products = store.isOnline;
+          console.log('I SEE:', store.isOnline, 'THERE!');
+        }
       }
     } else {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
