@@ -86,7 +86,6 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
   } else {
     btnLoadMore.style.display = 'none';
   }
-  console.log(btnLoadMore.classList);
 }
 
 function putOnPage(html) {

@@ -15,12 +15,35 @@ import config from '../../config.json';
  */
 export default async function goTo(link, refreshOnline = true) {
   const hero = document.querySelector('#hero-root');
+  hero.style.display = 'none';
   let linkPrefix = '';
   let { pathList, search, shortLink } = parse(link);
-  const filterString = search.categories;
-  if (pathList.includes('profile')) {
-    hero.style.display = 'none';
 
+  const filterString = search.categories ? search.categories : '';
+
+  if (!store.products && filterString.length) {
+    store.query.categories = filterString.split(',');
+  }
+
+  document.querySelectorAll(`[data-category]`).forEach(sel => {
+    const li = sel.closest('li');
+    if (filterString.includes(sel.dataset.category)) {
+      li.classList.add('is-orange');
+    } else {
+      li.classList.remove('is-orange');
+    }
+  });
+  // if (search.categories) {
+  //   search.categories
+  //     .split(',')
+  //     .forEach(catName =>
+  //       document
+  //         .querySelectorAll(`[data-category=${catName}]`)
+  //         .forEach(sel => sel.closest('li').classList.add('is-orange')),
+  //     );
+  // }
+
+  if (pathList.includes('profile')) {
     if (store.isOnline && !store.isOnline.error) {
       linkPrefix = '/profile/';
       const possibleCategory = textAfter(pathList, 'profile');
@@ -47,8 +70,6 @@ export default async function goTo(link, refreshOnline = true) {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
     }
   } else {
-    hero.style.display = '';
-
     if (pathList.includes('login')) {
       if (!store.isOnline) openAuthModal();
       else return goTo(search.redirect ? search.redirect : '/', false);
@@ -66,6 +87,7 @@ export default async function goTo(link, refreshOnline = true) {
             store.products = await API.request(`/call/specific/${possibleCategory}`);
           }
         } else {
+          hero.style.display = '';
           //ads = await API.request('/call/ads');
           store.products = (await API.request('/call?page=1'))
             ?.append(await API.request('/call?page=2'))
@@ -77,16 +99,6 @@ export default async function goTo(link, refreshOnline = true) {
         }
       }
     }
-  }
-
-  if (search.categories) {
-    search.categories
-      .split(',')
-      .forEach(catName =>
-        document
-          .querySelectorAll(`[data-category=${catName}]`)
-          .forEach(sel => sel.closest('li').classList.add('is-orange')),
-      );
   }
 
   render(store.products, filterString, linkPrefix);

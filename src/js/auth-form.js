@@ -12,13 +12,23 @@ store.register('isOnline', isIt => {
   headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
   headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
 
+  let newLink;
   if (isIt) {
     const url = new URL(location.href);
     const redirect = url.searchParams.get('redirect');
-    if (redirect) Link.goTo(redirect, false);
-    else if (store.products) Link.goTo('/profile', false);
-  } else if (store.products) {
-    Link.goTo('/', false);
+    if (redirect) {
+      Link.goTo(redirect, false);
+    } else {
+      newLink = '/profile';
+    }
+  } else {
+    newLink = '/';
+  }
+  if (store.products) {
+    if (store.query.categories)
+      newLink = Link.setSearchParam(newLink, 'categories', store.query.categories.join(','));
+    console.log(newLink);
+    Link.goTo(newLink, false);
   }
 });
 
