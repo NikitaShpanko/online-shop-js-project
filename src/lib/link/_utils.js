@@ -46,39 +46,28 @@ export function textAfter(pathList, keyword) {
  * @param {string} filterString
  * @param {boolean} clear
  */
-export function renderData(data, filterString, linkBefore, method) {
-  const catList = filterAndPaginate(data, filterString, config.maxCategories);
+/**/ export function renderData(data, filterString, linkBefore, method) {
+  const catList = filterAndPaginate(data, filterString, config.maxCategories); //
 
-  // const catList = data?.filter(filterString);
-  // if (!catList) return;
-
-  catList.forEach(cat => {
-    if (linkBefore) cat.link = linkBefore + cat.name;
-    cat.name = russify(cat.name);
-  });
-  // const html = categoriesTpl(catList);
-  // if (clear) {
-  //   document.querySelector('#root').innerHTML = html;
-  // } else {
-  //   document.querySelector('#root').insertAdjacentHTML('beforeend', html);
-  // }
-  method(categoriesTpl(catList));
-  //console.log('DATA', data?.filter(filterString), filterString);
-}
+  /**/ catList.forEach(cat => {
+    if (linkBefore) cat.link = linkBefore + cat.name; //
+    cat.name = russify(cat.name); //
+  }); //
+  method(categoriesTpl(catList)); //
+} //
 
 /**
  * @param {object} category
  * @param {string} filterString
  */
-export function renderCategory(category, filterString, linkBefore, method) {
-  API.Card.tpl = categoryCardTpl;
-  const fp = filterAndPaginate(category, filterString, config.maxCards);
-  //console.log(getCatReady(category.name, category?.filter(filterString), linkBefore));
-  method(searchCardTpl(getCatReady(category.name, fp, linkBefore)));
-  API.Card.tpl = cardTpl;
-}
+/**/ export function renderCategory(category, filterString, linkBefore, method) {
+  API.Card.tpl = categoryCardTpl; //
+  const fp = filterAndPaginate(category, filterString, config.maxCards); //
+  method(searchCardTpl(getCatReady(category.name, fp, linkBefore))); //
+  API.Card.tpl = cardTpl; //
+} //
 
-export function render(obj, filterString, linkPrefix, method = putOnPage) {
+/**/ export function render(obj, filterString, linkPrefix, method = putOnPage) {
   obj.filterString = filterString;
   obj.linkPrefix = linkPrefix;
 
@@ -88,40 +77,31 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
     renderData(obj, filterString, linkPrefix, method);
     swiperInit();
   } else {
-    method(errorTpl(obj));
-  }
+    method(errorTpl(obj)); //
+  } //
 
-  const btnLoadMore = document.querySelector('.js-load-more');
-  if (obj.needsPagination) {
-    btnLoadMore.style.display = '';
-  } else {
-    btnLoadMore.style.display = 'none';
-  }
-  console.log(btnLoadMore.classList);
-}
-8;
-function putOnPage(html /*clear, root = document.querySelector('#root')*/) {
-  document.querySelector('#root').innerHTML = html;
-  // if (clear)
-  //   return html => {
-  //     root.innerHTML = html;
-  //   };
-  // else
-  //   return html => {
-  //     root.insertAdjacentHTML('beforeend', html);
-  //   };
-}
+  const btnLoadMore = document.querySelector('.js-load-more'); //
+  /**/ if (obj.needsPagination) {
+    btnLoadMore.style.display = ''; //
+  } /**/ else {
+    btnLoadMore.style.display = 'none'; //
+  } //
+  console.log(btnLoadMore.classList); //
+} //
 
-function filterAndPaginate(obj, filterString, perPage) {
-  const filtered = obj?.filter(filterString);
-  if (!filtered) return [];
+/**/ function putOnPage(html) {
+  document.querySelector('#root').innerHTML = html; //
+} //
 
-  if (!obj.page) obj.page = 1;
-  const min = (obj.page - 1) * perPage;
-  const max = obj.page * perPage - 1;
+/**/ function filterAndPaginate(obj, filterString, perPage) {
+  const filtered = obj?.filter(filterString); //
+  if (!filtered) return []; //
 
-  obj.needsPagination = max < filtered.length;
+  if (!obj.page) obj.page = 1; //
+  const min = (obj.page - 1) * perPage; //
+  const max = obj.page * perPage - 1; //
 
-  return filtered.slice(0, max);
-  //console.log(min, max, perPage, obj.needsPagination);
-}
+  obj.needsPagination = max < filtered.length; //
+
+  return filtered.slice(0, max); //
+} //
