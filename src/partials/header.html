@@ -1,20 +1,31 @@
 <header class="header">
   <div class="header__mobile container">
-    <button type="button" class="header__btn" data-menu-button>
-      <svg class="header__icon" width="20" height="20">
-        <use href="./images/sprite.svg#burger-icon"></use>
-      </svg>
-    </button>
-    <a href="/" class="header__logo">
-      <svg class="header__icon-logo">
-        <use href="./images/sprite.svg#icon-logo"></use>
-      </svg>
-    </a>
-    <button type="button" class="header__btn" data-menu-search>
-      <svg class="header__icon" width="18" height="18">
-        <use href="./images/sprite.svg#icon-search"></use>
-      </svg>
-    </button>
+    <div class="header__mobile-burger-wrapper js-burger-wrapper">
+      <button type="button" class="header__btn" data-menu-button>
+        <svg class="header__icon" width="20" height="20">
+          <use href="./images/sprite.svg#burger-icon"></use>
+        </svg>
+      </button>
+      <a href="/" class="header__logo">
+        <svg class="header__icon-logo">
+          <use href="./images/sprite.svg#icon-logo"></use>
+        </svg>
+      </a>
+      <button type="button" class="header__btn js-show-input" data-menu-search>
+        <svg class="header__icon" width="18" height="18">
+          <use href="./images/sprite.svg#icon-search"></use>
+        </svg>
+      </button>
+    </div>
+
+    <div class="header__search-wrapper-mob" id="search-wrapper-mob">
+      <input type="text" class="header__input-search-mob js-input-search" />
+      <button type="button" class="header__btn header__input-search-btn js-search">
+        <svg class="header__search-icon" width="18" height="18">
+          <use href="./images/sprite.svg#icon-search"></use>
+        </svg>
+      </button>
+    </div>
 
     <div class="header__mobile-menu" data-menu>
       <button type="button" class="header__btn close-btn" data-menu-close>
@@ -108,7 +119,9 @@
           </ul>
         </div>
 
-        <button type="button" class="header__create-btn primary-button btn">Создать объявление</button>
+        <button type="button" class="header__create-btn primary-button btn">
+          Создать объявление
+        </button>
       </div>
     </div>
 

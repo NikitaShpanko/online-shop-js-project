@@ -7,7 +7,8 @@ const mobileFilterBtn = document.querySelector('[data-mobile-filter-btn]');
 const tabletFilter = document.querySelector('[data-tab-filter]');
 const tabletFilterBtn = document.querySelector('[data-tab-filter-btn]');
 const clearBtnsRef = document.querySelectorAll('.js-clear');
-const headerInputRef = document.querySelector('.js-input-search');
+const headerInputRefs = document.querySelectorAll('.js-input-search');
+const searchWrapperMob = document.querySelector('#search-wrapper-mob');
 
 menuBtnRef.addEventListener('click', () => {
   mobileMenuRef.classList.toggle('is-open');
@@ -48,14 +49,52 @@ clearBtnsRef[1].addEventListener('click', () => {
   store.setQuery(null);
 });
 
-const searchBtnRef = document.querySelector('.js-search');
+document.querySelector('.js-show-input').addEventListener('click', e => {
+  searchWrapperMob.classList.add('is-search');
+});
 
-searchBtnRef.addEventListener('click', () => {
-  let search = headerInputRef.value;
+const searchBtnRefs = document.querySelectorAll('.js-search');
+// searchBtnRefs[0].addEventListener('click', () => {
+//   let search = headerInputRefs[0].value;
+//   if (search && search.length) {
+//     store.setQuery({ search });
+//     headerInputRefs.forEach(ref => (ref.value = ''));
+//     searchWrapperMob.classList.remove('is-search');
+//   } else {
+//     store.setQuery(null);
+//   }
+// });
+
+searchBtnRefs[1].addEventListener('click', () => {
+  let search = headerInputRefs[1].value;
   if (search && search.length) {
+    debugger;
     store.setQuery({ search });
-    headerInputRef.value = '';
+    headerInputRefs.forEach(ref => (ref.value = ''));
+    searchWrapperMob.classList.remove('is-search');
   } else {
     store.setQuery(null);
   }
 });
+
+searchBtnRefs.forEach(ref => {
+  ref.addEventListener('click', searchInput);
+});
+
+// const headerInputSearch = document.querySelector('.js-input-search-mob');
+// const inputSearchBtnMob = document.querySelector('.js-inputbtn-mob');
+
+// function searchInput() {
+//   let search = headerInputRef.value;
+//   if (search && search.length) {
+//     store.setQuery({ search });
+//     headerInputRef.value = '';
+//     headerInputSearch.value = '';
+//     saerchWrapperMob.classList.remove('is-search');
+//   } else {
+//     store.setQuery(null);
+//   }
+// }
+
+// inputSearchBtnMob.addEventListener('click', searchInput);
+// searchBtnRef.addEventListener('click', searchInput);
