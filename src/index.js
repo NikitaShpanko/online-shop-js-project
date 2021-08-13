@@ -27,7 +27,6 @@ import './js/cardButton';
 API.Card.tpl = cardTpl;
 
 API.get.categoryNames().then(rusCategoryNames => {
-  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
 
   store.rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };

@@ -46,48 +46,48 @@ export function textAfter(pathList, keyword) {
  * @param {string} filterString
  * @param {boolean} clear
  */
-/**/ export function renderData(data, filterString, linkBefore, method) {
+export function renderData(data, filterString, linkBefore, method) {
   const catList = filterAndPaginate(data, filterString, config.maxCategories); //
 
-  /**/ catList.forEach(cat => {
-    if (linkBefore) cat.link = linkBefore + cat.name; //
-    cat.name = russify(cat.name); //
-  }); //
-  method(categoriesTpl(catList)); //
-} //
+  catList.forEach(cat => {
+    if (linkBefore) cat.link = linkBefore + cat.name;
+    cat.name = russify(cat.name);
+  });
+  method(categoriesTpl(catList));
+}
 
 /**
  * @param {object} category
  * @param {string} filterString
  */
-/**/ export function renderCategory(category, filterString, linkBefore, method) {
-  API.Card.tpl = categoryCardTpl; //
-  const fp = filterAndPaginate(category, filterString, config.maxCards); //
-  method(searchCardTpl(getCatReady(category.name, fp, linkBefore))); //
-  API.Card.tpl = cardTpl; //
-} //
+export function renderCategory(category, filterString, linkBefore, method) {
+  API.Card.tpl = categoryCardTpl;
+  const fp = filterAndPaginate(category, filterString, config.maxCards);
+  method(searchCardTpl(getCatReady(category.name, fp, linkBefore)));
+  API.Card.tpl = cardTpl;
+}
 
-/**/ export function render(obj, filterString, linkPrefix, method = putOnPage) {
+export function render(obj, filterString, linkPrefix, method = putOnPage) {
   obj.filterString = filterString;
   obj.linkPrefix = linkPrefix;
 
   if (obj instanceof API.Category) {
-    renderCategory(obj, filterString, linkPrefix, method);
+    renderCategory(obj, filterString, linkPrefix, clear);
   } else if (obj instanceof API.Data) {
-    renderData(obj, filterString, linkPrefix, method);
+    renderData(obj, filterString, linkPrefix, clear);
     swiperInit();
   } else {
-    method(errorTpl(obj)); //
-  } //
+    method(errorTpl(obj));
+  }
 
-  const btnLoadMore = document.querySelector('.js-load-more'); //
-  /**/ if (obj.needsPagination) {
-    btnLoadMore.style.display = ''; //
-  } /**/ else {
-    btnLoadMore.style.display = 'none'; //
-  } //
-  console.log(btnLoadMore.classList); //
-} //
+  const btnLoadMore = document.querySelector('.js-load-more');
+  if (obj.needsPagination) {
+    btnLoadMore.style.display = '';
+  } else {
+    btnLoadMore.style.display = 'none';
+  }
+  console.log(btnLoadMore.classList);
+}
 
 /**/ function putOnPage(html) {
   document.querySelector('#root').innerHTML = html; //

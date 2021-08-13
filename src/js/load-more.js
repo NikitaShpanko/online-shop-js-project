@@ -1,5 +1,4 @@
-//import store from '../lib/store';
-import * as Link from '../lib/link';
+import store from '../lib/store';
 
 const loadMoreRef = document.querySelector('.js-load-more');
 

@@ -31,9 +31,9 @@ export default {
 
   setQuery(query) {
     //this.query = query;
-    // console.log(query.categories);
     if (query === null) {
       this.query.categories = [];
+      this.query.search = '';
     } else if (query.categories) {
       const alreadyExists = this.query.categories.indexOf(query.categories[0]);
       if (alreadyExists === -1) {
@@ -41,7 +41,6 @@ export default {
       } else {
         this.query.categories.splice(alreadyExists, 1);
       }
-      console.log(this.query.categories);
     } else {
       Object.assign(this.query, query);
     }

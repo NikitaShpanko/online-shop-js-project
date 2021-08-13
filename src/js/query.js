@@ -3,15 +3,13 @@ import * as API from '../lib/api';
 import * as Link from '../lib/link';
 
 store.register('query', query => {
-  // console.log(store.query);
   const url = new URL(location.href);
 
   if (store.query.search) {
-    console.log(url.pathname, store.query.search);
     url.pathname = '/';
     url.searchParams.set('search', store.query.search);
   }
-  //console.log(url.toString());
+
   if (store.query.categories.length) {
     url.searchParams.set('categories', store.query.categories.join(','));
   } else {
@@ -22,7 +20,7 @@ store.register('query', query => {
   return;
   const loadMoreRef = document.querySelector('.js-load-more');
   loadMoreRef.style.opacity = `1`;
-
+  debugger;
   if (query && query.search && query.search.length) {
     loadMoreRef.style.opacity = `0`;
     //Добавляет параметр в URL
