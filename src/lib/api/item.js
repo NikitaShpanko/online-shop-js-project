@@ -1,4 +1,4 @@
-import toCamelCase from '../toCamelCase';
+import toCamelCase from './toCamelCase';
 
 export default class Item {
   /**

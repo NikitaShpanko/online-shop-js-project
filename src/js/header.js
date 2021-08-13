@@ -1,4 +1,5 @@
 import store from '../lib/store';
+import * as Link from '../lib/link';
 import headerCategoriesTpl from '../templates/header-categories.hbs';
 import headerCategoriesMobileTpl from '../templates/header-categories-mobile.hbs';
 
