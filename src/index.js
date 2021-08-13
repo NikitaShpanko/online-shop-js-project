@@ -1,5 +1,4 @@
 import './sass/main.scss';
-import './js/cardButton';
 
 import adsTpl from './templates/advertising-card.hbs';
 import cardTpl from './templates/card.hbs';
@@ -16,6 +15,7 @@ import './js/mobile-menu';
 import { getUrlCategories } from './js/header';
 import './js/products';
 import './js/query';
+import './js/cardButton';
 
 API.Card.tpl = cardTpl;
 
