@@ -10,6 +10,22 @@ export default class MainData extends Data {
       this.addCategory(key, `/category/${key}`, value);
     });
   }
+
+  /**
+   * @param  {...MainData} newMainData
+   */
+  append(...newMainData) {
+    newMainData.forEach(mainData => {
+      Object.entries(mainData).forEach(([key, value]) => {
+        if (typeof this[key] === 'undefined') {
+          this[key] = value;
+        }
+      });
+      this.categoryList.push(...mainData.categoryList);
+    });
+    return this;
+  }
+
   filter(query, param = 'category') {
     if (!query) return this.getCategoryList();
     const categoryFilter = Item.filter(this.categoryList, query, 'name');

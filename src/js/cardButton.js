@@ -1,25 +1,10 @@
 import modalCard from '../templates/modal-card.hbs';
-import allCardCategoryTpl from '../templates/categories-allcard.hbs';
-import cardCategoryTpl from '../templates/categories-allcard.hbs';
+import authorizationFormTpl from '../templates/authorization-form.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
-import { from } from 'form-data';
 
 const bodyNode = document.querySelector('body');
-
-// console.log(bodyNode.querySelectorAll('.card__all--content'));
-
-// const getIsFavoritesCard = API.request(
-//   '/call/favourites',
-//   'GET',
-//   false,
-//   localStorage.accessToken,
-// ).then(id =>
-//   id.cardList.forEach(card => {
-//     console.log(card);
-//   }),
-// );
 
 bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
@@ -29,48 +14,27 @@ bodyNode.addEventListener('click', e => {
 
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
+      if (!localStorage.accessToken) return openModal(authorizationFormTpl());
       const getCardId = cardId.dataset.id;
       buttonClick.classList.toggle('isFavorites');
+      if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
+      else deleteIsFavoritesCard(getCardId);
+    }
 
-      if (buttonClick.classList.contains('isFavorites')) {
-        const postIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'POST',
-          false,
-          localStorage.accessToken,
-        );
-      } else {
-        const deleteIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'DELETE',
-          false,
-          localStorage.accessToken,
-        );
+    if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      if (!localStorage.accessToken) {
+        closeModal(modalCard());
+        openModal(authorizationFormTpl());
       }
-    } else if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
       const getCardId = cardIdModal.dataset.id;
       buttonClick.classList.toggle('isFavorites');
+      if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
+      else deleteIsFavoritesCard(getCardId);
+    }
 
-      if (buttonClick.classList.contains('isFavorites')) {
-        const postIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'POST',
-          false,
-          localStorage.accessToken,
-        );
-      } else {
-        const deleteIsFavoritesCard = API.request(
-          `/call/favourite/${getCardId}`,
-          'DELETE',
-          false,
-          localStorage.accessToken,
-        );
-      }
-    } else if (buttonClick.classList.contains('icon-fullscreen')) openModalCard(cardId.dataset.id);
-    else if (buttonClick.classList.contains('load__more--button'))
-      console.log('Загрузка следующей страницы');
-    else if (buttonClick.classList.contains('categories__titel--allCard')) {
-      console.log('Загружается шаблон со всеми карточками');
+    if (buttonClick.classList.contains('icon-fullscreen')) {
+      updateURL('?card=modal');
+      openModalCard(cardId.dataset.id);
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
@@ -79,6 +43,7 @@ bodyNode.addEventListener('click', e => {
   }
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
+    updateURL('?card=modal');
     openModalCard(cardId.dataset.id);
   }
 
@@ -89,13 +54,7 @@ bodyNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
-  //////////////////////////////////////////////////////
-  ////  ЭТО ВРЕМЕННЫЙ КОСТЫЛЬ,  А ТО ОПЯТЬ СЛОМАЛОСЬ! //
-  ////  КОГДА ПОДТЯНУ СВОЮ ЛОГИКУ, БУДЕТ СНОВА ПРОСТО //
-  ////           store.products.getCard(id)           //
-  //////////////////////////////////////////////////////
-  const data = new API.MainData(store.products).getCard(id);
-  //////////////////////////////////////////////////////
+  const data = store.products.getCard(id);
   const dataUserId = data.userId;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
@@ -107,4 +66,21 @@ function openModalCard(id) {
 
 function onSubmit(params) {
   closeModal();
+}
+
+async function postIsFavoritesCard(getCardId) {
+  return API.request(`/call/favourite/${getCardId}`, 'POST', false, localStorage.accessToken);
+}
+
+async function deleteIsFavoritesCard(getCardId) {
+  return API.request(`/call/favourite/${getCardId}`, 'DELETE', false, localStorage.accessToken);
+}
+
+function updateURL(url) {
+  if (history.pushState) {
+    const baseUrl =
+      window.location.protocol + '//' + window.location.host + window.location.pathname;
+    const newUrl = baseUrl + url;
+    history.pushState(null, null, newUrl);
+  }
 }

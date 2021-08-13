@@ -1,9 +1,11 @@
 <ul class="filter-list list container js-categories">
   {{#each this}}
   <li class="header__filter-item">
-    <a href="" class="header__filter-link link" data-category="{{key}}">
+    <a href="" class="header__filter-link link" data-category="{{key}}" >
       {{name}}
     </a>
   </li>
   {{/each}}
 </ul>
+
+{{!-- {{#if activeCategories[key]}}is-orange{{/if}} --}}

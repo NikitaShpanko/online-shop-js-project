@@ -1,13 +1,17 @@
 {{#each this}}
-<div class="card__all--content  swiper-slide">
+
   <article class='card__article' data-id="{{_id}}">
     <div class='card'>
         <button class="icon-heart-white" type="button">
-          <div class="icon-heart"></div>
-          <div class="icon-heart--favorites"></div>
+          <svg class="icon" width="16" height="16">
+            <use class="icon-heart" href="/sprite.5ec50489.svg#icon-heart-wihte"></use>
+            <use class="icon-heart--favorites" href="/sprite.5ec50489.svg#icon-heart"></use>
+          </svg>
         </button>
         <button class="icon-fullscreen" type="button">
-          <div class="icon-fullscreen--conteiner"></div>
+          <svg class="icon" width="20" height="20">
+            <use href="/sprite.5ec50489.svg#icon-fullscreen"></use>
+          </svg>
         </button>
       <div class='card__conteiner'>
         <img class='card__img' src='{{imageUrls.[0]}}' alt='{{title}}' />
@@ -25,5 +29,5 @@
       </div>
     </div>
   </article>
-</div>
+
 {{/each}}

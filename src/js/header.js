@@ -1,4 +1,5 @@
 import store from '../lib/store';
+import * as Link from '../lib/link';
 import headerCategoriesTpl from '../templates/header-categories.hbs';
 import headerCategoriesMobileTpl from '../templates/header-categories-mobile.hbs';
 
@@ -14,53 +15,57 @@ export function getUrlCategories() {
   }
 }
 
-store.register('categories', (categories) => {
-      const toArr = Object.keys(categories)
-        .map(key => ({
-          key,
-          name: categories[key],
-        })).slice(1, 8);
+export function getUrlChosenCategory() {
+  const queryParams = new URLSearchParams(window.location.search);
+  let currentCategoriesUrl = queryParams.getAll('chosenCategory');
+  if (currentCategoriesUrl.length === 0) {
+    return null;
+  } else {
+    return currentCategoriesUrl[0];
+  }
+}
 
-      document.querySelector('#header-categories-mobile')
-        .outerHTML = headerCategoriesMobileTpl(toArr);
+store.register('categories', categories => {
+  const toArr = Object.keys(categories)
+    .map(key => ({
+      key,
+      name: categories[key],
+      activeCategories: getUrlCategories(),
+    }))
+    .slice(1, 8);
 
-      document.querySelector('.js-categories-m')
-        .addEventListener('click', handler)
+  document.querySelector('#header-categories-mobile').outerHTML = headerCategoriesMobileTpl(toArr);
 
-      document.querySelector('#header-categories')
-        .outerHTML = headerCategoriesTpl(toArr);
+  document.querySelector('.js-categories-m').addEventListener('click', handler);
 
-      document.querySelector('.js-categories')
-        .addEventListener('click', handler)
+  document.querySelector('#header-categories').outerHTML = headerCategoriesTpl(toArr);
 
-      function handler(e) {
-        e.preventDefault();
+  document.querySelector('.js-categories').addEventListener('click', handler);
 
-        if (!e.target.closest('a')) return false;
-        const category = e.target.getAttribute('data-category')
+  function handler(e) {
+    e.preventDefault();
 
-        if (category) {
-          let currentCategoriesUrl = getUrlCategories();
-          if (currentCategoriesUrl.length === 0) {
-            currentCategoriesUrl.push(category);
-          } else {
-            if (!currentCategoriesUrl.includes(category)){
-              currentCategoriesUrl.push(category);
-            } else {
-              const index = currentCategoriesUrl.indexOf(category);
-              currentCategoriesUrl.splice(index, 1);
-            }
-          }
+    if (!e.target.closest('a')) return false;
+    const category = e.target.getAttribute('data-category');
 
-          document.querySelectorAll(`[data-category="${[category]}"]`).forEach(ref => {
-            ref.parentNode.classList.toggle('is-orange')
-          })
-
-          store.setQuery({ categories: currentCategoriesUrl });
+    if (category) {
+      let currentCategoriesUrl = getUrlCategories();
+      if (currentCategoriesUrl.length === 0) {
+        currentCategoriesUrl.push(category);
+      } else {
+        if (!currentCategoriesUrl.includes(category)) {
+          currentCategoriesUrl.push(category);
+        } else {
+          const index = currentCategoriesUrl.indexOf(category);
+          currentCategoriesUrl.splice(index, 1);
         }
       }
-    },
-);
 
+      document.querySelectorAll(`[data-category="${[category]}"]`).forEach(ref => {
+        ref.parentNode.classList.toggle('is-orange');
+      });
 
-
+      store.setQuery({ categories: currentCategoriesUrl });
+    }
+  }
+});

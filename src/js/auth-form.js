@@ -132,6 +132,7 @@ async function onRegBtnClick(obj) {
     console.log('Пользователь с таким "email" уже существует');
   } else if (dataReg.id) {
     const dataAuth = await authUser(obj);
+
     console.log('Пользователь зарегистрирован и авторизирован');
     store.setIsOnline(dataAuth);
     saveToken(dataAuth);
