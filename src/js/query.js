@@ -1,7 +1,25 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
+import * as Link from '../lib/link';
 
 store.register('query', query => {
+  // console.log(store.query);
+  const url = new URL(location.href);
+
+  if (store.query.search) {
+    console.log(url.pathname, store.query.search);
+    url.pathname = '/';
+    url.searchParams.set('search', store.query.search);
+  }
+  //console.log(url.toString());
+  if (store.query.categories.length) {
+    url.searchParams.set('categories', store.query.categories.join(','));
+  } else {
+    url.searchParams.delete('categories');
+  }
+
+  Link.goTo(url.toString());
+  return;
   const loadMoreRef = document.querySelector('.js-load-more');
   loadMoreRef.style.opacity = `1`;
 

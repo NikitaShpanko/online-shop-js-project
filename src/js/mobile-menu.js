@@ -56,6 +56,7 @@ searchBtnRef.addEventListener('click', () => {
     store.setQuery({ search });
     headerInputRef.value = '';
   } else {
-    store.setQuery(null);
+    store.setQuery({ search: '' });
+    //store.setQuery(null);
   }
 });

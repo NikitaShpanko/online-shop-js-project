@@ -1,4 +1,4 @@
-import Swiper from 'swiper/bundle';
+import swiperInit from '../../js/swiperInit';
 
 import { textAfter, renderData, renderCategory, renderAds } from './_utils';
 import parse from './parse';
@@ -15,12 +15,12 @@ import config from '../../config.json';
  * @param {string} link
  */
 export default async function goTo(link) {
-  let ads = null;
+  const hero = document.querySelector('#hero-root');
   let linkPrefix = '';
   let { pathList, search, shortLink } = parse(link);
   const filterString = search.categories;
   if (pathList.includes('profile')) {
-    document.querySelector('#hero-root').style.display = 'none';
+    hero.style.display = 'none';
 
     if (store.isOnline && !store.isOnline.error) {
       linkPrefix = '/profile/';
@@ -36,7 +36,7 @@ export default async function goTo(link) {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
     }
   } else {
-    document.querySelector('#hero-root').style.display = '';
+    hero.style.display = '';
 
     if (pathList.includes('login')) {
       Modal.openModal(authorizationFormTpl()); //actually need some function here
@@ -67,46 +67,30 @@ export default async function goTo(link) {
     }
   }
 
+  if (search.categories) {
+    search.categories
+      .split(',')
+      .forEach(catName => console.log('sel', document.querySelector(`[data-category=${catName}]`)));
+    search.categories
+      .split(',')
+      .forEach(catName =>
+        document
+          .querySelectorAll(`[data-category=${catName}]`)
+          .forEach(sel => sel.closest('li').classList.add('is-orange')),
+      );
+  }
+
   //renderAds(ads);
 
   if (store.products instanceof API.Category) {
     renderCategory(store.products, filterString, linkPrefix);
   } else if (store.products instanceof API.Data) {
     renderData(store.products, filterString, linkPrefix);
+    swiperInit();
   } else {
     console.log('why the hell?', store.products);
   }
 
-  ////////////////////////////////////////////////
-  const swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween: 20,
-    slidesPerGroup: 4,
-    loopFillGroupWithBlank: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      1280: {
-        slidesPerView: 4,
-        spaceBetween: 40,
-      },
-    },
-  });
-  ////////////////////////////////////////////////
   history.pushState(null, null, shortLink);
   return shortLink;
 }

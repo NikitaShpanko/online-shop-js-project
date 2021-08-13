@@ -46,8 +46,6 @@ export function renderData(data, filterString, linkBefore, clear = true) {
   const catList = data?.filter(filterString);
   if (!catList) return;
 
-  API.Card.tpl = cardTpl;
-
   catList.forEach(cat => {
     if (linkBefore) cat.link = linkBefore + cat.name;
     cat.name = russify(cat.name);
@@ -71,6 +69,7 @@ export function renderCategory(category, filterString, linkBefore) {
   document.querySelector('#root').innerHTML = searchCardTpl(
     getCatReady(category.name, category?.filter(filterString), linkBefore),
   );
+  API.Card.tpl = cardTpl;
 }
 
 /**
