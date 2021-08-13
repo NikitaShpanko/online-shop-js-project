@@ -1,9 +1,7 @@
-//import store from '../lib/store';
-import * as Link from '../lib/link';
+import store from '../lib/store';
 
 const loadMoreRef = document.querySelector('.js-load-more');
 
 loadMoreRef.addEventListener('click', () => {
-  Link.loadNextPage();
-  //store.setQuery({ page: store.query && store.query.page ? store.query.page + 1 : 2 });
+  store.setQuery({ page: store.query && store.query.page ? store.query.page + 1 : 2 });
 });
