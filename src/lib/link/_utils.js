@@ -73,7 +73,6 @@ export function renderData(data, filterString, linkBefore, clear) {
 export function renderCategory(category, filterString, linkBefore, clear) {
   API.Card.tpl = categoryCardTpl;
   const fp = filterAndPaginate(category, filterString, config.maxCards, 'cardList');
-  //console.log(getCatReady(category.name, category?.filter(filterString), linkBefore));
   putOnPage(clear)(
     searchCardTpl(getCatReady(category.name, category?.filter(filterString), linkBefore)),
   );
@@ -81,7 +80,6 @@ export function renderCategory(category, filterString, linkBefore, clear) {
 }
 
 export function render(obj, filterString, linkPrefix, clear = true) {
-  console.log('RENDERER GETS THIS', obj);
   if (obj instanceof API.Category) {
     renderCategory(obj, filterString, linkPrefix, clear);
   } else if (obj instanceof API.Data) {

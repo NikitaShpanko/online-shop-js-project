@@ -12,6 +12,7 @@ import MainData from './mainData';
  * @param {object} body если не нужен, передаём `null`*.
  * @param {string} token если не нужен, передаём `null`*.
  * @param {boolean} requireJSON нужно ли выдавать JSON,
+ * @param {boolean} isMultiForm multiform или JSON лежит в body?
  * если нет, придёт сам объект Response
  *
  * \* - или что-то другое, что вернёт `false` при проверке.
@@ -22,13 +23,14 @@ export default function request(
   body = null,
   token = '',
   requireJSON = true,
+  isMultiForm = false,
 ) {
   method = method.toUpperCase();
   const param = { method };
   if (body) param.body = JSON.stringify(body);
   param.headers = {
-    'Content-Type': 'application/json; charset=UTF-8',
-  };
+    'Content-Type': isMultiForm ? '*/*' : 'application/json; charset=UTF-8',
+  }; // потому что "multipart/form-data" мытарил душу как мог
   if (token) {
     param.headers.Authorization = `Bearer ${token}`;
   }

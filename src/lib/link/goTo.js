@@ -28,7 +28,6 @@ export default async function goTo(link, refreshOnline = true) {
         if (refreshOnline) {
           store.products = await API.get.request('​/call/own', localStorage.accessToken);
         } else {
-          console.log('I SEE:', store.isOnline, 'THERE!');
           store.products = store.isOnline.getCategory('own');
         }
       } else if (possibleCategory === 'favourite') {
@@ -42,7 +41,6 @@ export default async function goTo(link, refreshOnline = true) {
           store.products = await API.get.request('/user', localStorage.accessToken);
         } else {
           store.products = store.isOnline;
-          console.log('I SEE:', store.isOnline, 'THERE!');
         }
       }
     } else {
@@ -82,9 +80,6 @@ export default async function goTo(link, refreshOnline = true) {
   }
 
   if (search.categories) {
-    search.categories
-      .split(',')
-      .forEach(catName => console.log('sel', document.querySelector(`[data-category=${catName}]`)));
     search.categories
       .split(',')
       .forEach(catName =>
