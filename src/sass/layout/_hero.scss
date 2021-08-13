@@ -101,7 +101,7 @@
 }
 
 .advertising-list__item:nth-child(2),
-.advertising-list__item:nth-child(4) {
+.advertising-list__item:nth-child(6) {
   background-color: var(--color-secondary-advertising-card);
 }
 
@@ -113,7 +113,7 @@
   }
 }
 
-.advertising-list__item:nth-child(6) {
+.advertising-list__item:nth-child(4) {
   background-color: var(--color-highlight);
   & .advertising-list__price {
     color: var(--color-main-background);
