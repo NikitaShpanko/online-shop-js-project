@@ -14,7 +14,7 @@
           name='email'
           required
           placeholder='E-mail'
-          pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$'
+          pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$"
         />
         <span></span>
       </label>
@@ -25,8 +25,8 @@
           name='password'
           required
           placeholder='Password'
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$"
-          title="Должен содержать 1 загланую букву и 1 цифру."
+          minlength="6"
+          maxlength="16"
         />
         <span></span>
       </label>
