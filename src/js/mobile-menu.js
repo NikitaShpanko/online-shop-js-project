@@ -73,7 +73,8 @@ searchBtnRefs[1].addEventListener('click', () => {
     headerInputRefs.forEach(ref => (ref.value = ''));
     searchWrapperMob.classList.remove('is-search');
   } else {
-    store.setQuery(null);
+    store.setQuery({ search: '' });
+    //store.setQuery(null);
   }
 });
 
