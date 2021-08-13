@@ -42,5 +42,5 @@ API.get.categoryNames().then(rusCategoryNames => {
   //store.setQuery({ categories });
   Link.init();
 
-  Link.goTo(location.href);
+  Link.goTo(location.href, false);
 });

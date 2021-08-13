@@ -3,13 +3,23 @@ import confirmModal from '../templates/confirm-modal.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
+import * as Link from '../lib/link';
 
 const headerRegContiner = document.querySelectorAll('[data-account-registration]');
 const headerCabContiner = document.querySelectorAll('[data-account-user]');
 
-store.register('isOnline', () => {
+store.register('isOnline', isIt => {
   headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
   headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
+
+  if (isIt) {
+    const url = new URL(location.href);
+    const redirect = url.searchParams.get('redirect');
+    if (redirect) Link.goTo(redirect, false);
+    else Link.goTo('/profile', false);
+  } else {
+    Link.goTo('/', false);
+  }
 });
 
 (async () => {
@@ -57,7 +67,7 @@ function userAccountControl(e) {
   }
 }
 
-function openAuthModal() {
+export function openAuthModal() {
   openModal(authorizationFormTpl());
   const form = document.body.querySelector('.authorization-form');
   form.addEventListener('click', e => {
