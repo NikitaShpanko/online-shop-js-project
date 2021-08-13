@@ -23,11 +23,11 @@ function russify(name) {
  */
 function getCatReady(name, cardList, linkBefore = '') {
   const category = {};
-  category.name = russify(name);
   category.card = API.Card.tpl(cardList); //cardTpl(cardList);
   if (linkBefore) {
     category.link = linkBefore + category.name;
   }
+  category.name = russify(name);
   return category;
 }
 
@@ -72,9 +72,9 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
   obj.linkPrefix = linkPrefix;
 
   if (obj instanceof API.Category) {
-    renderCategory(obj, filterString, linkPrefix, clear);
+    renderCategory(obj, filterString, linkPrefix, method);
   } else if (obj instanceof API.Data) {
-    renderData(obj, filterString, linkPrefix, clear);
+    renderData(obj, filterString, linkPrefix, method);
     swiperInit();
   } else {
     method(errorTpl(obj));
@@ -89,19 +89,19 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
   console.log(btnLoadMore.classList);
 }
 
-/**/ function putOnPage(html) {
-  document.querySelector('#root').innerHTML = html; //
-} //
+function putOnPage(html) {
+  document.querySelector('#root').innerHTML = html;
+}
 
-/**/ function filterAndPaginate(obj, filterString, perPage) {
-  const filtered = obj?.filter(filterString); //
-  if (!filtered) return []; //
+function filterAndPaginate(obj, filterString, perPage) {
+  const filtered = obj?.filter(filterString);
+  if (!filtered) return [];
 
-  if (!obj.page) obj.page = 1; //
-  const min = (obj.page - 1) * perPage; //
-  const max = obj.page * perPage - 1; //
+  if (!obj.page) obj.page = 1;
+  const min = (obj.page - 1) * perPage;
+  const max = obj.page * perPage - 1;
 
-  obj.needsPagination = max < filtered.length; //
+  obj.needsPagination = max < filtered.length;
 
-  return filtered.slice(0, max); //
-} //
+  return filtered.slice(0, max);
+}

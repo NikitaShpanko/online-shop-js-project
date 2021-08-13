@@ -46,7 +46,6 @@ store.register('categories', categories => {
     if (!e.target.dataset.category) return;
     store.setQuery({ categories: [e.target.dataset.category] });
 
-    console.log(e.target);
     e.target.closest('li').classList.toggle('is-orange');
     return;
 
