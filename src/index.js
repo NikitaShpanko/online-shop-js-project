@@ -12,7 +12,7 @@ import config from './config.json';
 import * as API from './lib/api';
 import * as Link from './lib/link';
 import store from './lib/store';
-//import './js/hero';
+import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 

@@ -20,6 +20,8 @@ export default async function goTo(link) {
   let { pathList, search, shortLink } = parse(link);
   const filterString = search.categories;
   if (pathList.includes('profile')) {
+    document.querySelector('#hero-root').style.display = 'none';
+
     if (store.isOnline && !store.isOnline.error) {
       linkPrefix = '/profile/';
       const possibleCategory = textAfter(pathList, 'profile');
@@ -34,6 +36,8 @@ export default async function goTo(link) {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
     }
   } else {
+    document.querySelector('#hero-root').style.display = '';
+
     if (pathList.includes('login')) {
       Modal.openModal(authorizationFormTpl()); //actually need some function here
     } else {
@@ -50,7 +54,7 @@ export default async function goTo(link) {
             store.products = await API.request(`/call/specific/${possibleCategory}`);
           }
         } else {
-          ads = await API.request('/call/ads');
+          //ads = await API.request('/call/ads');
           store.products = (await API.request('/call?page=1'))
             ?.append(await API.request('/call?page=2'))
             ?.append(await API.request('/call?page=3'));
@@ -63,7 +67,7 @@ export default async function goTo(link) {
     }
   }
 
-  renderAds(ads);
+  //renderAds(ads);
 
   if (store.products instanceof API.Category) {
     renderCategory(store.products, filterString, linkPrefix);
