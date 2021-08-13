@@ -15,11 +15,24 @@ export function getUrlCategories() {
   }
 }
 
+export function getUrlChosenCategory() {
+  const queryParams = new URLSearchParams(window.location.search);
+  let currentCategoriesUrl = queryParams.getAll('chosenCategory');
+  if (currentCategoriesUrl.length === 0) {
+    return null;
+  } else {
+    return currentCategoriesUrl[0];
+  }
+}
+
 store.register('categories', categories => {
-  const toArr = Object.keys(categories).map(key => ({
-    key,
-    name: categories[key],
-  })); //.slice(1, 8);
+  const toArr = Object.keys(categories)
+    .map(key => ({
+      key,
+      name: categories[key],
+      activeCategories: getUrlCategories(),
+    }))
+    .slice(1, 8);
 
   document.querySelector('#header-categories-mobile').outerHTML = headerCategoriesMobileTpl(toArr);
 
