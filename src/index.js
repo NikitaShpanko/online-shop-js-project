@@ -17,6 +17,7 @@ import './js/auth-form';
 import './js/mobile-menu';
 
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
+import './js/swiperInit';
 //import './js/products';
 
 import './js/query';
