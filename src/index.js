@@ -15,13 +15,13 @@ import store from './lib/store';
 import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
-
+import './js/new-modal-advert';
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
 import './js/swiperInit';
 //import './js/products';
 
 import './js/query';
-import './js/modal-advert';
+//import './js/modal-advert';
 import './js/load-more';
 import './js/cardButton';
 
