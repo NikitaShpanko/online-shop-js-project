@@ -1,5 +1,4 @@
 import './sass/main.scss';
-import './js/cardButton';
 
 import adsTpl from './templates/advertising-card.hbs';
 import cardTpl from './templates/card.hbs';
@@ -18,6 +17,8 @@ import './js/products';
 import './js/query';
 import './js/modal-advert'
 import './js/load-more';
+import './js/cardButton';
+
 
 API.Card.tpl = cardTpl;
 

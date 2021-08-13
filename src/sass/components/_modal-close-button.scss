@@ -8,6 +8,7 @@
   align-items: center;
   height: 24px;
   width: 24px;
+  padding: 5px;
   cursor: pointer;
 
   border: none;
@@ -23,9 +24,29 @@
     color: var(--color-main-background);
     background-color: var(--color-highlight);
     box-shadow: $shadow-default;
+    & .modal-close-button__icon {
+      display: none;
+    }
+    & .modal-close-button__icon-white {
+      display: block;
+    }
   }
 }
 
-.modal-close-button__icon {
+.modal-close-button__icon,
+.modal-close-button__icon-white {
   fill: currentColor;
+  height: 14px;
+  width: 14px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.modal-close-button__icon {
+  background-image: url('/images/svg/close.svg');
+}
+
+.modal-close-button__icon-white {
+  display: none;
+  background-image: url('/images/svg/close-w.svg');
 }
