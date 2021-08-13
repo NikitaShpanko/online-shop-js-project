@@ -20,7 +20,7 @@ store.register('query', query => {
   return;
   const loadMoreRef = document.querySelector('.js-load-more');
   loadMoreRef.style.opacity = `1`;
-
+  debugger;
   if (query && query.search && query.search.length) {
     loadMoreRef.style.opacity = `0`;
     //Добавляет параметр в URL
