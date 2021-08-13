@@ -1,4 +1,4 @@
-import toCamelCase from '../../toCamelCase';
+import toCamelCase from '../toCamelCase';
 import request from '../request';
 
 export default async function categoryNames() {

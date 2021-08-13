@@ -7,6 +7,7 @@ export default class Category extends Item {
     if (this.cardList && !this.card) {
       this.card = Card.tpl(this.cardList);
     }
+    if (this.name) this.origName = this.name;
   }
   getCard(id) {
     for (const item of this.cardList) {

@@ -11,8 +11,8 @@ import MainData from './mainData';
  * @param {string} method по умолчанию GET.
  * @param {object} body если не нужен, передаём `null`*.
  * @param {string} token если не нужен, передаём `null`*.
- * @param {boolean} requireJSON нужно ли выдавать JSON, если
- * нет, придёт простая строка `"Success!"`
+ * @param {boolean} requireJSON нужно ли выдавать JSON,
+ * если нет, придёт сам объект Response
  *
  * \* - или что-то другое, что вернёт `false` при проверке.
  */
@@ -55,14 +55,24 @@ function setDataType(obj, link) {
   if (link.includes('/favourite'))
     return new Category({
       name: 'favourite',
-      link: '/home/favourite',
       cardList: Object.values(obj)[0],
     });
-  if (link === '/call/own')
+  if (link.includes('/own'))
     return new Category({
       name: 'own',
-      link: '/home/own',
       cardList: Object.values(obj)[0],
+    });
+  if (link.includes('/specific')) {
+    const catName = link.slice(link.indexOf('/specific') + '/specific'.length + 1);
+    return new Category({
+      name: catName,
+      cardList: obj,
+    });
+  }
+  if (link.includes('/find'))
+    return new Category({
+      name: 'searchResults',
+      cardList: obj,
     });
   return obj;
 }

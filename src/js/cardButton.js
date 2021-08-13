@@ -54,13 +54,7 @@ bodyNode.addEventListener('click', e => {
 });
 
 function openModalCard(id) {
-  //////////////////////////////////////////////////////
-  ////  ЭТО ВРЕМЕННЫЙ КОСТЫЛЬ,  А ТО ОПЯТЬ СЛОМАЛОСЬ! //
-  ////  КОГДА ПОДТЯНУ СВОЮ ЛОГИКУ, БУДЕТ СНОВА ПРОСТО //
-  ////           store.products.getCard(id)           //
-  //////////////////////////////////////////////////////
-  const data = new API.MainData(store.products).getCard(id);
-  //////////////////////////////////////////////////////
+  const data = store.products.getCard(id);
   const dataUserId = data.userId;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
