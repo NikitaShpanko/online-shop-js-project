@@ -8,10 +8,10 @@
     width: 334px;
   }
 
-  .icon-heart-white,
-  .icon-fullscreen {
-    fill: var(--color-ghost);
-  }
+  // .icon-heart-white,
+  // .icon-fullscreen {
+  //   fill: var(--color-ghost);
+  // }
   &__title {
     font-weight: bold;
     font-size: 20px;
@@ -28,10 +28,10 @@
       margin-top: 20px;
       margin-left: 20px;
     }
-    .icon-heart-white,
-    .icon-fullscreen {
-      fill: none;
-    }
+    // .icon-heart-white,
+    // .icon-fullscreen {
+    //   fill: none;
+    // }
   }
 
   @media screen and (min-width: 1280px) {
@@ -47,10 +47,10 @@
       &:focus,
       &:active {
         background-color: rgba(0, 0, 0, 0.12);
-        .icon-heart-white,
-        .icon-fullscreen {
-          fill: var(--color-main-background);
-        }
+        // .icon-heart-white,
+        // .icon-fullscreen {
+        //   fill: var(--color-main-background);
+        // }
       }
     }
   }
