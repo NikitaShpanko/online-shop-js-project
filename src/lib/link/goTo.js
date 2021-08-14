@@ -1,4 +1,5 @@
 import { textAfter, render } from './_utils';
+import { syncHearts } from './_hearts';
 import parse from './parse';
 import setSearchParam from './setSearchParam';
 
@@ -93,6 +94,8 @@ export default async function goTo(link, refreshOnline = true) {
   }
 
   render(store.products, filterString, linkPrefix);
+
+  syncHearts(pathList, refreshOnline);
 
   history.pushState(null, null, shortLink);
   return shortLink;
