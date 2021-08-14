@@ -21,6 +21,7 @@ bodyNode.addEventListener('click', e => {
     if (buttonClick.classList.contains('icon-heart-white')) {
       if (!localStorage.accessToken) return openModal(authorizationFormTpl());
       const getCardId = cardId.dataset.id;
+      console.log(card);
       buttonClick.classList.toggle('isFavorites');
       if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
       else deleteIsFavoritesCard(getCardId);
