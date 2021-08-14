@@ -4,6 +4,7 @@ import modalAdvertEditTpl from '../templates/new-modal-advert-edit.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
+import { async } from 'q';
 
 const bodyNode = document.querySelector('body');
 
@@ -62,6 +63,13 @@ bodyNode.addEventListener('click', e => {
       const imgInput = document.querySelector('.containerImgg_inp');
       const containerImg = document.querySelector('.containerImg');
 
+      const allCategoryNode = document.querySelectorAll('.form-modal-adv__select option');
+      const nowCategoryNode = document.querySelector('.form-modal-adv__select');
+
+      allCategoryNode.forEach(e => {
+        if (nowCategoryNode.dataset.category === e.value) e.setAttribute('selected', 'selected');
+      });
+
       const picArr = [];
       let picId = 0;
 
@@ -81,19 +89,17 @@ bodyNode.addEventListener('click', e => {
         e.preventDefault();
         const id = advForm.dataset.id;
         const formData = new FormData(e.target);
-        fet(id, formData);
+        fetchPatch(id, formData);
       });
 
       imgInput.addEventListener('change', e => {
         if (containerImg.children.length < 6) {
           if (!e.target.files.length) return;
           const files = Array.from(e.target.files);
-          console.log(e.target.files);
 
           files.forEach(file => {
             if (!file.type.match('image')) return;
             picArr.push({ id: picId, file });
-            console.log(picArr);
             const reader = new FileReader();
 
             reader.onload = ev => {
@@ -156,8 +162,8 @@ async function user() {
   return API.request(`/user`, 'GET', false, localStorage.accessToken);
 }
 
-async function fet(id, getCard) {
-  await fetch(`https://callboard-backend.goit.global/call/${id}`, {
+function fetchPatch(id, getCard) {
+  fetch(`https://callboard-backend.goit.global/call/${id}`, {
     method: 'PATCH',
     body: getCard,
     headers: {
