@@ -9,15 +9,9 @@ export default function swiperInit() {
 
     if (button.dataset.action === 'right') {
       swiper.slideNext();
-      if (swiper.isEnd) button.style.display = 'none';
-      container.querySelector('[data-action="left"]').style.display = '';
     }
     if (button.dataset.action === 'left') {
       swiper.slidePrev();
-      if (swiper.isBeginning) button.style.display = 'none';
-      container.querySelector('[data-action="right"]').style.display = '';
     }
-
-    console.log(`B: ${swiper.isBeginning}, E: ${swiper.isEnd}`);
   });
 }
