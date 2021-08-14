@@ -35,9 +35,13 @@
 
 .advertising-list__item {
   padding: 15px;
+  transition: tranform linear 300ms;
 
   &:not(:first-child) {
     cursor: pointer;
+    &:hover {
+      transform: scale(0.98);
+    }
   }
 
   @media screen and (max-width: 767px) {

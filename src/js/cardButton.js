@@ -5,6 +5,7 @@ import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
 import { async } from 'q';
+import * as Link from '../lib/link';
 
 const bodyNode = document.querySelector('body');
 
@@ -191,12 +192,14 @@ function fetchPatch(id, getCard) {
       if (data.id) {
         console.log('Обьявление отредактированно');
         closeModal();
+        Link.goTo(location.href);
       }
     })
-    .catch(e => {});
+    .catch(console.log);
 }
 
 async function deleteCard(id) {
   const data = await API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken, false);
-  closeModal(modalAdvertEditTpl);
+  closeModal();
+  Link.goTo(location.href);
 }
