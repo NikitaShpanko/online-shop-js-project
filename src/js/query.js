@@ -1,10 +1,26 @@
 import store from '../lib/store';
 import * as API from '../lib/api';
+import * as Link from '../lib/link';
 
 store.register('query', query => {
+  const url = new URL(location.href);
+
+  if (store.query.search) {
+    url.pathname = '/';
+    url.searchParams.set('search', store.query.search);
+  }
+
+  if (store.query.categories.length) {
+    url.searchParams.set('categories', store.query.categories.join(','));
+  } else {
+    url.searchParams.delete('categories');
+  }
+
+  Link.goTo(url.toString());
+  return;
   const loadMoreRef = document.querySelector('.js-load-more');
   loadMoreRef.style.opacity = `1`;
-
+  debugger;
   if (query && query.search && query.search.length) {
     loadMoreRef.style.opacity = `0`;
     //Добавляет параметр в URL

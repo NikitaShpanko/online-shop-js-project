@@ -1,11 +1,10 @@
-import Swiper from 'swiper/bundle';
-
-import { textAfter, renderData, renderCategory, renderAds } from './_utils';
+import { textAfter, render } from './_utils';
 import parse from './parse';
 import setSearchParam from './setSearchParam';
 
 import authorizationFormTpl from '../../templates/authorization-form.hbs';
-import * as Modal from '../../js/modal-control';
+//import * as Modal from '../../js/modal-control';
+import { openAuthModal } from '../../js/auth-form';
 
 import * as API from '../api';
 import store from '../store';
@@ -14,32 +13,45 @@ import config from '../../config.json';
 /**
  * @param {string} link
  */
-export default async function goTo(link) {
-  let ads = null;
+export default async function goTo(link, refreshOnline = true) {
+  const hero = document.querySelector('#hero-root');
   let linkPrefix = '';
   let { pathList, search, shortLink } = parse(link);
   const filterString = search.categories;
   if (pathList.includes('profile')) {
-    document.querySelector('#hero-root').style.display = 'none';
+    hero.style.display = 'none';
 
     if (store.isOnline && !store.isOnline.error) {
       linkPrefix = '/profile/';
       const possibleCategory = textAfter(pathList, 'profile');
       if (possibleCategory === 'own') {
-        store.products = await API.get.request('​/call/own', localStorage.accessToken);
+        if (refreshOnline) {
+          store.products = await API.get.request('​/call/own', localStorage.accessToken);
+        } else {
+          store.products = store.isOnline.getCategory('own');
+        }
       } else if (possibleCategory === 'favourite') {
-        store.products = await API.get.request('​/call/favourites', localStorage.accessToken);
+        if (refreshOnline) {
+          store.products = await API.get.request('​/call/favourites', localStorage.accessToken);
+        } else {
+          store.products = store.isOnline.getCategory('favourite');
+        }
       } else {
-        store.products = await API.get.request('/user', localStorage.accessToken);
+        if (refreshOnline) {
+          store.products = await API.get.request('/user', localStorage.accessToken);
+        } else {
+          store.products = store.isOnline;
+        }
       }
     } else {
       return goTo(setSearchParam('/login', 'redirect', shortLink));
     }
   } else {
-    document.querySelector('#hero-root').style.display = '';
+    hero.style.display = '';
 
     if (pathList.includes('login')) {
-      Modal.openModal(authorizationFormTpl()); //actually need some function here
+      if (!store.isOnline) openAuthModal();
+      else return goTo(search.redirect ? search.redirect : '/', false);
     } else {
       if (search.search) {
         store.products = await API.request(setSearchParam('/call/find', 'search', search.search));
@@ -67,46 +79,18 @@ export default async function goTo(link) {
     }
   }
 
-  //renderAds(ads);
-
-  if (store.products instanceof API.Category) {
-    renderCategory(store.products, filterString, linkPrefix);
-  } else if (store.products instanceof API.Data) {
-    renderData(store.products, filterString, linkPrefix);
-  } else {
-    console.log('why the hell?', store.products);
+  if (search.categories) {
+    search.categories
+      .split(',')
+      .forEach(catName =>
+        document
+          .querySelectorAll(`[data-category=${catName}]`)
+          .forEach(sel => sel.closest('li').classList.add('is-orange')),
+      );
   }
 
-  ////////////////////////////////////////////////
-  const swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween: 20,
-    slidesPerGroup: 4,
-    loopFillGroupWithBlank: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
+  render(store.products, filterString, linkPrefix);
 
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      1280: {
-        slidesPerView: 4,
-        spaceBetween: 40,
-      },
-    },
-  });
-  ////////////////////////////////////////////////
   history.pushState(null, null, shortLink);
   return shortLink;
 }

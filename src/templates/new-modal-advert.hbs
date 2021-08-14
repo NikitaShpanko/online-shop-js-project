@@ -1,0 +1,84 @@
+<div class="backdrop">
+  <div class="modal modal-adv">
+    <button type="button" class="modal-close-button">
+      <div class='modal-close-button__icon'></div>
+      <div class='modal-close-button__icon-white'></div>
+    </button>
+    <form class="form-modal-adv">
+      <p class="form-modal-adv__title">Создать объявление</p>
+      <label for="product-name" class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Название товара</span>
+        <span class="form-modal-adv__wrapper">
+          <input 
+            type="text" 
+            class="form-modal-adv__input _hvr" 
+            name="title" 
+            id="product-name" 
+            required
+            minlength="2"
+            maxlength="30"
+          />
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Фото</span>
+          <div class="containerImg form-modal-adv__wrapper form-modal-adv__list">
+            <div class="containerImgg">
+              <span class="containerImgg_add">+</span>
+              <input type="file" name='file' class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
+            </div>
+          </div>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Описание товара</span>
+        <span class="form-modal-adv__wrapper">
+          <textarea class="form-modal-adv__desc _hvr" name="description" maxlength="300"></textarea>
+      </label>
+        </span>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Категория товара</span>
+        <span class="form-modal-adv__wrapper">
+          <select name="category" required class="form-modal-adv__select">
+            <option value=""></option>
+            <option value="property">Недвижимость</option>
+            <option value="transport">Транспорт</option>
+            <option value="work">Работа</option>
+            <option value="electronics">Электроника</option>
+            <option value="business and services">Бизнес и услуги</option>
+            <option value="recreation and sport">Отдых и спорт</option>
+            <option value="free">Отдам бесплатно</option>
+            <option value="trade">Обмен</option>
+          </select>
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Цена</span>
+        <span class="form-modal-adv__wrapper">
+          <input
+            type="number"
+            class="form-modal-adv__input _hvr input-price"
+            min="0"
+            name="price"
+            placeholder="0.00 €"
+            pattern="/^(?!(?:0|0\.0|0\.00)$)[+]?\d+(\.\d|\.\d[0-9])?$/"
+          />
+        </span>
+      </label>
+      <label class="form-modal-adv__label">
+        <span class="form-modal-adv__text">Телефон</span>
+        <span class="form-modal-adv__wrapper">
+          <input
+            type="tel"
+            class="form-modal-adv__input _hvr"
+            name="phone"
+            placeholder="+380 -- --- -- --"
+            {{!-- pattern="^\+?3?8?(0[\s\.-]\d{2}[\s\.-]\d{3}[\s\.-]\d{2}[\s\.-]\d{2})$" --}}
+            title="+380 -- --- -- --"
+            required
+          />
+        </span>
+      </label>
+      <button type="submit" class="primary-button form-modal-adv__button">Добавить</button>
+    </form>
+  </div>
+</div>

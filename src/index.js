@@ -15,33 +15,31 @@ import store from './lib/store';
 import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
-
+import './js/new-modal-advert';
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
-import './js/swiperInit';
 //import './js/products';
 
 import './js/query';
-import './js/modal-advert';
+//import './js/modal-advert';
 import './js/load-more';
 import './js/cardButton';
 
 API.Card.tpl = cardTpl;
 
 API.get.categoryNames().then(rusCategoryNames => {
-  console.log(rusCategoryNames);
   store.setCategories(rusCategoryNames);
 
   store.rusCategoryNames = { ...config.rusNames, ...rusCategoryNames };
 
-  const chosenCategory = getUrlChosenCategory();
-  if (chosenCategory) {
-    store.setQuery({ chosenCategory });
-    return;
-  }
+  // const chosenCategory = getUrlChosenCategory();
+  // if (chosenCategory) {
+  //   store.setQuery({ chosenCategory });
+  //   return;
+  // }
 
-  const categories = getUrlCategories();
+  //const categories = getUrlCategories();
   //store.setQuery({ categories });
   Link.init();
 
-  Link.goTo(location.href);
+  Link.goTo(location.href, false);
 });

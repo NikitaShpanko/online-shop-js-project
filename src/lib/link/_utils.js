@@ -1,11 +1,15 @@
 import * as API from '../api';
 import store from '../store';
+import swiperInit from '../../js/swiperInit';
+
+import config from '../../config.json';
+
 import adsHero from '../../templates/advertising-card.hbs';
 import cardTpl from '../../templates/card.hbs';
 import categoriesTpl from '../../templates/categories.hbs';
 import searchCardTpl from '../../templates/search-allcard.hbs';
-
 import categoryCardTpl from '../../templates/category-cards.hbs';
+import errorTpl from '../../templates/error.hbs';
 
 function russify(name) {
   const rusName = store.rusCategoryNames[name];
@@ -19,11 +23,11 @@ function russify(name) {
  */
 function getCatReady(name, cardList, linkBefore = '') {
   const category = {};
-  category.name = russify(name);
   category.card = API.Card.tpl(cardList); //cardTpl(cardList);
   if (linkBefore) {
     category.link = linkBefore + category.name;
   }
+  category.name = russify(name);
   return category;
 }
 
@@ -42,41 +46,62 @@ export function textAfter(pathList, keyword) {
  * @param {string} filterString
  * @param {boolean} clear
  */
-export function renderData(data, filterString, linkBefore, clear = true) {
-  const catList = data?.filter(filterString);
-  if (!catList) return;
-
-  API.Card.tpl = cardTpl;
+export function renderData(data, filterString, linkBefore, method) {
+  const catList = filterAndPaginate(data, filterString, config.maxCategories); //
 
   catList.forEach(cat => {
     if (linkBefore) cat.link = linkBefore + cat.name;
     cat.name = russify(cat.name);
   });
-  const html = categoriesTpl(catList);
-  if (clear) {
-    document.querySelector('#root').innerHTML = html;
-  } else {
-    document.querySelector('#root').insertAdjacentHTML('beforeend', html);
-  }
-  console.log('DATA', data?.filter(filterString), filterString);
+  method(categoriesTpl(catList));
 }
 
 /**
  * @param {object} category
  * @param {string} filterString
  */
-export function renderCategory(category, filterString, linkBefore) {
+export function renderCategory(category, filterString, linkBefore, method) {
   API.Card.tpl = categoryCardTpl;
-  console.log(getCatReady(category.name, category?.filter(filterString), linkBefore));
-  document.querySelector('#root').innerHTML = searchCardTpl(
-    getCatReady(category.name, category?.filter(filterString), linkBefore),
-  );
+  const fp = filterAndPaginate(category, filterString, config.maxCards);
+  method(searchCardTpl(getCatReady(category.name, fp, linkBefore)));
+  API.Card.tpl = cardTpl;
 }
 
-/**
- * @param {object} adsObj
- */
-export function renderAds(adsObj) {
-  document.querySelector('#hero-root').innerHTML = adsObj ? adsHero(adsObj) : '';
-  console.log('ADS', adsObj);
+export function render(obj, filterString, linkPrefix, method = putOnPage) {
+  obj.filterString = filterString;
+  obj.linkPrefix = linkPrefix;
+
+  if (obj instanceof API.Category) {
+    renderCategory(obj, filterString, linkPrefix, method);
+  } else if (obj instanceof API.Data) {
+    renderData(obj, filterString, linkPrefix, method);
+    swiperInit();
+  } else {
+    method(errorTpl(obj));
+  }
+
+  const btnLoadMore = document.querySelector('.js-load-more');
+  if (obj.needsPagination) {
+    btnLoadMore.style.display = '';
+  } else {
+    btnLoadMore.style.display = 'none';
+  }
+  console.log(btnLoadMore.classList);
+}
+
+function putOnPage(html) {
+  document.querySelector('#root').innerHTML = html;
+}
+
+function filterAndPaginate(obj, filterString, perPage) {
+  const filtered = obj?.filter(filterString);
+  if (!filtered) return [];
+
+  if (!obj.page) obj.page = 1;
+  const min = (obj.page - 1) * perPage;
+  const max = obj.page * perPage - 1;
+
+  obj.needsPagination = max < filtered.length;
+
+  return filtered.slice(0, max);
 }
