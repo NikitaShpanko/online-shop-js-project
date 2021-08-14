@@ -86,7 +86,6 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
   } else {
     btnLoadMore.style.display = 'none';
   }
-  console.log(btnLoadMore.classList);
 }
 
 function putOnPage(html) {
@@ -94,12 +93,14 @@ function putOnPage(html) {
 }
 
 function filterAndPaginate(obj, filterString, perPage) {
+  // console.log(obj);
   const filtered = obj?.filter(filterString);
   if (!filtered) return [];
+  // console.log('filtered:', filterString, filtered);
 
   if (!obj.page) obj.page = 1;
   const min = (obj.page - 1) * perPage;
-  const max = obj.page * perPage - 1;
+  const max = obj.page * perPage;
 
   obj.needsPagination = max < filtered.length;
 
