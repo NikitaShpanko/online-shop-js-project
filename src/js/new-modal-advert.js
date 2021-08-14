@@ -12,24 +12,41 @@ function openAdvModal(e) {
   const containerImg = document.querySelector('.containerImg');
 
   advForm.addEventListener('submit', onSubmit);
+  const picArr = [];
+  let picId = 0;
+
+  containerImg.addEventListener('click', onClickRemove);
+  function onClickRemove(e) {
+    const imgShell = e.target.closest('Div');
+    if (!imgShell?.classList.contains('containerImgg')) {
+      return;
+    }
+
+    const indexPicToRemove = picArr.findIndex(e => e.id === imgShell.dataset.id);
+    picArr.splice(indexPicToRemove, 1);
+    imgShell.remove();
+  }
 
   imgInput.addEventListener('change', e => {
     if (containerImg.children.length < 6) {
       if (!e.target.files.length) return;
       const files = Array.from(e.target.files);
+      console.log(e.target.files);
 
       files.forEach(file => {
         if (!file.type.match('image')) return;
-
+        picArr.push({ id: picId, file });
+        console.log(picArr);
         const reader = new FileReader();
 
         reader.onload = ev => {
           const src = ev.target.result;
           containerImg.insertAdjacentHTML(
             'afterbegin',
-            `<div class="containerImgg"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
+            `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
           );
         };
+        picId++;
         reader.readAsDataURL(file);
       });
     }
@@ -53,6 +70,10 @@ function openAdvModal(e) {
     }
 
     const formData = new FormData(e.target);
+    for (const pic of picArr) {
+      formData.append('file', pic.file);
+    }
+    console.log(formData.getAll('file'));
 
     fetch('https://callboard-backend.goit.global/call', {
       method: 'POST',
@@ -64,15 +85,14 @@ function openAdvModal(e) {
     })
       .then(r => r.json())
       .then(data => {
+        if (data.message === 'Only image files are allowed') {
+          console.log('Неверный формат изображения! Формат должен быть ".jpg, .jpeg, .png"');
+        }
         if (data.id) {
           console.log('Обьявление добавлено');
           closeModal();
         }
       })
-      .catch(e => {
-        if (e.status === 415) {
-          console.log('Файл должен быть картинкой');
-        }
-      });
+      .catch(console.log);
   }
 }
