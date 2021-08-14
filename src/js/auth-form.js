@@ -27,7 +27,6 @@ store.register('isOnline', isIt => {
   if (store.products) {
     if (store.query.categories)
       newLink = Link.setSearchParam(newLink, 'categories', store.query.categories.join(','));
-    console.log(newLink);
     Link.goTo(newLink, false);
   }
 });

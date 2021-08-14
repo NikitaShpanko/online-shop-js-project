@@ -33,15 +33,6 @@ export default async function goTo(link, refreshOnline = true) {
       li.classList.remove('is-orange');
     }
   });
-  // if (search.categories) {
-  //   search.categories
-  //     .split(',')
-  //     .forEach(catName =>
-  //       document
-  //         .querySelectorAll(`[data-category=${catName}]`)
-  //         .forEach(sel => sel.closest('li').classList.add('is-orange')),
-  //     );
-  // }
 
   if (pathList.includes('profile')) {
     if (store.isOnline && !store.isOnline.error) {
