@@ -10,6 +10,7 @@ function openAdvModal(e) {
   const advForm = document.querySelector('.form-modal-adv');
   const imgInput = document.querySelector('.containerImgg_inp');
   const containerImg = document.querySelector('.containerImg');
+  const containerLabel = document.querySelector('.containerImgg__label');
 
   advForm.addEventListener('submit', onSubmit);
   const picArr = [];
@@ -39,8 +40,8 @@ function openAdvModal(e) {
 
         reader.onload = ev => {
           const src = ev.target.result;
-          containerImg.insertAdjacentHTML(
-            'afterbegin',
+          containerLabel.insertAdjacentHTML(
+            'beforebegin',
             `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
           );
         };
