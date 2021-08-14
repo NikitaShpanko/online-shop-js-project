@@ -70,9 +70,7 @@ function openAdvModal(e) {
     }
 
     const formData = new FormData(e.target);
-    for (const pic of picArr) {
-      formData.append('file', pic.file);
-    }
+    picArr.forEach(e => formData.append('file', e.file));
     console.log(formData.getAll('file'));
 
     fetch('https://callboard-backend.goit.global/call', {
