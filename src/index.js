@@ -16,6 +16,7 @@ import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 import './js/new-modal-advert';
+
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
 //import './js/products';
 

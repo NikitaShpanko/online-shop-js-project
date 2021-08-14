@@ -24,6 +24,15 @@
 }
 
 .form-modal-edit {
+  display: block;
+  margin: 0 auto;
   border: none;
   background-color: inherit;
+}
+
+.form-modal-edit::before {
+  content: url(/images/svg/deletefile.svg);
+  width: 13px;
+  height: 14px;
+  margin-right: 10px;
 }
