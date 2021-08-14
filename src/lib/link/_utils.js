@@ -1,6 +1,6 @@
 import * as API from '../api';
 import store from '../store';
-import swiperInit from '../../js/swiperInit';
+import swiperSetup from '../../js/swiperSetup';
 
 import config from '../../config.json';
 
@@ -75,7 +75,7 @@ export function render(obj, filterString, linkPrefix, method = putOnPage) {
     renderCategory(obj, filterString, linkPrefix, method);
   } else if (obj instanceof API.Data) {
     renderData(obj, filterString, linkPrefix, method);
-    swiperInit();
+    swiperSetup();
   } else {
     method(errorTpl(obj));
   }
