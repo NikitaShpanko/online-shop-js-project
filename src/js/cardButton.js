@@ -4,6 +4,7 @@ import modalAdvertEditTpl from '../templates/new-modal-advert-edit.hbs';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
+import { async } from 'q';
 
 const bodyNode = document.querySelector('body');
 
@@ -41,13 +42,8 @@ bodyNode.addEventListener('click', e => {
       const getId = cardId.dataset.id;
       const infoUser = store.isOnline;
       const data = store.products.getCard(getId);
-
       if (infoUser.id === getUserId) openModal(modalAdvertEditTpl({ data }));
       else openModalCard(cardId.dataset.id);
-      // user().then(e => {
-      //   if (e.id === getUserId) openModal(modalAdvertEditTpl({ data }));
-      //   else openModalCard(cardId.dataset.id);
-      // });
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
@@ -67,13 +63,35 @@ bodyNode.addEventListener('click', e => {
       const imgInput = document.querySelector('.containerImgg_inp');
       const containerImg = document.querySelector('.containerImg');
 
+      const allCategoryNode = document.querySelectorAll('.form-modal-adv__select option');
+      const nowCategoryNode = document.querySelector('.form-modal-adv__select');
+
+      allCategoryNode.forEach(e => {
+        if (nowCategoryNode.dataset.category === e.value) e.setAttribute('selected', 'selected');
+      });
+
+      const picArr = [];
+      let picId = 0;
+
+      containerImg.addEventListener('click', onClickRemove);
+      function onClickRemove(e) {
+        const imgShell = e.target.closest('Div');
+        if (!imgShell?.classList.contains('containerImgg')) {
+          return;
+        }
+
+        const indexPicToRemove = picArr.findIndex(e => e.id === imgShell.dataset.id);
+        picArr.splice(indexPicToRemove, 1);
+        imgShell.remove();
+      }
+
       advForm.addEventListener('submit', e => {
         e.preventDefault();
         const id = advForm.dataset.id;
         const formData = new FormData(e.target);
-        console.log(formData.get('title'));
-        fet(id, formData);
+        fetchPatch(id, formData);
       });
+
       imgInput.addEventListener('change', e => {
         if (containerImg.children.length < 6) {
           if (!e.target.files.length) return;
@@ -81,16 +99,17 @@ bodyNode.addEventListener('click', e => {
 
           files.forEach(file => {
             if (!file.type.match('image')) return;
-
+            picArr.push({ id: picId, file });
             const reader = new FileReader();
 
             reader.onload = ev => {
               const src = ev.target.result;
               containerImg.insertAdjacentHTML(
                 'afterbegin',
-                `<div class="containerImgg"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
+                `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
               );
             };
+            picId++;
             reader.readAsDataURL(file);
           });
         }
@@ -101,14 +120,6 @@ bodyNode.addEventListener('click', e => {
     const id = formIdModal.dataset.id;
     deleteCard(id);
   }
-
-  // if (cardModalPatch) {
-  //   const id = cardId.dataset.id;
-  //   let form = document.createElement('.form-modal-adv');
-  //   console.log(form);
-  //   console.log(form.submit());
-  //   patshCard(form.submit(), id);
-  // }
 
   if (imgPrev) {
     const imgSrcPrev = e.target.getAttribute('src');
@@ -151,20 +162,8 @@ async function user() {
   return API.request(`/user`, 'GET', false, localStorage.accessToken);
 }
 
-// async function patshCard(id, getCard) {
-//   const data = await API.request(
-//     `/call/${id}`,
-//     'PATCH',
-//     getCard,
-//     localStorage.accessToken,
-//     true,
-//     false,
-//   );
-//   closeModal();
-// }
-
-async function fet(id, getCard) {
-  await fetch(`https://callboard-backend.goit.global/call/${id}`, {
+function fetchPatch(id, getCard) {
+  fetch(`https://callboard-backend.goit.global/call/${id}`, {
     method: 'PATCH',
     body: getCard,
     headers: {
@@ -175,26 +174,13 @@ async function fet(id, getCard) {
     .then(r => r.json())
     .then(data => {
       if (data.id) {
-        console.log('Обьявление добавлено');
         closeModal();
       }
     })
-    .catch(e => {
-      console.log(e);
-    });
+    .catch(e => {});
 }
 
 async function deleteCard(id) {
   const data = await API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken, false);
   closeModal(modalAdvertEditTpl);
 }
-
-// function onSubmit(e) {
-//   e.preventDefault();
-//   console.log(advForm);
-//   const id = advForm.dataset.id;
-//   console.log(id);
-
-//   const formData = new FormData(e.target);
-//   patshCard(id, formData);
-// }
