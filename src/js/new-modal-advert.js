@@ -31,12 +31,10 @@ function openAdvModal(e) {
     if (containerImg.children.length < 6) {
       if (!e.target.files.length) return;
       const files = Array.from(e.target.files);
-      console.log(e.target.files);
 
       files.forEach(file => {
         if (!file.type.match('image')) return;
         picArr.push({ id: picId, file });
-        console.log(picArr);
         const reader = new FileReader();
 
         reader.onload = ev => {
@@ -51,8 +49,6 @@ function openAdvModal(e) {
       });
     }
   });
-
-  console.log(advForm.elements.category.value);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -71,7 +67,6 @@ function openAdvModal(e) {
 
     const formData = new FormData(e.target);
     picArr.forEach(e => formData.append('file', e.file));
-    console.log(formData.getAll('file'));
 
     fetch('https://callboard-backend.goit.global/call', {
       method: 'POST',
