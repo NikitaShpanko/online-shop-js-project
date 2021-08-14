@@ -12,7 +12,6 @@ export async function syncHearts(pathList, refreshOnline) {
       card.isFavorites = true;
     });
     document.querySelectorAll('.icon-heart-white').forEach(iconHeart => {
-      console.log(iconHeart);
       iconHeart.classList.add('isFavorites');
     });
     return;
@@ -31,13 +30,11 @@ export async function syncHearts(pathList, refreshOnline) {
       if (card) card.isFavorites = true;
 
       const cardElement = document.querySelector(`[data-id="${id}"]`);
-      console.log(id, cardElement);
       if (cardElement) {
         const iconHeart = cardElement.querySelector('.icon-heart-white');
         if (iconHeart) {
           iconHeart.classList.add('isFavorites');
         }
       }
-      //console.log(document.querySelector(`[data-id="${id}"]`));
     });
 }

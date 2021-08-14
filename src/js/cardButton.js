@@ -28,6 +28,9 @@ bodyNode.addEventListener('click', e => {
       buttonClick.classList.toggle('isFavorites');
       if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
       else deleteIsFavoritesCard(getCardId);
+
+      const card = store.products.getCard(getCardId);
+      card.isFavorites = !card.isFavorites;
     }
 
     if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
