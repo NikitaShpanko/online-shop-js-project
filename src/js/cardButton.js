@@ -63,6 +63,7 @@ bodyNode.addEventListener('click', e => {
       const advForm = document.querySelector('.form-modal-adv');
       const imgInput = document.querySelector('.containerImgg_inp');
       const containerImg = document.querySelector('.containerImg');
+      const containerLabel = document.querySelector('.containerImgg__label');
 
       const allCategoryNode = document.querySelectorAll('.form-modal-adv__select option');
       const nowCategoryNode = document.querySelector('.form-modal-adv__select');
@@ -88,8 +89,22 @@ bodyNode.addEventListener('click', e => {
 
       advForm.addEventListener('submit', e => {
         e.preventDefault();
-        const id = advForm.dataset.id;
+        if (containerImg.children.length < 2) {
+          console.log('нужно добавить картинку');
+          return;
+        }
+
+        const catagoryInput = advForm.elements.category.value;
+        if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
+          if (!+advForm.elements.price.value) {
+            console.log('Цена должна быть 0');
+            return;
+          }
+        }
+
         const formData = new FormData(e.target);
+        picArr.forEach(e => formData.append('file', e.file));
+        const id = advForm.dataset.id;
         fetchPatch(id, formData);
       });
 
@@ -105,8 +120,8 @@ bodyNode.addEventListener('click', e => {
 
             reader.onload = ev => {
               const src = ev.target.result;
-              containerImg.insertAdjacentHTML(
-                'afterbegin',
+              containerLabel.insertAdjacentHTML(
+                'beforebegin',
                 `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
               );
             };
@@ -175,6 +190,7 @@ function fetchPatch(id, getCard) {
     .then(r => r.json())
     .then(data => {
       if (data.id) {
+        console.log('Обьявление отредактированно');
         closeModal();
       }
     })

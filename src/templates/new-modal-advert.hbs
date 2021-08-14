@@ -23,7 +23,7 @@
       <span class="form-modal-adv__label">
         <span class="form-modal-adv__text">Фото</span>
           <div class="containerImg form-modal-adv__wrapper form-modal-adv__list">
-            <label class="containerImgg">
+            <label class="containerImgg containerImgg__label">
               <span class="containerImgg_add">+</span>
               <input type="file" class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
             </label>
@@ -72,6 +72,8 @@
             class="form-modal-adv__input _hvr"
             name="phone"
             placeholder="+380 -- --- -- --"
+            minlength="13"
+            maxlength="13"
             {{!-- pattern="^\+?3?8?(0[\s\.-]\d{2}[\s\.-]\d{3}[\s\.-]\d{2}[\s\.-]\d{2})$" --}}
             title="+380 -- --- -- --"
             required

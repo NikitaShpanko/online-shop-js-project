@@ -24,6 +24,16 @@ export default function swiperSetup() {
         spaceBetween: 20,
       },
     },
+
+    on: {
+      slideChange: swiper => {
+        const container = swiper.el.closest('.categories__container');
+        container.querySelector('[data-action="left"]').style.display = swiper.isBeginning
+          ? 'none'
+          : '';
+        container.querySelector('[data-action="right"]').style.display = swiper.isEnd ? 'none' : '';
+      },
+    },
   });
 
   document.querySelectorAll('.swiper-container').forEach(elem => {

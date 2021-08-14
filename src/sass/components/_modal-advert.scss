@@ -65,11 +65,11 @@
   display: flex;
 
   @media screen and (min-width: 768px) {
-    min-width: 458px;
+    width: 458px;
   }
 
   @media screen and (min-width: 1200px) {
-    min-width: 610px;
+    width: 610px;
   }
 }
 .form-modal-adv__input {
@@ -153,10 +153,10 @@
 .containerImgg {
   display: flex;
   position: relative;
-  flex-basis: calc(100% / 3 - 10px);
+  width: calc(100% / 3 - 10px);
   margin-bottom: 10px;
   margin-right: 10px;
-  width: 78px;
+  // width: 78px;
   height: 50px;
   border: none;
   cursor: pointer;
@@ -164,7 +164,11 @@
   background: #f5f6fb;
 
   @media screen and (min-width: 768px) {
-    flex-basis: calc(100% / 5 - 10px);
+    width: calc(100% / 5 - 10px);
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 78px;
   }
 
   &_add {
