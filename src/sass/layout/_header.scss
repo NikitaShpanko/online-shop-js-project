@@ -153,7 +153,7 @@
   &__filter-item {
     border: 1px solid var(--color-header-text-ads-back);
     border-radius: 20px;
-    padding: 8px 21px;
+    padding: 8px 6px;
     margin-right: 8px;
     margin-bottom: 20px;
     &:hover {
@@ -214,6 +214,10 @@
   }
 
   @media screen and (min-width: 768px) {
+    &__filter-link {
+      padding: 8px 12px;
+    }
+
     &__mobile {
       display: none;
     }
