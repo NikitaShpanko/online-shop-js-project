@@ -37,10 +37,12 @@ bodyNode.addEventListener('click', e => {
 
     if (buttonClick.classList.contains('icon-fullscreen')) {
       const getUserId = cardId.dataset.userid;
+      const getId = cardId.dataset.id;
+      const data = store.products.getCard(getId);
       user().then(e => {
-        if (e.id === getUserId) return openModal(modalAdvertEditTpl());
+        if (e.id === getUserId) openModal(modalAdvertEditTpl(data));
       });
-      updateURL('?card=modal');
+      // updateURL('?card=modal');
       openModalCard(cardId.dataset.id);
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
@@ -78,7 +80,6 @@ bodyNode.addEventListener('click', e => {
 
 function openModalCard(id) {
   const data = store.products.getCard(id);
-
   const dataUserId = data.userId;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
