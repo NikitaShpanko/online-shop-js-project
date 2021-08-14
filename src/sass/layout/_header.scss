@@ -29,6 +29,28 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    &:hover {
+      color: var(--color-header-text-ads-back);
+      .header__icon {
+        fill: var(--color-highlight);
+      }
+    }
+  }
+  &__account-linkink {
+    text-decoration: none;
+    color: var(--color-header-text-ads-back);
+    & span {
+      margin-left: 6px;
+    }
+    &:hover {
+      color: var(--color-header-text-ads-back);
+      span {
+        color: var(--color-highlight);
+      }
+      .header__icon {
+        fill: var(--color-highlight);
+      }
+    }
   }
 
   &__mobile-menu {
