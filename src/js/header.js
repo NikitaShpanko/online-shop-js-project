@@ -46,7 +46,7 @@ store.register('categories', categories => {
     if (!e.target.dataset.category) return;
     store.setQuery({ categories: [e.target.dataset.category] });
 
-    e.target.closest('li').classList.toggle('is-orange');
+    //e.target.closest('li').classList.toggle('is-orange');
     return;
 
     if (!e.target.closest('a')) return false;
