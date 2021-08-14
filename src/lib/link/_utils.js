@@ -27,7 +27,8 @@ function getCatReady(name, cardList, linkBefore = '') {
   if (linkBefore) {
     category.link = linkBefore + category.name;
   }
-  category.name = russify(name);
+  category.name = name;
+  category.rusName = russify(name);
   return category;
 }
 
@@ -51,7 +52,8 @@ export function renderData(data, filterString, linkBefore, method) {
 
   catList.forEach(cat => {
     if (linkBefore) cat.link = linkBefore + cat.name;
-    cat.name = russify(cat.name);
+    //cat.name = russify(cat.name);
+    cat.rusName = russify(cat.name);
   });
   method(categoriesTpl(catList));
 }
