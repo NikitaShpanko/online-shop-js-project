@@ -16,6 +16,7 @@ import './js/hero';
 import './js/auth-form';
 import './js/mobile-menu';
 import './js/new-modal-advert';
+import './js/swiperInit';
 
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
 //import './js/products';
@@ -24,8 +25,11 @@ import './js/query';
 //import './js/modal-advert';
 import './js/load-more';
 import './js/cardButton';
+import swiperInit from './js/swiperInit';
 
 API.Card.tpl = cardTpl;
+
+swiperInit();
 
 API.get.categoryNames().then(rusCategoryNames => {
   store.setCategories(rusCategoryNames);
