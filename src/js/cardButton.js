@@ -11,6 +11,7 @@ bodyNode.addEventListener('click', e => {
   const buttonClick = e.target.closest('button');
   const cardId = e.target.closest('.card__article');
   const cardIdModal = e.target.closest('.modal-card-conteiner');
+  const formIdModal = e.target.closest('.form-modal-adv');
   const cardModalPatsh = e.target.closest('.form-modal-push');
   const cardModalDelete = e.target.closest('.form-modal-edit');
   const imgPrev = e.target.closest('.modal-card--poiner');
@@ -38,12 +39,15 @@ bodyNode.addEventListener('click', e => {
     if (buttonClick.classList.contains('icon-fullscreen')) {
       const getUserId = cardId.dataset.userid;
       const getId = cardId.dataset.id;
+      const infoUser = store.isOnline;
       const data = store.products.getCard(getId);
-      user().then(e => {
-        if (e.id === getUserId) openModal(modalAdvertEditTpl(data));
-      });
-      // updateURL('?card=modal');
-      openModalCard(cardId.dataset.id);
+
+      if (infoUser.id === getUserId) openModal(modalAdvertEditTpl({ data }));
+      else openModalCard(cardId.dataset.id);
+      // user().then(e => {
+      //   if (e.id === getUserId) openModal(modalAdvertEditTpl({ data }));
+      //   else openModalCard(cardId.dataset.id);
+      // });
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
@@ -53,14 +57,15 @@ bodyNode.addEventListener('click', e => {
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
     const getUserId = cardId.dataset.userid;
-    user().then(e => {
-      if (e.id === getUserId) return openModal(modalAdvertEditTpl());
-    });
-    updateURL('?card=modal');
-    openModalCard(cardId.dataset.id);
+    const getId = cardId.dataset.id;
+    const infoUser = store.isOnline;
+    const data = store.products.getCard(getId);
+
+    if (infoUser.id === getUserId) openModal(modalAdvertEditTpl({ data }));
+    else openModalCard(cardId.dataset.id);
   }
   if (cardModalDelete) {
-    const id = cardId.dataset.id;
+    const id = formIdModal.dataset.id;
     deleteCard(id);
   }
 
@@ -84,7 +89,6 @@ function openModalCard(id) {
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
     const obj = { ...data, ...id };
-    data.userId;
     openModal(modalCard({ obj }));
   });
 }
@@ -101,14 +105,14 @@ async function deleteIsFavoritesCard(getCardId) {
   return API.request(`/call/favourite/${getCardId}`, 'DELETE', false, localStorage.accessToken);
 }
 
-function updateURL(url) {
-  if (history.pushState) {
-    const baseUrl =
-      window.location.protocol + '//' + window.location.host + window.location.pathname;
-    const newUrl = baseUrl + url;
-    history.pushState(null, null, newUrl);
-  }
-}
+// function updateURL(url) {
+//   if (history.pushState) {
+//     const baseUrl =
+//       window.location.protocol + '//' + window.location.host + window.location.pathname;
+//     const newUrl = baseUrl + url;
+//     history.pushState(null, null, newUrl);
+//   }
+// }
 
 async function user() {
   return API.request(`/user`, 'GET', false, localStorage.accessToken);
@@ -116,8 +120,10 @@ async function user() {
 
 async function patshCard(getCard, id) {
   return API.request(`/call/${id}`, 'POST', getCard, localStorage.accessToken);
+  closeModal(modalAdvertEditTpl);
 }
 
 async function deleteCard(id) {
-  return API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken);
+  const data = await API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken, false);
+  closeModal(modalAdvertEditTpl);
 }

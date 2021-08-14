@@ -5,10 +5,10 @@
       <div class='modal-close-button__icon-white'></div>
     </button>
     {{#each this}}
-    <form class="form-modal-adv">
+    <form class="form-modal-adv" data-id="{{this._id}}">
       <p class="form-modal-adv__title">Редактировать объявление</p>
       <label for="product-name" class="form-modal-adv__label">
-        <span class="form-modal-adv__text">Название товара</span>
+        <span class="form-modal-adv__text">Название</span>
         <span class="form-modal-adv__wrapper">
           <input 
             type="text" 
@@ -18,67 +18,72 @@
             required
             minlength="2"
             maxlength="30"
+            value = "{{this.title}}"
           />
         </span>
       </label>
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Фото</span>
           <div class="containerImg form-modal-adv__wrapper form-modal-adv__list">
+  
             <div class="containerImgg">
               <span class="containerImgg_add">+</span>
-              <input type="file" class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
+              <input type="file" class="containerImgg_inp" accept=".jpg, .jpeg, .png" 
+              value = "{{imageUrls.[0]}}"/>
             </div>
           </div>
       </label>
       <label class="form-modal-adv__label">
-        <span class="form-modal-adv__text">{{this.description}}</span>
+        <span class="form-modal-adv__text">Описание товара</span>
         <span class="form-modal-adv__wrapper">
-          <textarea class="form-modal-adv__desc _hvr" name="product__description" maxlength="300"></textarea>
+          <textarea class="form-modal-adv__desc _hvr" name="product__description" maxlength="300">{{this.description}}</textarea>
       </label>
         </span>
       <label class="form-modal-adv__label">
         <span class="form-modal-adv__text">Категория товара</span>
         <span class="form-modal-adv__wrapper">
           <select name="product-category" class="form-modal-adv__select">
-            <option value="">{{this.category}}</option>
-            {{!-- <option value="property">Недвижимость</option>
+            <option value="{{this.category}}">{{this.category}}</option>
+            <option value="property">Недвижимость</option>
             <option value="transport">Транспорт</option>
             <option value="work">Работа</option>
             <option value="electronics">Электроника</option>
             <option value="business and services">Бизнес и услуги</option>
             <option value="recreation and sport">Отдых и спорт</option>
             <option value="free">Отдам бесплатно</option>
-            <option value="trade">Обмен</option> --}}
+            <option value="trade">Обмен</option>
           </select>
         </span>
       </label>
       <label class="form-modal-adv__label">
-        <span class="form-modal-adv__text">{{this.price}}</span>
+        <span class="form-modal-adv__text">Цена</span>
         <span class="form-modal-adv__wrapper">
           <input
             type="number"
             class="form-modal-adv__input _hvr input-price"
             name="product-price"
             placeholder="0.00 €"
+            value = "{{this.price}}"
           />
         </span>
       </label>
       <label class="form-modal-adv__label">
-        <span class="form-modal-adv__text">{{this.phone}}</span>
+        <span class="form-modal-adv__text">Телефон</span>
         <span class="form-modal-adv__wrapper">
           <input
             type="tel"
             class="form-modal-adv__input _hvr"
             name="product-tel"
-            placeholder="+380 -- --- -- --"
-            pattern="^\+?3?8?(0[\s\.-]\d{2}[\s\.-]\d{3}[\s\.-]\d{2}[\s\.-]\d{2})$"
-            title="+380 -- --- -- --"
+            placeholder="+380---------"
+            {{!-- pattern="^\+?3?8?(0[\s\.-]\d{2}[\s\.-]\d{3}[\s\.-]\d{2}[\s\.-]\d{2})$" --}}
+            title="+380---------"
             required
+            value ="{{this.phone}}";
           />
         </span>
       </label>
       <button type="button" class="form-modal-edit">Удалить объявление</button>
-      <button type="submit" class="primary-button form-modal-adv__button form-modal-push">Добавить</button>
+      <button type="submit" class="primary-button form-modal-adv__button form-modal-push">Изменить объявление</button>
     </form>
     {{/each}}
   </div>
