@@ -10,6 +10,7 @@ function openAdvModal(e) {
   const advForm = document.querySelector('.form-modal-adv');
   const imgInput = document.querySelector('.containerImgg_inp');
   const containerImg = document.querySelector('.containerImg');
+  const containerLabel = document.querySelector('.containerImgg__label');
 
   advForm.addEventListener('submit', onSubmit);
   const picArr = [];
@@ -31,18 +32,16 @@ function openAdvModal(e) {
     if (containerImg.children.length < 6) {
       if (!e.target.files.length) return;
       const files = Array.from(e.target.files);
-      console.log(e.target.files);
 
       files.forEach(file => {
         if (!file.type.match('image')) return;
         picArr.push({ id: picId, file });
-        console.log(picArr);
         const reader = new FileReader();
 
         reader.onload = ev => {
           const src = ev.target.result;
-          containerImg.insertAdjacentHTML(
-            'afterbegin',
+          containerLabel.insertAdjacentHTML(
+            'beforebegin',
             `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
           );
         };
@@ -51,8 +50,6 @@ function openAdvModal(e) {
       });
     }
   });
-
-  console.log(advForm.elements.category.value);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -70,10 +67,7 @@ function openAdvModal(e) {
     }
 
     const formData = new FormData(e.target);
-    for (const pic of picArr) {
-      formData.append('file', pic.file);
-    }
-    console.log(formData.getAll('file'));
+    picArr.forEach(e => formData.append('file', e.file));
 
     fetch('https://callboard-backend.goit.global/call', {
       method: 'POST',
