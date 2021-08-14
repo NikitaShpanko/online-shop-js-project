@@ -26,20 +26,20 @@ export default class MainData extends Data {
     return this;
   }
 
-  filter(query, param = 'category') {
-    if (!query) return this.getCategoryList();
-    const categoryFilter = Item.filter(this.categoryList, query, 'name');
-    const salesFilter = this.getCategory(config.specialCategory)?.filter(query, param);
-    if (salesFilter?.length) {
-      return [
-        new Category({
-          name: config.specialCategory,
-          link: `/category/${config.specialCategory}`,
-          cardList: salesFilter,
-        }),
-        ...categoryFilter,
-      ];
-    }
-    return categoryFilter;
-  }
+  // filter(query, param = 'category') {
+  //   if (!query) return this.getCategoryList();
+  //   const categoryFilter = Item.filter(this.categoryList, query, 'name');
+  //   const salesFilter = this.getCategory(config.specialCategory)?.filter(query, param);
+  //   if (salesFilter?.length) {
+  //     return [
+  //       new Category({
+  //         name: config.specialCategory,
+  //         link: `/category/${config.specialCategory}`,
+  //         cardList: salesFilter,
+  //       }),
+  //       ...categoryFilter,
+  //     ];
+  //   }
+  //   return categoryFilter;
+  // }
 }
