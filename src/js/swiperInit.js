@@ -1,40 +1,23 @@
 import Swiper from 'swiper/bundle';
 
 export default function swiperInit() {
-  const swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween: 20,
-    slidesPerGroup: 4,
-    loopFillGroupWithBlank: true,
-  
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 22,
-      },
-      1280: {
-        slidesPerView: 4,
-        spaceBetween: 20,
-      },
-    },
-  });
-  
   document.querySelector('#root').addEventListener('click', e => {
     const button = e.target.closest('button');
-    if (!button) return;
+    if (!button || !button.dataset.action) return;
+    const container = button.closest('.categories__container');
+    const swiper = container.querySelector('.swiper-container').swiper;
+
     if (button.dataset.action === 'right') {
-      button.closest('.categories__container').querySelector('.swiper-container').swiper.slideNext();
+      swiper.slideNext();
+      if (swiper.isEnd) button.style.display = 'none';
+      container.querySelector('[data-action="left"]').style.display = '';
     }
-  
     if (button.dataset.action === 'left') {
-      button.closest('.categories__container').querySelector('.swiper-container').swiper.slidePrev();
+      swiper.slidePrev();
+      if (swiper.isBeginning) button.style.display = 'none';
+      container.querySelector('[data-action="right"]').style.display = '';
     }
-  });  
+
+    console.log(`B: ${swiper.isBeginning}, E: ${swiper.isEnd}`);
+  });
 }
