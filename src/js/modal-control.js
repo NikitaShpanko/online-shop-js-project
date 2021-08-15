@@ -1,3 +1,5 @@
+import { deleteHash } from '../lib/link';
+
 const modalContainer = document.querySelector('.modal-container');
 modalContainer.addEventListener('mousedown', onOpenModalClick);
 
@@ -11,6 +13,7 @@ export function closeModal() {
   window.removeEventListener('keyup', onOpenModalKeyPress);
   toggleClass();
   modalContainer.innerHTML = '';
+  deleteHash();
 }
 
 function toggleClass() {
