@@ -4,6 +4,7 @@ import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
 import * as Link from '../lib/link';
+import { success, error } from '@pnotify/core';
 
 const headerRegContiner = document.querySelectorAll('[data-account-registration]');
 const headerCabContiner = document.querySelectorAll('[data-account-user]');
@@ -54,6 +55,7 @@ store.register('isOnline', isIt => {
 
     const newTokenData = await API.request('/auth/refresh', 'POST', body, refToken, true);
     saveToken(newTokenData, true);
+    success({ text: 'Успешная авторизация, c возвращением!', delay: 2000 });
   }
 })();
 
@@ -115,7 +117,6 @@ function confirmLogoutUser() {
     }
     if (+e.target.dataset.confirm) {
       logoutUser();
-      console.log('Вы успешно вышли из акаунта');
       closeModal();
     } else {
       closeModal();
@@ -126,6 +127,11 @@ function confirmLogoutUser() {
 function logoutUser() {
   API.request('/auth/logout', 'POST', false, localStorage.accessToken, false).then(data => {
     if (data.status === 204) {
+      success({ text: 'Вы успешно вышли из акаунта', delay: 2000 });
+      store.setIsOnline(false);
+      deleteToken();
+    } else {
+      error({ text: 'Упс ошибка, что-то пошло не так!', delay: 2000 });
       store.setIsOnline(false);
       deleteToken();
     }
@@ -134,11 +140,12 @@ function logoutUser() {
 
 async function onAuthBtnClick(obj) {
   const data = await authUser(obj);
-
   if (data.error === 403) {
-    console.log('Ошибка авторизации, Неверный пароль или логин');
-  } else if (data.user.id) {
-    console.log('Пользователь авторизирован');
+    error({ text: 'Ошибка авторизации, неверный пароль или логин!', delay: 2000 });
+    return;
+  }
+  if (data.user.id) {
+    success({ text: 'Успешная авторизация.', delay: 2000 });
     store.setIsOnline(data);
     saveToken(data);
     closeModal();
@@ -148,11 +155,15 @@ async function onAuthBtnClick(obj) {
 async function onRegBtnClick(obj) {
   const dataReg = await regUser(obj);
   if (dataReg.error === 409) {
-    console.log('Пользователь с таким "email" уже существует');
-  } else if (dataReg.id) {
+    error({
+      text: 'Ошибка регистрации, пользователь с таким "email" уже существует!',
+      delay: 2000,
+    });
+    return;
+  }
+  if (dataReg.id) {
     const dataAuth = await authUser(obj);
-
-    console.log('Пользователь зарегистрирован и авторизирован');
+    success({ text: 'Успешная регистрация и авторизация', delay: 2000 });
     store.setIsOnline(dataAuth);
     saveToken(dataAuth);
     closeModal();

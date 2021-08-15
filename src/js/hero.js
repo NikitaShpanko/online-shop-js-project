@@ -13,7 +13,7 @@ API.request('/call/ads').then(data => {
 
   let isPaused = false;
   let index = 1;
-  console.dir(heroContainer);
+
   heroContainer.addEventListener('click', changeAdsByClick);
 
   function changeAdsByClick(e) {
