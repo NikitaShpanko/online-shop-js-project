@@ -12,5 +12,5 @@ export default function init() {
     goTo(href);
   });
 
-  window.addEventListener('popstate', () => goTo(location.href));
+  window.addEventListener('popstate', () => goTo(location.href, true, false));
 }
