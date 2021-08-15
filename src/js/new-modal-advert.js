@@ -1,4 +1,4 @@
-import { success, error, notice } from '@pnotify/core';
+import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';
@@ -41,6 +41,7 @@ function openAdvModal(e) {
     files.forEach(file => {
       if (!file.type.match('image')) return;
       picArr.push({ id: picId, file });
+      imgInput.value = '';
       const reader = new FileReader();
 
       reader.onload = ev => {

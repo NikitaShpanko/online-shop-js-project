@@ -29,6 +29,9 @@ function getCatReady(name, cardList, linkBefore = '') {
   }
   category.name = name;
   category.rusName = russify(name);
+  // if(name === 'searchResults') {
+  //   category.rusName += `: ${}`;
+  // }
   return category;
 }
 

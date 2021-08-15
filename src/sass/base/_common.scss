@@ -6,6 +6,7 @@ body {
   letter-spacing: 0.02em;
   background-color: var(--color-main-background);
   color: var(--color-main-text);
+  height: 100%;
 }
 
 h1,
@@ -42,4 +43,16 @@ img {
 
 body.modal-open {
   overflow: hidden;
+}
+
+main {
+  min-height: calc(100vh - 189px);
+
+  @media screen and (min-width: 768px) {
+    min-height: calc(100vh - 257px);
+  }
+
+  @media screen and (min-width: 1280px) {
+    min-height: calc(100vh - 258px);
+  }
 }

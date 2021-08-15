@@ -1,5 +1,6 @@
 import modalCard from '../templates/modal-card.hbs';
 import modalAdvertEditTpl from '../templates/new-modal-advert-edit.hbs';
+import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
@@ -127,6 +128,7 @@ bodyNode.addEventListener('click', e => {
         files.forEach(file => {
           if (!file.type.match('image')) return;
           picArr.push({ id: picId, file });
+          imgInput.value = '';
           const reader = new FileReader();
 
           reader.onload = ev => {
@@ -153,7 +155,8 @@ bodyNode.addEventListener('click', e => {
   }
 });
 
-function openModalCard(id) {
+export function openModalCard(id) {
+  history.pushState(null, null, `${location.href}#${id}`);
   const data = store.products.getCard(id);
   const dataUserId = data.userId;
   const cardIsFavorites = data.isFavorites;
@@ -214,6 +217,7 @@ function fetchPatch(id, getCard) {
 
 async function deleteCard(id) {
   const data = await API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken, false);
+  success({ text: 'Обьявление успешно удаленно', delay: 2000 });
   closeModal();
   Link.goTo(location.href);
 }
