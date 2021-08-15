@@ -25,22 +25,9 @@ bodyNode.addEventListener('click', e => {
       buttonClick.classList.toggle('isFavorites');
       if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
       else deleteIsFavoritesCard(getCardId);
-
       const card = store.products.getCard(getCardId);
       card.isFavorites = !card.isFavorites;
     }
-
-    if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
-      if (!localStorage.accessToken) {
-        closeModal(modalCard());
-        openModal(authorizationFormTpl());
-      }
-      const getCardId = cardIdModal.dataset.id;
-      buttonClick.classList.toggle('isFavorites');
-      if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
-      else deleteIsFavoritesCard(getCardId);
-    }
-
     if (buttonClick.classList.contains('icon-fullscreen')) {
       const getUserId = cardId.dataset.userid;
       const getId = cardId.dataset.id;
@@ -53,6 +40,20 @@ bodyNode.addEventListener('click', e => {
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
     } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
       console.log('Поделиться товаром с друзьями чере социальные сети (допустим)');
+
+    if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
+      if (!localStorage.accessToken) {
+        closeModal(modalCard());
+        openModal(authorizationFormTpl());
+      }
+      const getCardId = cardIdModal.dataset.id;
+      buttonClick.classList.toggle('isFavorites');
+      if (buttonClick.classList.contains('isFavorites')) {
+        postIsFavoritesCard(getCardId);
+      } else {
+        deleteIsFavoritesCard(getCardId);
+      }
+    }
   }
 
   if (cardId && buttonClick?.nodeName !== 'BUTTON') {
@@ -149,10 +150,14 @@ bodyNode.addEventListener('click', e => {
 function openModalCard(id) {
   const data = store.products.getCard(id);
   const dataUserId = data.userId;
+  const cardIsFavorites = data.isFavorites;
 
   const userIdObj = API.request(`/user/${dataUserId}`).then(id => {
     const obj = { ...data, ...id };
     openModal(modalCard({ obj }));
+
+    const modalIsFavoriteNode = document.querySelector('.modal-card--buttonIsFavorite');
+    if (cardIsFavorites) modalIsFavoriteNode.classList.add('isFavorites');
   });
 }
 

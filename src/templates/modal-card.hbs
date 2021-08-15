@@ -1,7 +1,7 @@
 <div class='backdrop'>
     <div class='modal modal-card'>
         {{#each this}}
-        <div class="modal-card-conteiner" data-id="{{_id}}">
+        <div class="modal-card-conteiner" data-id="{{_id}}" data-isFavorites="{{isFavorites}}">
             <div class="modal-card--name isHibenTitelOne">
                 <p class="modal-card--titel">{{this.title}}</p>
                 <p class="modal-card--cod">Категория товара | {{this._id}}</p>

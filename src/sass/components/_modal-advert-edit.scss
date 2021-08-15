@@ -25,6 +25,7 @@
 
 .form-modal-edit {
   display: block;
+  cursor: pointer;
   margin: 0 auto;
   margin-left: 0;
   padding-left: 0;
@@ -37,6 +38,13 @@
 
   @media screen and (min-width: 1280px) {
     margin-left: 225px;
+  }
+
+  &:hover {
+    color: var(--color-highlight);
+    .form-modal-edit::before {
+      background-color: var(--color-highlight);
+    }
   }
 }
 
