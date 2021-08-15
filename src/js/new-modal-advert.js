@@ -1,3 +1,4 @@
+import { success, error, notice } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';
@@ -13,10 +14,11 @@ function openAdvModal(e) {
   const containerLabel = document.querySelector('.containerImgg__label');
 
   advForm.addEventListener('submit', onSubmit);
+  containerImg.addEventListener('click', onClickRemove);
+
   const picArr = [];
   let picId = 0;
 
-  containerImg.addEventListener('click', onClickRemove);
   function onClickRemove(e) {
     const imgShell = e.target.closest('Div');
     if (!imgShell?.classList.contains('containerImgg')) {
@@ -29,39 +31,44 @@ function openAdvModal(e) {
   }
 
   imgInput.addEventListener('change', e => {
-    if (containerImg.children.length < 6) {
-      if (!e.target.files.length) return;
-      const files = Array.from(e.target.files);
-
-      files.forEach(file => {
-        if (!file.type.match('image')) return;
-        picArr.push({ id: picId, file });
-        const reader = new FileReader();
-
-        reader.onload = ev => {
-          const src = ev.target.result;
-          containerLabel.insertAdjacentHTML(
-            'beforebegin',
-            `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
-          );
-        };
-        picId++;
-        reader.readAsDataURL(file);
-      });
+    if (!e.target.files.length) return;
+    if (e.target.files.length + picArr.length > 5) {
+      error({ text: 'Максимум 5 изображений должно быть!', delay: 2000 });
+      return;
     }
+    const files = Array.from(e.target.files);
+
+    files.forEach(file => {
+      if (!file.type.match('image')) return;
+      picArr.push({ id: picId, file });
+      const reader = new FileReader();
+
+      reader.onload = ev => {
+        const src = ev.target.result;
+        containerLabel.insertAdjacentHTML(
+          'beforebegin',
+          `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
+        );
+      };
+      picId++;
+      reader.readAsDataURL(file);
+    });
   });
 
   function onSubmit(e) {
     e.preventDefault();
-    if (containerImg.children.length < 2) {
-      console.log('нужно добавить картинку');
+    if (!picArr.length) {
+      error({ text: 'Нужно добавить изображение товара!', delay: 2000 });
       return;
     }
 
     const catagoryInput = advForm.elements.category.value;
     if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
       if (!+advForm.elements.price.value) {
-        console.log('Цена должна быть 0');
+        error({
+          text: 'Для категорий: работа, обмен, отдам бесплатно - цена должна быть 0',
+          delay: 2000,
+        });
         return;
       }
     }
@@ -80,13 +87,16 @@ function openAdvModal(e) {
       .then(r => r.json())
       .then(data => {
         if (data.message === 'Only image files are allowed') {
-          console.log('Неверный формат изображения! Формат должен быть ".jpg, .jpeg, .png"');
+          error({
+            text: 'Неверный формат изображения! Формат должен быть ".jpg, .jpeg, .png"!',
+            delay: 2000,
+          });
         }
         if (data.id) {
-          console.log('Обьявление добавлено');
+          success({ text: 'Обьявление успешно добавлено', delay: 2000 });
           closeModal();
         }
       })
-      .catch(console.log);
+      .catch(e => error({ text: `${e}`, delay: 2000 }));
   }
 }
