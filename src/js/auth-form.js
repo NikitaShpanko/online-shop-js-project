@@ -156,7 +156,7 @@ async function onRegBtnClick(obj) {
   const dataReg = await regUser(obj);
   if (dataReg.error === 409) {
     error({
-      text: 'Ошибка регистрации, пользователь с таким "email" уже существует!',
+      text: `Ошибка регистрации, пользователь с таким "${obj.email}" уже существует!`,
       delay: 2000,
     });
     return;

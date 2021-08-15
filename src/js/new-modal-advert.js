@@ -1,4 +1,4 @@
-import { success, error, notice } from '@pnotify/core';
+import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';

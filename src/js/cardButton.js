@@ -1,5 +1,6 @@
 import modalCard from '../templates/modal-card.hbs';
 import modalAdvertEditTpl from '../templates/new-modal-advert-edit.hbs';
+import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import * as API from '../lib/api';
 import store from '../lib/store';
@@ -214,6 +215,7 @@ function fetchPatch(id, getCard) {
 
 async function deleteCard(id) {
   const data = await API.request(`/call/${id}`, 'DELETE', false, localStorage.accessToken, false);
+  success({ text: 'Обьявление успешно удаленно', delay: 2000 });
   closeModal();
   Link.goTo(location.href);
 }
