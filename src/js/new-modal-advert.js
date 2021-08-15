@@ -25,7 +25,7 @@ function openAdvModal(e) {
       return;
     }
 
-    const indexPicToRemove = picArr.findIndex(e => e.id === imgShell.dataset.id);
+    const indexPicToRemove = picArr.findIndex(e => e.id === +imgShell.dataset.id);
     picArr.splice(indexPicToRemove, 1);
     imgShell.remove();
   }
@@ -50,8 +50,8 @@ function openAdvModal(e) {
           'beforebegin',
           `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
         );
+        picId++;
       };
-      picId++;
       reader.readAsDataURL(file);
     });
   });

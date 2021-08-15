@@ -81,41 +81,25 @@ bodyNode.addEventListener('click', e => {
       const picArr = [];
       let picId = initIndex;
 
+      (() => {
+        const oldImg = containerImg.querySelectorAll('.old-image-from-backend');
+        oldImg.forEach(e => {
+          const id = +e.dataset.id;
+          const imageUrls = e.querySelector('img').src;
+          picArr.push({ id, imageUrls });
+        });
+      })();
+
       containerImg.addEventListener('click', onClickRemove);
       function onClickRemove(e) {
         const imgShell = e.target.closest('Div');
         if (!imgShell?.classList.contains('containerImgg')) {
           return;
         }
-
-        const indexPicToRemove = picArr.findIndex(e => e.id === imgShell.dataset.id);
+        const indexPicToRemove = picArr.findIndex(e => e.id === +imgShell.dataset.id);
         picArr.splice(indexPicToRemove, 1);
         imgShell.remove();
       }
-
-      advForm.addEventListener('submit', e => {
-        e.preventDefault();
-        // if (!picArr.length) {
-        //   error({ text: 'Нужно добавить изображение товара!', delay: 2000 });
-        //   return;
-        // }
-
-        const catagoryInput = advForm.elements.category.value;
-        if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
-          if (!+advForm.elements.price.value) {
-            error({
-              text: 'Для категорий: работа, обмен, отдам бесплатно - цена должна быть 0',
-              delay: 2000,
-            });
-            return;
-          }
-        }
-
-        const formData = new FormData(e.target);
-        picArr.forEach(e => formData.append('file', e.file));
-        const id = advForm.dataset.id;
-        fetchPatch(id, formData);
-      });
 
       imgInput.addEventListener('change', e => {
         if (!e.target.files.length) return;
@@ -137,10 +121,41 @@ bodyNode.addEventListener('click', e => {
               'beforebegin',
               `<div class="containerImgg" data-id="${picId}"> <img src="${src}" alt="${file.name}" class="newImg"/> </div>`,
             );
+            picId++;
           };
-          picId++;
+
           reader.readAsDataURL(file);
         });
+      });
+
+      advForm.addEventListener('submit', e => {
+        e.preventDefault();
+        if (!picArr.length) {
+          error({ text: 'Нужно добавить изображение товара!', delay: 2000 });
+          return;
+        }
+
+        const catagoryInput = advForm.elements.category.value;
+        if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
+          if (!+advForm.elements.price.value) {
+            error({
+              text: 'Для категорий: работа, обмен, отдам бесплатно - цена должна быть 0',
+              delay: 2000,
+            });
+            return;
+          }
+        }
+
+        const formData = new FormData(e.target);
+        picArr.forEach(e => {
+          if (e.file) {
+            formData.append('file', e.file);
+          }
+        });
+        console.log('file', formData.getAll('file'));
+        console.log('imageUrls', formData.getAll('imageUrls'));
+        const id = advForm.dataset.id;
+        fetchPatch(id, formData);
       });
     } else openModalCard(cardId.dataset.id);
   }
