@@ -14,11 +14,13 @@ import config from '../../config.json';
 /**
  * @param {string} link
  */
-export default async function goTo(link, refreshOnline = true) {
+export default async function goTo(link, refreshOnline = true, pushState = true) {
   const hero = document.querySelector('#hero-root');
   hero.style.display = 'none';
   let linkPrefix = '';
-  let { pathList, search, shortLink } = parse(link);
+  let { pathList, search, shortLink, hash } = parse(link);
+
+  if (hash.length && shortLink !== '/') return goTo(`/#${hash}`);
 
   const filterString = search.categories ? search.categories : '';
 
@@ -97,6 +99,11 @@ export default async function goTo(link, refreshOnline = true) {
 
   syncHearts(pathList, refreshOnline);
 
-  history.pushState(null, null, shortLink);
+  if (pushState) history.pushState(null, null, shortLink);
+
+  if (hash.length)
+    confirm(
+      `Здесь откроется модалка с id="${hash}". Она сама добавит его к адресу при открытии и уберёт при закрытии.`,
+    );
   return shortLink;
 }
