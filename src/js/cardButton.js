@@ -128,6 +128,7 @@ bodyNode.addEventListener('click', e => {
         files.forEach(file => {
           if (!file.type.match('image')) return;
           picArr.push({ id: picId, file });
+          imgInput.value = '';
           const reader = new FileReader();
 
           reader.onload = ev => {
