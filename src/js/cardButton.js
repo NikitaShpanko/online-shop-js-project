@@ -19,6 +19,8 @@ bodyNode.addEventListener('click', e => {
   const imgPrev = e.target.closest('.modal-card--poiner');
 
   if (buttonClick?.nodeName === 'BUTTON') {
+    const cardHeart = document.querySelector('.icon-heart-white');
+
     if (buttonClick.classList.contains('icon-heart-white')) {
       if (!localStorage.accessToken) return openModal(authorizationFormTpl());
       const getCardId = cardId.dataset.id;
@@ -48,6 +50,11 @@ bodyNode.addEventListener('click', e => {
       }
       const getCardId = cardIdModal.dataset.id;
       buttonClick.classList.toggle('isFavorites');
+      cardHeart.classList.toggle('isFavorites');
+      console.log(cardHeart.classList.toggle('isFavorites'));
+      store.products.getCard(getCardId).isFavorites =
+        !store.products.getCard(getCardId).isFavorites;
+
       if (buttonClick.classList.contains('isFavorites')) {
         postIsFavoritesCard(getCardId);
       } else {
