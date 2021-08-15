@@ -106,5 +106,5 @@ function filterAndPaginate(obj, filterString, perPage) {
 
   obj.needsPagination = max < filtered.length;
 
-  return filtered.slice(0, max);
+  return filtered.slice(min, max);
 }
