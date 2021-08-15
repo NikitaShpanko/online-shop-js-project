@@ -2,10 +2,14 @@ import { textAfter, render } from './_utils';
 import { syncHearts } from './_hearts';
 import parse from './parse';
 import setSearchParam from './setSearchParam';
+import deleteHash from './deleteHash';
 
 import authorizationFormTpl from '../../templates/authorization-form.hbs';
 //import * as Modal from '../../js/modal-control';
 import { openAuthModal } from '../../js/auth-form';
+import { openModalCard } from '../../js/cardButton';
+
+import { error } from '@pnotify/core';
 
 import * as API from '../api';
 import store from '../store';
@@ -20,7 +24,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
   let linkPrefix = '';
   let { pathList, search, shortLink, hash } = parse(link);
 
-  if (hash.length && shortLink !== '/') return goTo(`/#${hash}`);
+  if (hash.length && shortLink !== '/') return goTo(`/#${hash}`, refreshOnline, pushState);
 
   const filterString = search.categories ? search.categories : '';
 
@@ -70,6 +74,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
     } else {
       if (search.search) {
         store.products = await API.request(setSearchParam('/call/find', 'search', search.search));
+        console.log(store.products);
       } else {
         linkPrefix = '/category/';
         const possibleCategory = textAfter(pathList, 'category');
@@ -97,13 +102,17 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
 
   render(store.products, filterString, linkPrefix);
 
-  syncHearts(pathList, refreshOnline);
+  await syncHearts(pathList, refreshOnline);
 
   if (pushState) history.pushState(null, null, shortLink);
+  else deleteHash();
 
-  if (hash.length)
-    confirm(
-      `Здесь откроется модалка с id="${hash}". Она сама добавит его к адресу при открытии и уберёт при закрытии.`,
-    );
+  if (hash.length) {
+    if (store.products.getCard(hash)) openModalCard(hash);
+    else {
+      error(`Товар с кодом "${hash}" не существует!`);
+      //if (!pushState) deleteHash();
+    }
+  }
   return shortLink;
 }

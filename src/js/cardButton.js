@@ -153,7 +153,8 @@ bodyNode.addEventListener('click', e => {
   }
 });
 
-function openModalCard(id) {
+export function openModalCard(id) {
+  history.pushState(null, null, `${location.href}#${id}`);
   const data = store.products.getCard(id);
   const dataUserId = data.userId;
   const cardIsFavorites = data.isFavorites;
