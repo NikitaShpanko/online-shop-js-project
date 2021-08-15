@@ -2,10 +2,14 @@ import { textAfter, render } from './_utils';
 import { syncHearts } from './_hearts';
 import parse from './parse';
 import setSearchParam from './setSearchParam';
+import deleteHash from './deleteHash';
 
 import authorizationFormTpl from '../../templates/authorization-form.hbs';
 //import * as Modal from '../../js/modal-control';
 import { openAuthModal } from '../../js/auth-form';
+import { openModalCard } from '../../js/cardButton';
+
+import { error } from '@pnotify/core';
 
 import * as API from '../api';
 import store from '../store';
@@ -14,11 +18,13 @@ import config from '../../config.json';
 /**
  * @param {string} link
  */
-export default async function goTo(link, refreshOnline = true) {
+export default async function goTo(link, refreshOnline = true, pushState = true) {
   const hero = document.querySelector('#hero-root');
   hero.style.display = 'none';
   let linkPrefix = '';
-  let { pathList, search, shortLink } = parse(link);
+  let { pathList, search, shortLink, hash } = parse(link);
+
+  if (hash.length && shortLink !== '/') return goTo(`/#${hash}`, refreshOnline, pushState);
 
   const filterString = search.categories ? search.categories : '';
 
@@ -68,6 +74,7 @@ export default async function goTo(link, refreshOnline = true) {
     } else {
       if (search.search) {
         store.products = await API.request(setSearchParam('/call/find', 'search', search.search));
+        console.log(store.products);
       } else {
         linkPrefix = '/category/';
         const possibleCategory = textAfter(pathList, 'category');
@@ -95,8 +102,17 @@ export default async function goTo(link, refreshOnline = true) {
 
   render(store.products, filterString, linkPrefix);
 
-  syncHearts(pathList, refreshOnline);
+  await syncHearts(pathList, refreshOnline);
 
-  history.pushState(null, null, shortLink);
+  if (pushState) history.pushState(null, null, shortLink);
+  else deleteHash();
+
+  if (hash.length) {
+    if (store.products.getCard(hash)) openModalCard(hash);
+    else {
+      error(`Товар с кодом "${hash}" не существует!`);
+      //if (!pushState) deleteHash();
+    }
+  }
   return shortLink;
 }

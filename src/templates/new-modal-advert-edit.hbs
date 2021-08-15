@@ -25,12 +25,12 @@
       <span class="form-modal-adv__label">
         <span class="form-modal-adv__text">Фото</span>
           <div class="containerImg form-modal-adv__wrapper form-modal-adv__list">
-                {{#each imageUrls}}
-            <div class="containerImgg"> <img src="{{this}}" alt="" class="newImg"/> </div>
+                {{#each this.imageUrls}}
+            <div class="containerImgg old-image-from-backend" data-id="{{@index}}"> <img src="{{this}}" alt="" class="newImg"/> </div>
                 {{/each}}
             <label class="containerImgg containerImgg__label">
               <span class="containerImgg_add">+</span>
-              <input type="file" class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
+              <input type="file" multiple class="containerImgg_inp" accept=".jpg, .jpeg, .png"/>
             </label>
           </div>
       </span>
