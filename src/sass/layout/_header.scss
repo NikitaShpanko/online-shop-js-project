@@ -76,7 +76,6 @@
     }
   }
   &__account {
-    margin-left: 70px;
     margin-bottom: 40px;
   }
 
@@ -235,6 +234,7 @@
     }
 
     &__logo {
+      width: 100%;
       display: inline-block;
       margin-bottom: 20px;
     }
@@ -269,12 +269,14 @@
       align-items: center;
       position: absolute;
       right: 38px;
-      top: 35px;
+      top: 32px;
     }
 
     &__right-container {
       display: flex;
       flex-direction: column;
+      position: relative;
+      align-items: center;
     }
 
     &__account {
@@ -397,7 +399,6 @@
     }
 
     &__input-search {
-      margin-right: 282px;
       padding-left: 10px;
       font-size: 20px;
       color: var(--color-header-footer-back);

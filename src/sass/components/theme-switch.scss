@@ -1,8 +1,15 @@
 .theme-switch {
   display: flex;
-  position: absolute;
-  right: 1px;
-  top: 1px;
+  margin-left: 25px;
+  align-items: center;
+}
+
+.theme-switch__icon {
+  color: currentColor;
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .theme-switch__control {
@@ -66,4 +73,20 @@
 .theme-switch__toggle:focus + .theme-switch__track,
 .theme-switch__toggle:active + .theme-switch__track {
   box-shadow: 0 0 0 3px #2196f3;
+}
+
+@media screen and (max-width: 1279px) {
+  .theme-switch {
+    position: absolute;
+    left: 50px;
+    top: 5px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .theme-switch {
+    transform: scale(0.6);
+    left: -44px;
+    top: 22px;
+  }
 }
