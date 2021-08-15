@@ -27,7 +27,6 @@ bodyNode.addEventListener('click', e => {
       const card = store.products.getCard(getCardId);
       card.isFavorites = !card.isFavorites;
     }
-
     if (buttonClick.classList.contains('icon-fullscreen')) {
       const getUserId = cardId.dataset.userid;
       const getId = cardId.dataset.id;
