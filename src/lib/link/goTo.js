@@ -41,6 +41,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
     }
   });
 
+  store.query.search = '';
   //document.querySelectorAll('.js-input-search').forEach(elem => (elem.value = ''));
   if (pathList.includes('profile')) {
     if (store.isOnline && !store.isOnline.error) {

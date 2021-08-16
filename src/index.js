@@ -19,6 +19,7 @@ import './js/mobile-menu';
 import './js/new-modal-advert';
 import './js/swiperInit';
 import './js/modal-students'
+import './js/change-theme';
 
 import { getUrlCategories, getUrlChosenCategory } from './js/header';
 //import './js/products';

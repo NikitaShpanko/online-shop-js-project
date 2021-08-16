@@ -77,7 +77,7 @@
     display: block;
     position: absolute;
     z-index: 2;
-    background-color: #f4f4f4;
+    background-color: var(--arrow-color);
     border: 0px;
     top: 123px;
     width: 32px;
@@ -166,6 +166,63 @@
 
     .button__arow--left {
       left: 0 !important;
+    }
+  }
+}
+
+.icon-arow--left {
+  width: 18px;
+  height: 18px;
+  background-image: url(/images/svg/arrow-l.svg);
+  background-repeat: no-repeat;
+}
+
+.icon-arow--leftW {
+  width: 18px;
+  height: 18px;
+  background-image: url(/images/svg/arrow-l-w.svg);
+  background-repeat: no-repeat;
+  display: none;
+}
+
+.icon-arow--right {
+  width: 18px;
+  height: 18px;
+  background-image: url(/images/svg/arrow-r.svg);
+  background-repeat: no-repeat;
+}
+
+.icon-arow--rightW {
+  width: 18px;
+  height: 18px;
+  background-image: url(/images/svg/arrow-r-w.svg);
+  background-repeat: no-repeat;
+  display: none;
+}
+.button__arow--left {
+  &:hover {
+    color: var(--color-main-background);
+    background-color: var(--color-highlight);
+
+    & .icon-arow--left {
+      display: none;
+    }
+    & .icon-arow--leftW {
+      display: block;
+    }
+  }
+}
+
+.button__arow-right {
+  &:hover {
+    color: var(--color-main-background);
+    background-color: var(--color-highlight);
+
+    & .icon-arow--right {
+      display: none;
+    }
+    & .icon-arow--rightW {
+      display: block;
     }
   }
 }

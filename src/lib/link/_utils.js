@@ -30,7 +30,6 @@ function getCatReady(proto, cardList, linkBefore = '') {
     category.link = linkBefore + category.name;
   }
   category.rusName = russify(category.name) + (proto.search ? ` "${proto.search}"` : '');
-  console.log(proto, category);
   return category;
 }
 
@@ -72,6 +71,7 @@ export function renderCategory(category, filterString, linkBefore, method) {
 }
 
 export function render(obj, filterString, linkPrefix, method = putOnPage) {
+  if (!obj) return;
   obj.filterString = filterString;
   obj.linkPrefix = linkPrefix;
 

@@ -13,23 +13,24 @@ store.register('isOnline', isIt => {
   headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
   headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
 
-  let newLink;
-  if (isIt) {
-    const url = new URL(location.href);
-    const redirect = url.searchParams.get('redirect');
-    if (redirect) {
-      Link.goTo(redirect, false);
-    } else {
-      newLink = '/profile';
-    }
-  } else {
-    newLink = '/';
-  }
-  if (store.products) {
-    if (store.query.categories)
-      newLink = Link.setSearchParam(newLink, 'categories', store.query.categories.join(','));
-    Link.goTo(newLink, false);
-  }
+  if (store.products) Link.goTo(location.href.includes('/profile') ? '/' : location.href, false);
+  //let newLink;
+  // if (isIt) {
+  //   const url = new URL(location.href);
+  //   const redirect = url.searchParams.get('redirect');
+  //   if (redirect) {
+  //     Link.goTo(redirect, false);
+  //   } else {
+  //     newLink = '/profile';
+  //   }
+  // } else {
+  //   newLink = '/';
+  // }
+  // if (store.products) {
+  //   if (store.query.categories)
+  //     newLink = Link.setSearchParam(newLink, 'categories', store.query.categories.join(','));
+  //   Link.goTo(newLink, false);
+  // }
 });
 
 (async () => {

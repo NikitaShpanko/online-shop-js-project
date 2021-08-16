@@ -2,11 +2,17 @@ import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';
+import { openAuthModal } from './auth-form';
+import * as Link from '../lib/link';
 
 const btnCreateAvert = document.querySelector('.header__create-btn');
 btnCreateAvert.addEventListener('click', openAdvModal);
 
 function openAdvModal(e) {
+  if (!localStorage.accessToken) {
+    openAuthModal();
+    return;
+  }
   openModal(advModalTpl());
   const advForm = document.querySelector('.form-modal-adv');
   const imgInput = document.querySelector('.containerImgg_inp');
@@ -65,7 +71,7 @@ function openAdvModal(e) {
 
     const catagoryInput = advForm.elements.category.value;
     if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
-      if (!+advForm.elements.price.value) {
+      if (+advForm.elements.price.value) {
         error({
           text: 'Для категорий: работа, обмен, отдам бесплатно - цена должна быть 0',
           delay: 2000,
@@ -95,9 +101,12 @@ function openAdvModal(e) {
         }
         if (data.id) {
           success({ text: 'Обьявление успешно добавлено', delay: 2000 });
+          Link.goTo(location.href);
           closeModal();
         }
       })
-      .catch(e => error({ text: `${e}`, delay: 2000 }));
+      .catch(e => {
+        error({ text: `${e}`, delay: 2000 });
+      });
   }
 }

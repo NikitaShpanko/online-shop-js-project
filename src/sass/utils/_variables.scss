@@ -14,6 +14,28 @@ $shadow-default: 0px 2px 4px rgba(0, 0, 0, 0.1);
   --color-header-footer-back: #122438;
   --color-header-text-ads-back: #5e6671;
   --color-footer-text: #8e9198;
+  --button-text-color: #ffffff;
+  --color-modal-card-code: #878686;
+  --box-shedow-color: rgba(0, 0, 0, 0.1);
+  --arrow-color: #f4f4f1;
+}
+
+@mixin dark-theme {
+  --color-highlight: #e6762c;
+  --color-main-text: #afb8c5;
+  --color-main-background: rgb(45 54 74);
+
+  --color-ghost: #bbbbbb;
+  --color-secondary-advertising-card: #dddee2;
+  --color-google-btn: #fafafa;
+
+  --color-header-footer-back: #0c1723;
+  --color-header-text-ads-back: #5e6671;
+  --color-footer-text: #8e9198;
 
   --color-modal-card-code: #878686;
+  --button-text-color: #8e9198;
+
+  --box-shedow-color: rgb(175 144 144 / 10%);
+  --arrow-color: #122438;
 }
