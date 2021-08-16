@@ -43,7 +43,7 @@
   &:hover {
     color: var(--color-highlight);
     .form-modal-edit::before {
-      background-color: var(--color-highlight);
+      content: url(/images/svg/file-del-ora.svg);
     }
   }
 }
