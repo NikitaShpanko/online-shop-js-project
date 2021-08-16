@@ -26,7 +26,6 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
   let linkPrefix = '';
   let { pathList, search, shortLink, hash } = parse(link);
 
-  console.log('HELLO,', link, search, search.goto);
   if (search.goto) return goTo(search.goto, refreshOnline, pushState);
 
   if (hash.length && shortLink !== '/') return goTo(`/#${hash}`, refreshOnline, pushState);
