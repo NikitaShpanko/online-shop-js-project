@@ -8,7 +8,6 @@ export default function init() {
   const projNameIndex = location.pathname.indexOf(config.projectName);
   if (projNameIndex < 0) return;
   prePath = location.pathname.slice(0, projNameIndex + config.projectName.length);
-  console.log('PREPATH: ', prePath);
 
   document.addEventListener('click', e => {
     if (!e.target.closest('a')) return;
