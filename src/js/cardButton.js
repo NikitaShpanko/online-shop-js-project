@@ -49,6 +49,18 @@ bodyNode.addEventListener('click', e => {
       }
       const getCardId = cardIdModal.dataset.id;
       buttonClick.classList.toggle('isFavorites');
+
+      store.products.getCard(getCardId).isFavorites =
+        !store.products.getCard(getCardId).isFavorites;
+      const cardElement = document.querySelector(`[data-id="${getCardId}"]`);
+      if (cardElement) {
+        const iconHeart = cardElement.querySelector('.icon-heart-white');
+        if (iconHeart) {
+          iconHeart.classList.toggle('isFavorites');
+        }
+      }
+      console.log(cardElement);
+
       if (buttonClick.classList.contains('isFavorites')) {
         postIsFavoritesCard(getCardId);
       } else {
