@@ -59,7 +59,6 @@ bodyNode.addEventListener('click', e => {
           iconHeart.classList.toggle('isFavorites');
         }
       }
-      console.log(cardElement);
 
       if (buttonClick.classList.contains('isFavorites')) {
         postIsFavoritesCard(getCardId);
@@ -166,8 +165,7 @@ bodyNode.addEventListener('click', e => {
             formData.append('imageUrls', e.imageUrls);
           }
         });
-        console.log('file', formData.getAll('file'));
-        console.log('imageUrls', formData.getAll('imageUrls'));
+
         const id = advForm.dataset.id;
         fetchPatch(id, formData);
       });
