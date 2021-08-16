@@ -157,6 +157,8 @@ bodyNode.addEventListener('click', e => {
         picArr.forEach(e => {
           if (e.file) {
             formData.append('file', e.file);
+          } else if (e.imageUrls) {
+            formData.append('imageUrls', e.imageUrls);
           }
         });
         console.log('file', formData.getAll('file'));
