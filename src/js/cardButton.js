@@ -160,13 +160,12 @@ bodyNode.addEventListener('click', e => {
         }
 
         const formData = new FormData(e.target);
-        // const urlImgArr = picArr.filter(e => e.imageUrls);
-        // formData.append('imageUrls', JSON.stringify(urlImgArr));
+        const urlImgArr = picArr.filter(item => item.imageUrls).map(item => item.imageUrls);
+
+        formData.append('imageUrls', JSON.stringify(urlImgArr));
         picArr.forEach(e => {
           if (e.file) {
             formData.append('file', e.file);
-          } else if (e.imageUrls) {
-            formData.append('imageUrls', e.imageUrls);
           }
         });
 
