@@ -30,7 +30,6 @@ function getCatReady(proto, cardList, linkBefore = '') {
     category.link = linkBefore + category.name;
   }
   category.rusName = russify(category.name) + (proto.search ? ` "${proto.search}"` : '');
-  console.log(proto, category);
   return category;
 }
 
