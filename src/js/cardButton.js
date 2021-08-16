@@ -39,8 +39,16 @@ bodyNode.addEventListener('click', e => {
     } else if (buttonClick.classList.contains('modal-card--bnInfo')) {
       e.target.classList.toggle('isDispleyNone');
       document.querySelector('.modal-card--userInfo').classList.toggle('isDispleyNone');
-    } else if (buttonClick.classList.contains('modal-card--buttonToShare'))
-      console.log('Поделиться товаром с друзьями чере социальные сети (допустим)');
+    } else if (buttonClick.classList.contains('modal-card--buttonToShare')) {
+      navigator.clipboard
+        .writeText(location.href)
+        .then(() => {
+          success({ text: 'Ссылка скопирована в буфер обмена', delay: 2000 });
+        })
+        .catch(() => {
+          error({ text: 'Не удалось скопировать ссылку в буфер обмена', delay: 2000 });
+        });
+    }
 
     if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
       if (!localStorage.accessToken) {
