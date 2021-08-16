@@ -1,5 +1,5 @@
-const inputsNode = document.querySelectorAll('#theme-switch-toggle');
-
+const inputsNode = document.querySelectorAll('.theme-switch__toggle');
+console.log(inputsNode);
 const Theme = {
   LIGHT: 'light-theme',
   DARK: 'dark-theme',
