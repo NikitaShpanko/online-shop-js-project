@@ -1,8 +1,15 @@
 import goTo from './goTo';
 import store from '../store';
-import QueryString from 'qs';
+import config from '../../config.json';
+
+let prePath = '';
 
 export default function init() {
+  const projNameIndex = location.pathname.indexOf(config.projectName);
+  if (projNameIndex < 0) return;
+  prePath = location.pathname.slice(0, projNameIndex + config.projectName.length);
+  console.log('PREPATH: ', prePath);
+
   document.addEventListener('click', e => {
     if (!e.target.closest('a')) return;
     const href = e.target.closest('a').getAttribute('href');
@@ -14,3 +21,5 @@ export default function init() {
 
   window.addEventListener('popstate', () => goTo(location.href, true, false));
 }
+
+export { prePath };

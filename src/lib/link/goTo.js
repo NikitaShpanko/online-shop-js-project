@@ -15,6 +15,8 @@ import * as API from '../api';
 import store from '../store';
 
 import config from '../../config.json';
+
+import { prePath } from './init';
 /**
  * @param {string} link
  */
@@ -93,7 +95,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
           store.products = (await API.request('/call?page=1'))
             ?.append(await API.request('/call?page=2'))
             ?.append(await API.request('/call?page=3'));
-          shortLink = '/';
+          shortLink = prePath + '/';
           for (const param in search) {
             shortLink = setSearchParam(shortLink, param, search[param]);
           }

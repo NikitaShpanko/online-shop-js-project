@@ -1,4 +1,5 @@
 import config from '../../config.json';
+import { prePath } from './init';
 
 /**
  * @typedef linkData
@@ -27,11 +28,14 @@ export default function parse(link, lowerCase = false) {
   } else {
     const url = new URL(link);
     pathname = url.pathname;
-    const projNameIndex = pathname.indexOf(config.projectName);
-    if (projNameIndex > -1) {
-      const projNameLength = config.projectName.length;
-      pathname = pathname.slice(projNameIndex + projNameLength);
+    if (pathname.includes(prePath)) {
+      pathname = pathname.slice(prePath.length);
     }
+    // const projNameIndex = pathname.indexOf(config.projectName);
+    // if (projNameIndex > -1) {
+    //   const projNameLength = config.projectName.length;
+    //   pathname = pathname.slice(projNameIndex + projNameLength);
+    // }
   }
 
   if (lowerCase) pathname = pathname.toLowerCase();
@@ -64,6 +68,8 @@ export default function parse(link, lowerCase = false) {
     if (hasParams) linkData.shortLink = `${pathname}?${usp.toString()}`;
   }
   if (!hasParams) linkData.shortLink = pathname;
+
+  linkData.shortLink = prePath + linkData.shortLink;
 
   // linkData.hash = hashIndex > -1 ? link.slice(hashIndex + 1) : '';
 
