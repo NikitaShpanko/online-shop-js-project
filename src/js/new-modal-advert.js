@@ -2,6 +2,7 @@ import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';
+import * as Link from '../lib/link';
 
 const btnCreateAvert = document.querySelector('.header__create-btn');
 btnCreateAvert.addEventListener('click', openAdvModal);
@@ -99,6 +100,8 @@ function openAdvModal(e) {
           closeModal();
         }
       })
-      .catch(e => error({ text: `${e}`, delay: 2000 }));
+      .catch(e => {
+        error({ text: `${e}`, delay: 2000 });
+      });
   }
 }
