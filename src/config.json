@@ -9,7 +9,7 @@
   },
   "specialCategory": "sales",
   "adCount": 6,
-  "searchParams": ["categories", "search", "redirect", "redir"],
+  "searchParams": ["categories", "search", "redirect", "goto"],
   "maxCards": 12,
   "maxCategories": 4
 }
