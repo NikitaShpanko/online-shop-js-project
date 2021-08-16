@@ -26,6 +26,8 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
   let linkPrefix = '';
   let { pathList, search, shortLink, hash } = parse(link);
 
+  if (search.redir) return goTo(search.redir, refreshOnline, pushState);
+
   if (hash.length && shortLink !== '/') return goTo(`/#${hash}`, refreshOnline, pushState);
 
   const filterString = search.categories ? search.categories : '';
