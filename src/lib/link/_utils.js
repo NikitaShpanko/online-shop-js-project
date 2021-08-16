@@ -17,21 +17,20 @@ function russify(name) {
 }
 
 /**
- * @param {API.Category} category
+ * @param {API.Category} proto
+ * @param {API.Card[]} cardList
  * @param {string} linkBefore - должен начинаться и заканчиваться слэшем,
  * иначе не создаётся вообще
  */
-function getCatReady(name, cardList, linkBefore = '') {
+function getCatReady(proto, cardList, linkBefore = '') {
   const category = {};
   category.card = API.Card.tpl(cardList); //cardTpl(cardList);
+  category.name = proto.name;
   if (linkBefore) {
     category.link = linkBefore + category.name;
   }
-  category.name = name;
-  category.rusName = russify(name);
-  // if(name === 'searchResults') {
-  //   category.rusName += `: ${}`;
-  // }
+  category.rusName = russify(category.name) + (proto.search ? ` "${proto.search}"` : '');
+  console.log(proto, category);
   return category;
 }
 
@@ -68,7 +67,7 @@ export function renderData(data, filterString, linkBefore, method) {
 export function renderCategory(category, filterString, linkBefore, method) {
   API.Card.tpl = categoryCardTpl;
   const fp = filterAndPaginate(category, filterString, config.maxCards);
-  method(searchCardTpl(getCatReady(category.name, fp, linkBefore)));
+  method(searchCardTpl(getCatReady(category, fp, linkBefore)));
   API.Card.tpl = cardTpl;
 }
 
