@@ -49,6 +49,17 @@ bodyNode.addEventListener('click', e => {
       }
       const getCardId = cardIdModal.dataset.id;
       buttonClick.classList.toggle('isFavorites');
+
+      store.products.getCard(getCardId).isFavorites =
+        !store.products.getCard(getCardId).isFavorites;
+      const cardElement = document.querySelector(`[data-id="${getCardId}"]`);
+      if (cardElement) {
+        const iconHeart = cardElement.querySelector('.icon-heart-white');
+        if (iconHeart) {
+          iconHeart.classList.toggle('isFavorites');
+        }
+      }
+
       if (buttonClick.classList.contains('isFavorites')) {
         postIsFavoritesCard(getCardId);
       } else {
@@ -154,8 +165,7 @@ bodyNode.addEventListener('click', e => {
             formData.append('imageUrls', e.imageUrls);
           }
         });
-        console.log('file', formData.getAll('file'));
-        console.log('imageUrls', formData.getAll('imageUrls'));
+
         const id = advForm.dataset.id;
         fetchPatch(id, formData);
       });
