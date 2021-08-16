@@ -72,6 +72,7 @@ export function renderCategory(category, filterString, linkBefore, method) {
 }
 
 export function render(obj, filterString, linkPrefix, method = putOnPage) {
+  if (!obj) return;
   obj.filterString = filterString;
   obj.linkPrefix = linkPrefix;
 
