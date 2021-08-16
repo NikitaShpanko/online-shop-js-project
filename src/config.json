@@ -3,7 +3,7 @@
   "projectName": "online-shop-js-project",
   "rusNames": {
     "sales": "Распродажа",
-    "searchResults": "Результаты поиска",
+    "searchResults": "Результаты поиска по запросу",
     "own": "Мои объявления",
     "favourite": "Избранное"
   },

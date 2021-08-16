@@ -41,6 +41,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
     }
   });
 
+  //document.querySelectorAll('.js-input-search').forEach(elem => (elem.value = ''));
   if (pathList.includes('profile')) {
     if (store.isOnline && !store.isOnline.error) {
       linkPrefix = '/profile/';
@@ -74,7 +75,7 @@ export default async function goTo(link, refreshOnline = true, pushState = true)
     } else {
       if (search.search) {
         store.products = await API.request(setSearchParam('/call/find', 'search', search.search));
-        console.log(store.products);
+        //document.querySelectorAll('.js-input-search').forEach(elem => (elem.value = search.search));
       } else {
         linkPrefix = '/category/';
         const possibleCategory = textAfter(pathList, 'category');

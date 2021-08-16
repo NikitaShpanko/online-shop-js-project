@@ -74,6 +74,7 @@ function setDataType(obj, link) {
   if (link.includes('/find'))
     return new Category({
       name: 'searchResults',
+      search: decodeURIComponent(link.slice(link.indexOf('=') + 1)),
       cardList: obj,
     });
   return obj;
