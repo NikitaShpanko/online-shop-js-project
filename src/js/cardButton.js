@@ -21,7 +21,7 @@ bodyNode.addEventListener('click', e => {
 
   if (buttonClick?.nodeName === 'BUTTON') {
     if (buttonClick.classList.contains('icon-heart-white')) {
-      if (!localStorage.accessToken) return openAuthModal();
+      if (!localStorage.accessToken) return Link.loginRedirect(); // openAuthModal();
       const getCardId = cardId.dataset.id;
       buttonClick.classList.toggle('isFavorites');
       if (buttonClick.classList.contains('isFavorites')) postIsFavoritesCard(getCardId);
@@ -44,8 +44,10 @@ bodyNode.addEventListener('click', e => {
 
     if (buttonClick.classList.contains('modal-card--buttonIsFavorite')) {
       if (!localStorage.accessToken) {
+        const href = location.href;
         closeModal(modalCard());
-        openAuthModal();
+        //openAuthModal();
+        return Link.loginRedirect(href);
       }
       const getCardId = cardIdModal.dataset.id;
       buttonClick.classList.toggle('isFavorites');
@@ -158,13 +160,12 @@ bodyNode.addEventListener('click', e => {
         }
 
         const formData = new FormData(e.target);
-        // const urlImgArr = picArr.filter(e => e.imageUrls);
-        // formData.append('imageUrls', JSON.stringify(urlImgArr));
+        const urlImgArr = picArr.filter(item => item.imageUrls).map(item => item.imageUrls);
+
+        formData.append('imageUrls', JSON.stringify(urlImgArr));
         picArr.forEach(e => {
           if (e.file) {
             formData.append('file', e.file);
-          } else if (e.imageUrls) {
-            formData.append('imageUrls', e.imageUrls);
           }
         });
 
