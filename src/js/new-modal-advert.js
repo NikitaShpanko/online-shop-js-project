@@ -65,7 +65,7 @@ function openAdvModal(e) {
 
     const catagoryInput = advForm.elements.category.value;
     if (catagoryInput === 'work' || catagoryInput === 'trade' || catagoryInput === 'free') {
-      if (!+advForm.elements.price.value) {
+      if (+advForm.elements.price.value) {
         error({
           text: 'Для категорий: работа, обмен, отдам бесплатно - цена должна быть 0',
           delay: 2000,
@@ -95,6 +95,7 @@ function openAdvModal(e) {
         }
         if (data.id) {
           success({ text: 'Обьявление успешно добавлено', delay: 2000 });
+          Link.goTo(location.href);
           closeModal();
         }
       })
