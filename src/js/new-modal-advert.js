@@ -101,7 +101,6 @@ function openAdvModal(e) {
         }
       })
       .catch(e => {
-        console.log(e);
         error({ text: `${e}`, delay: 2000 });
       });
   }
