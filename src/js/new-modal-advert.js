@@ -2,12 +2,17 @@ import { success, error } from '@pnotify/core';
 import { openModal, closeModal } from './modal-control';
 import advModalTpl from '../templates/new-modal-advert.hbs';
 import * as API from '../lib/api';
+import { openAuthModal } from './auth-form';
 import * as Link from '../lib/link';
 
 const btnCreateAvert = document.querySelector('.header__create-btn');
 btnCreateAvert.addEventListener('click', openAdvModal);
 
 function openAdvModal(e) {
+  if (!localStorage.accessToken) {
+    openAuthModal();
+    return;
+  }
   openModal(advModalTpl());
   const advForm = document.querySelector('.form-modal-adv');
   const imgInput = document.querySelector('.containerImgg_inp');
