@@ -13,7 +13,7 @@ store.register('isOnline', isIt => {
   headerRegContiner.forEach(e => e.classList.toggle('reg-is-hidden'));
   headerCabContiner.forEach(e => e.classList.toggle('cab-is-hidden'));
 
-  Link.goTo(location.href.includes('/profile') ? '/' : location.href, false);
+  if (store.products) Link.goTo(location.href.includes('/profile') ? '/' : location.href, false);
   //let newLink;
   // if (isIt) {
   //   const url = new URL(location.href);
